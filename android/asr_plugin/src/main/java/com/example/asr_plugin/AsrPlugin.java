@@ -14,6 +14,7 @@ import androidx.core.content.ContextCompat;
 import io.flutter.plugin.common.MethodCall;
 import io.flutter.plugin.common.MethodChannel;
 import io.flutter.plugin.common.PluginRegistry;
+import io.flutter.embedding.engine.FlutterEngine;
 
 public class AsrPlugin implements MethodChannel.MethodCallHandler{
     private final static String TAG = "AsrPlugin";
@@ -21,14 +22,25 @@ public class AsrPlugin implements MethodChannel.MethodCallHandler{
     private ResultStateful resultStateful;
     private AsrManager asrManager;
 
-    public static void registerWith(PluginRegistry.Registrar registrar){
-        MethodChannel channel = new MethodChannel(registrar.messenger(),"asr_plugin");
-        AsrPlugin instance=new AsrPlugin(registrar);
+//    public static void registerWith(PluginRegistry.Registrar registrar){
+//        MethodChannel channel = new MethodChannel(registrar.messenger(),"asr_plugin");
+//        AsrPlugin instance=new AsrPlugin(registrar);
+//        channel.setMethodCallHandler(instance);
+//    }
+//
+//    public AsrPlugin(PluginRegistry.Registrar registrar){
+//        this.activity=registrar.activity();
+//    }
+
+
+    public static void registerWith(FlutterEngine flutterEngine,Activity activity){
+        MethodChannel channel = new MethodChannel(flutterEngine.getDartExecutor(),"asr_plugin");
+        AsrPlugin instance=new AsrPlugin(activity);
         channel.setMethodCallHandler(instance);
     }
 
-    public AsrPlugin(PluginRegistry.Registrar registrar){
-        this.activity=registrar.activity();
+    public AsrPlugin(Activity activity){
+        this.activity=activity;
     }
 
     @Override
