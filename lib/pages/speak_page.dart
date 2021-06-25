@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_trip/pages/search_page.dart';
-import 'package:flutter_trip/plugin/asr_manager.dart';
+import 'package:demo7_pro/pages/search_page.dart';
+import 'package:demo7_pro/plugin/asr_manager/asr_manager.dart';
 
 class SpeakPage extends StatefulWidget {
 

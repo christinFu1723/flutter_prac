@@ -3,7 +3,7 @@ import 'package:demo7_pro/model/grid_nav_model.dart';
 import 'package:demo7_pro/model/common_model.dart';
 import 'package:demo7_pro/model/sales_box_model.dart';
 
-
+import 'package:demo7_pro/pages/speak_page.dart';
 import 'package:flutter/material.dart';
 import 'package:demo7_pro/dao/home_dao.dart';
 import 'dart:convert';
@@ -236,6 +236,11 @@ class _MyHomePageState extends State<MyHomePage> {
             })
     );
   }
-  _jumpToSpeak(){}
+  _jumpToSpeak(){
+    Navigator.push(
+        context, MaterialPageRoute(builder: (context) => SpeakPage())
+    );
+
+  }
 }
 
