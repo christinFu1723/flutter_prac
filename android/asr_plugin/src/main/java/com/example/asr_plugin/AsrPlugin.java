@@ -45,7 +45,13 @@ public class AsrPlugin implements MethodChannel.MethodCallHandler{
 
     @Override
     public void onMethodCall(MethodCall methodCall, MethodChannel.Result result) {
+        if(this.activity ==null){
+            Log.e(TAG,"activitiy是空的，有错误");
+
+        }
+        Log.i(TAG,"权限问题？？？");
         initPermission();
+        Log.i(TAG,"不是权限问题");
         switch (methodCall.method){
             case "start":
                 resultStateful = ResultStateful.of(result);
@@ -73,6 +79,7 @@ public class AsrPlugin implements MethodChannel.MethodCallHandler{
             Log.i(TAG,"测试sdjhsdjhsd");
             getAsrManager().start(call.arguments instanceof Map ? (Map) call.arguments : null);
         } else {
+            Log.i(TAG,"错误监控死角手机号");
             Log.e(TAG,"ignored start,current activity is null");
             result.error("ignored start,current activity is null",null,null);
         }
@@ -93,6 +100,7 @@ public class AsrPlugin implements MethodChannel.MethodCallHandler{
      * android 6.0 以上需要动态申请权限
      */
     private void initPermission() {
+        Log.i(TAG,"权限问题11111？？？");
         String permissions[] = {Manifest.permission.RECORD_AUDIO,
                 Manifest.permission.ACCESS_NETWORK_STATE,
                 Manifest.permission.INTERNET,
@@ -102,12 +110,14 @@ public class AsrPlugin implements MethodChannel.MethodCallHandler{
         ArrayList<String> toApplyList = new ArrayList<String>();
 
         for (String perm :permissions){
-            if (PackageManager.PERMISSION_GRANTED != ContextCompat.checkSelfPermission(activity, perm)) {
+            if (PackageManager.PERMISSION_GRANTED != ContextCompat.checkSelfPermission(this.activity, perm)) {
+                Log.i(TAG,"权限问题2222？？？");
                 toApplyList.add(perm);
                 //进入到这里代表没有权限.
 
             }
         }
+        Log.i(TAG,"权限问题333？？？");
         String tmpList[] = new String[toApplyList.size()];
         if (!toApplyList.isEmpty()){
             ActivityCompat.requestPermissions(activity, toApplyList.toArray(tmpList), 123);
