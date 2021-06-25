@@ -64,11 +64,13 @@ public class AsrPlugin implements MethodChannel.MethodCallHandler{
 
     private void start(MethodCall call,ResultStateful result){
         if(activity ==null){
+            Log.e(TAG,"有错误");
             Log.e(TAG,"ignored start,current activity is null");
             result.error("ignored start,current activity is null",null,null);
             return;
         }
         if(getAsrManager()!=null){
+            Log.i(TAG,"测试sdjhsdjhsd");
             getAsrManager().start(call.arguments instanceof Map ? (Map) call.arguments : null);
         } else {
             Log.e(TAG,"ignored start,current activity is null");

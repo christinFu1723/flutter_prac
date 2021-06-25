@@ -30,8 +30,21 @@ class MainActivity : FlutterActivity(),ActivityAware {
         AsrPlugin.registerWith(flutterEngine,_activity);
     }
 
-    override fun onDetachedFromActivity(){}
+
     override fun onReattachedToActivityForConfigChanges(binding:ActivityPluginBinding){
         _activity = binding.activity;
+    }
+
+    override fun onDetachedFromActivity() {
+        TODO("Not yet implemented")
+    }
+
+
+    override fun onAttachedToActivity(binding: ActivityPluginBinding) {
+        _activity = binding.activity
+    }
+
+    override fun onDetachedFromActivityForConfigChanges() {
+        TODO("Not yet implemented")
     }
 }
