@@ -91,7 +91,7 @@ class _SpeakPageState extends State<SpeakPage>
               _speakStop();
             },
             onTapCancel: () {
-              _speakCancle();
+              _speakCancel();
             },
             child: Center(
               child: Column(
@@ -161,7 +161,13 @@ class _SpeakPageState extends State<SpeakPage>
     AsrManager.stop();
   }
 
-  _speakCancle() {
+  _speakCancel() {
+    setState(() {
+    speakTips = '长按说话';
+    });
+    controller.reset();
+    controller.stop();
+
     AsrManager.cancel();
   }
 
