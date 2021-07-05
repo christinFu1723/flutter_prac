@@ -53,7 +53,7 @@ class _TravelTabPageState extends State<TravelTabPage> with AutomaticKeepAliveCl
     setState(() {
       _loading =true;
     });
-
+    print('子页面开始请求');
     try{
     var res = await TravelDao.fetch(widget.travelUrl??_TRAVEL_URL,widget.groupChannelCode,pageIndex,PAGE_SIZE);
     TravelItemModel model = res['TravelItemModel'];

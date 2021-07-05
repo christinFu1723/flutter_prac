@@ -2,7 +2,9 @@ import 'package:demo7_pro/model/travel_model.dart';
 import 'dart:async';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
+import 'package:dio/dio.dart';
 
+import 'package:dio/adapter.dart';
 
 var Params = {
   "districtId": -1,
@@ -34,21 +36,41 @@ class TravelDao{
 
 
 
-    print(jsonEncode(Params) is String);
-    final resp = await http.post(uri,body: json.encode(Params),headers: {
-      'content-type':'application/json'
-    });
-    if(resp.statusCode==200){
-      Utf8Decoder utf8decoder = Utf8Decoder();
-      var result = json.decode(utf8decoder.convert(resp.bodyBytes));
+    // print(jsonEncode(Params) is String);
 
+
+    var dio = new Dio();
+
+    // 设置代理用来调试应用
+    (dio.httpClientAdapter as DefaultHttpClientAdapter).onHttpClientCreate =
+        (client) {
+      client.findProxy = (Uri) {
+        // 用1个开关设置是否开启代理
+        return 'PROXY 192.168.201.94:1080';
+      };
+
+    };
+
+    final resp = await dio.post(url,data:json.encode(Params));
+    print('返回值1111${resp.statusCode}');
+    print('返回值1111${resp.statusMessage}');
+
+
+    // final resp = await http.post(uri,body: json.encode(Params),headers: {
+    //   'content-type':'application/json'
+    // });
+    if(resp.statusCode==200){
+      // Utf8Decoder utf8decoder = Utf8Decoder();
+      // var result = json.decode(utf8decoder.convert(resp.bodyBytes));
+      Utf8Decoder utf8decoder = Utf8Decoder();
+      var result = json.decode(resp.toString());
       return {
         'TravelItemModel':TravelItemModel.fromJson(result),
         'resultStrJson':result
       };
     } else {
 
-      throw Exception('请求失败${resp.reasonPhrase}');
+      throw Exception('请求失败${resp.statusMessage}');
     }
 
 
