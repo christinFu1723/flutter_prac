@@ -32,12 +32,82 @@ dependencies:
   flutter_webview_plugin: ^0.4.0
   flutter_swiper: ^1.1.6
   flutter_staggered_grid_view: ^0.4.0
+  # HTTP
+  # https://pub.flutter-io.cn/packages/dio
   dio: ^4.0.0
+
+
+  # .env 多环境支持
+  # https://pub.flutter-io.cn/packages/flutter_dotenv
   flutter_dotenv: ^5.0.0
+
+
+  # 日志查看，体质调试查看
+  # https://pub.flutter-io.cn/packages/logger
   logger: ^1.0.0
+
+
+  # 组件通信 EventBus
+  # https://pub.flutter-io.cn/packages/event_bus
   event_bus: ^2.0.0
+
+
+  # 查找文件系统上的常用位置
+  # https://pub.flutter-io.cn/packages/path_provider
   path_provider: ^2.0.2
+
+
+  # 设备权限检查
+  # https://pub.flutter-io.cn/packages/permission_handler
   permission_handler: ^8.1.2
+
+
+  # 状态管理
+  # https://pub.flutter-io.cn/packages/provider
+  provider: ^5.0.0
+
+
+  # 读取 pubspec.yaml 文件内容
+  # https://pub.flutter-io.cn/packages/package_info
+  package_info: ^2.0.2
+
+
+  shared_preferences: ^2.0.6
+
+  # 极光推送
+  # https://pub.flutter-io.cn/packages/jpush_flutter
+  jpush_flutter: ^2.1.4
+
+
+  # 获取设备信息
+  # https://pub.flutter-io.cn/packages/device_info
+  device_info: ^2.0.2
+
+
+  # Toast 提示
+  # https://pub.flutter-io.cn/packages/bot_toast
+  bot_toast: ^4.0.1
+
+
+  # 加载动画组件
+  # 配合 BotToast 使用，美化 Loading 组件样式。
+  # https://pub.flutter-io.cn/packages/flutter_spinkit
+  flutter_spinkit: ^5.0.0
+
+
+  # 图片压缩
+  # https://pub.flutter-io.cn/packages/flutter_image_compress
+  flutter_image_compress: ^1.0.0
+
+
+  # 震动反馈
+  # https://pub.flutter-io.cn/packages/vibrate
+  vibrate: ^0.0.4
+
+
+  # 缓存图片
+  # https://pub.flutter-io.cn/packages/cached_network_image
+  cached_network_image: ^3.0.0
 
 dev_dependencies:
   flutter_test:
