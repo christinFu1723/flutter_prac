@@ -109,6 +109,16 @@ dependencies:
   # https://pub.flutter-io.cn/packages/cached_network_image
   cached_network_image: ^3.0.0
 
+
+  # 安卓安装 apk
+  # https://pub.flutter-io.cn/packages/install_plugin
+  install_plugin: ^2.0.1
+
+
+  # 文件大小转换
+  # https://pub.flutter-io.cn/packages/filesize
+  filesize: ^2.0.1
+
 dev_dependencies:
   flutter_test:
     sdk: flutter

@@ -21,7 +21,11 @@ import 'package:demo7_pro/utils/app.dart';
 import 'package:demo7_pro/pages/login.dart';
 import 'package:demo7_pro/widgets/confirm.dart';
 import 'package:demo7_pro/services/jpush.dart';
-
+import 'package:demo7_pro/config/theme.dart';
+import 'package:demo7_pro/widgets/apk_install.dart';
+import 'package:install_plugin/install_plugin.dart';
+import 'package:flutter/services.dart' show rootBundle;
+// import 'package:url_launcher/url_launcher.dart';
 
 // import 'package:vibrate/vibrate.dart';
 // import 'package:flutter_cache_manager/flutter_cache_manager.dart';
@@ -198,7 +202,96 @@ class AppService{
 
 
 
+  /// 检查新版本
+  static Future<void> checkClientVersion(BuildContext context,
+      {bool tipsy}) async {
+    try {
+      AppUtil.showLoading();
 
+      /// 刷新应用配置
+      await getClientConfig(context);
+
+      /// 获取版本信息
+      PackageInfo info = await PackageInfo.fromPlatform();
+
+      // ClientVersionDetailModel detail = await ApiBasic.checkerClientVersion(
+      //   appMark: info.buildNumber,
+      // );
+      ClientVersionDetailModel detail;
+
+      if (detail == null) {
+        if (tipsy == true) throw '已经是最新版本';
+        return;
+      }
+
+      bool confirm = await showDialog(
+        context: context,
+        builder: (BuildContext context) => AppConfirm(
+          title: '发现新版本',
+          titleSub: '更新到新版本以获得更稳定的体验',
+          confirmText: '立即更新',
+          cancelText: '暂不',
+          content: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Image.asset('assets/images/update_cover.png'),
+              SizedBox(height: AppTheme.gutter),
+              Text(
+                [
+                  '最新版本：v${detail.version ?? '?.?.?'}+${detail.appMark ?? '?'}',
+                  '更新日期：${detail.releaseTime}',
+                  '更新内容：\n${detail.versionDescription ?? '没有更新日志'}',
+                ].join('\n'),
+                style: AppConfirm.contentTextStyle.copyWith(
+                  fontSize: AppTheme.fontSizeSmall,
+                ),
+              ),
+            ],
+          ),
+        ),
+      );
+
+      if (confirm != true) return;
+
+      if (Platform.isAndroid && detail.appUrl != null) {
+        /// 如果是 apk，则直接下载并安装
+        if (detail.appUrl.endsWith('.apk')) {
+          showDialog(
+            context: context,
+            barrierDismissible: false, // 禁止关闭
+            builder: (BuildContext context) {
+              return ApkInstall(
+                detail.appUrl,
+                onSuccess: () {
+                  AppUtil.pop(context);
+                },
+              );
+            },
+          );
+        } else {
+          /// URL 则直接用浏览器打开
+          // await launch(detail.appUrl);
+        }
+
+        return;
+      }
+
+      if (Platform.isIOS) {
+        ClientConfigModel clientConfig = Provider.of<AppStoreModel>(
+          context,
+          listen: false,
+        ).clientConfig;
+
+        AppUtil.showToast('发现新版本，请前往 AppStore 更新');
+        if (clientConfig?.appStoreUrl == null) return;
+        InstallPlugin.gotoAppStore(clientConfig?.appStoreUrl);
+      }
+    } catch (e) {
+      AppUtil.showToast(e);
+    } finally {
+      AppUtil.hideLoading();
+    }
+  }
 
 
   /// 需要登录后操作
