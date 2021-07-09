@@ -1,4 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.example.demo7_pro">
    <application
         android:label="demo7_pro"
@@ -7,6 +8,7 @@
        android:networkSecurityConfig="@xml/network_security_config"
        >
        <!--自动安装-->
+
        <provider
            android:name="androidx.core.content.FileProvider"
            android:authorities="${applicationId}.fileProvider.install"
@@ -16,10 +18,13 @@
            <meta-data
                android:name="android.support.FILE_PROVIDER_PATHS"
                tools:replace="android:resource"
-               android:resource="@xml/file_paths_public"/>
+               android:resource="@xml/provider_install_paths"/>
        </provider>
 
+
+
        <!--网页选择图片-->
+
        <provider
            android:name="com.example.demo7_pro.MyFileProvider"
            android:authorities="${applicationId}.fileprovider"
@@ -28,8 +33,10 @@
            tools:replace="android:authorities">
            <meta-data
                android:name="android.support.FILE_PROVIDER_PATHS"
-               android:resource="@xml/file_paths_public" />
+               android:resource="@xml/provider_webview" />
        </provider>
+
+
         <activity
             android:name=".MainActivity"
             android:launchMode="singleTop"
