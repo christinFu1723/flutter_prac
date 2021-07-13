@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart' show SystemChrome,DeviceOrientation,SystemUiOverlayStyle;
+import 'package:flutter/services.dart' ;
 import 'dart:io' show Platform;
 import 'package:demo7_pro/pages/home_page.dart';
 import 'package:demo7_pro/tabbar/tab_nav.dart';
@@ -9,10 +9,10 @@ import 'package:demo7_pro/services/jpush.dart';
 void main() async{
   WidgetsFlutterBinding.ensureInitialized();// main()方法想要使用async ,一定要调用它。
 
-  await dotenv.load(fileName: ".env");// 静态文件需要在pubspec.yaml里注册
+  await dotenv.load(fileName: ".env.development"); // 静态文件需要在pubspec.yaml里注册
 
   /// 初始化极光
-  JPushService.init();
+  JPushService.init();// android sdk30可能会报getNetWorkType 安全错误，可以尝试修改build.gradle targetSdkVersion
 
   runApp(MaterialApp(
       title: '阿福首页',

@@ -6,11 +6,13 @@ class HttpConfig {
   static HttpConfig _instance = HttpConfig._();
   static HttpConfig get instance => _instance;
 
+  String proxyBaseUrl ='192.168.201.94:1080';
+
   /// 服务器端接口配置
   static Map<String, String> apis = {
-    "development": "http://192.168.200.246:8282",
-    "uat": "https://uat.api.dingdangchewu.com",
-    "production": "https://api.dingdangchewu.com",
+    "development": "https://www.devio.org/io/flutter_app/",
+    "uat": "https://www.devio.org/io/flutter_app/",
+    "production": "https://www.devio.org/io/flutter_app/",
   };
 
   /// 服务端地址
@@ -21,6 +23,10 @@ class HttpConfig {
 
   void setBaseUrlWithEnv(String value) {
     this.baseUrl = apis[value];
+  }
+
+  void setBaseUrlWithUrl(String url){
+    this.baseUrl= url;
   }
 
   /// 客户端参数配置，具体 secret 参数咨询后端

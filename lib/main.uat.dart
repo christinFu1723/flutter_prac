@@ -9,7 +9,7 @@ import 'package:demo7_pro/services/jpush.dart';
 void main() async{
   WidgetsFlutterBinding.ensureInitialized();// main()方法想要使用async ,一定要调用它。
 
-  await dotenv.load(fileName: ".env");// 静态文件需要在pubspec.yaml里注册
+  await dotenv.load(fileName: ".env.uat");// 静态文件需要在pubspec.yaml里注册
 
   /// 初始化极光
   JPushService.init();

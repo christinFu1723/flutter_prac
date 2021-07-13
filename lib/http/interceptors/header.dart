@@ -9,7 +9,7 @@ import 'package:logger/logger.dart';
 // 拦截器 请求前添加头部 token
 class HeaderInterceptor extends Interceptor{
   @override
-  Future onRequest(RequestOptions options) async {
+  void onRequest(RequestOptions options,RequestInterceptorHandler handler) {
     Map<String,dynamic> header ={};
 
     if(options.path.startsWith('/api')){
@@ -36,6 +36,7 @@ class HeaderInterceptor extends Interceptor{
 
     Logger().i(logs);
 
-    return super.onRequest(options);
+    // return super.onRequest(options);
+    handler.next(options);
   }
 }

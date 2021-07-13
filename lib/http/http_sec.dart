@@ -12,22 +12,23 @@ import 'package:demo7_pro/http/interceptors/response.dart';
 import 'package:demo7_pro/model/response_data.dart';
 import 'package:demo7_pro/utils/event_bus.dart';
 
-class HttpUtil{
-  bool openProxy=false; // 是否开启代理
+class HttpUtilSec{
+  final baseUrlInput; // 输入的基础地址
+  bool openProxy=true; // 是否开启代理
   // 请求类型
   static const CONTENT_TYPE_JSON = 'application/json';
   static const CONTENT_TYPE_FROM = 'application/x-www-form-urlencoded';
   // Dio 实例
   static Dio _dio = Dio();
 
-  // HttpUtil 实例
-  static HttpUtil _instance = HttpUtil();
+  // HttpUtilSec 实例
+  static HttpUtilSec _instance = HttpUtilSec();
 
-  static HttpUtil get instance => _instance;
+  static HttpUtilSec get instance => _instance;
 
-  static HttpUtil getInstance() {
+  static HttpUtilSec getInstance() {
     if (_instance != null) return _instance;
-    _instance = new HttpUtil();
+    _instance = new HttpUtilSec();
     return _instance;
   }
 
@@ -35,7 +36,7 @@ class HttpUtil{
     this.openProxy = proxyFlg;
   }
 
-  HttpUtil() {
+  HttpUtilSec({this.baseUrlInput}) {
     (_dio.httpClientAdapter as DefaultHttpClientAdapter).onHttpClientCreate =
         (HttpClient client) {
       if(this.openProxy){
@@ -52,7 +53,7 @@ class HttpUtil{
 
     // 配置设置
     _dio.options.method = 'get';
-    _dio.options.baseUrl = HttpConfig.instance.baseUrl;
+    _dio.options.baseUrl = this.baseUrlInput;
     _dio.options.sendTimeout = HttpConfig.instance.timeout;
     _dio.options.receiveTimeout = HttpConfig.instance.timeout;
 

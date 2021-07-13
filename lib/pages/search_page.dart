@@ -56,7 +56,8 @@ class _SearchPageState extends State<SearchPage> {
       return;
     }
     String url=widget.searchUrl+text;
-    SearchDao.fetch(url:url,keyword:keyword)
+    // SearchDao.fetch(url:url,keyword:keyword)
+    SearchDao.fetch(keyword:keyword)
         .then((resp){
 
           if(resp['SearchModel']?.keyword==keyword){
