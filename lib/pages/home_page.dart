@@ -16,6 +16,7 @@ import 'package:flutter_swiper/flutter_swiper.dart';
 import 'package:demo7_pro/widgets/webview.dart';
 import 'package:demo7_pro/widgets/search_bar.dart';
 import 'package:demo7_pro/pages/search_page.dart';
+import 'package:demo7_pro/widgets/imageNetwork.dart';
 
 const AppBar_Hide_Distance = 100;
 const SEARCH_BAR_DEFAULT_TEXT='首页默认值';
@@ -170,10 +171,11 @@ class _MyHomePageState extends State<MyHomePage> {
         itemBuilder: (BuildContext context, int index) {
           return _wrapGesture(
             context,
-            Image.network(
-              bannerList[index].icon,
-              fit: BoxFit.cover,
-            ),
+            // Image.network(
+            //   bannerList[index].icon,
+            //   fit: BoxFit.cover,
+            // ),
+            ImageNetwork(imageUrl:bannerList[index].icon),
 
             bannerList[index].url,
             bannerList[index].title,
