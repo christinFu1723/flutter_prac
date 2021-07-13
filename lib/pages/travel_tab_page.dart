@@ -6,6 +6,7 @@ import 'package:demo7_pro/dao/travel_dao.dart';
 
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:demo7_pro/widgets/webview.dart';
+import 'package:logger/logger.dart';
 
 const PAGE_SIZE = 10;
 const _TRAVEL_URL = '';
@@ -13,8 +14,10 @@ const _TRAVEL_URL = '';
 class TravelTabPage extends StatefulWidget {
   final String travelUrl;
   final String groupChannelCode;
+  final int nowSltTab;// 控制器选择的key值
+  final int tabsIndex;// 遍历的key值
 
-  const TravelTabPage({Key key,this.travelUrl,this.groupChannelCode}) :super(key: key);
+  const TravelTabPage({Key key,this.travelUrl,this.groupChannelCode,this.nowSltTab,this.tabsIndex}) :super(key: key);
   @override
   _TravelTabPageState createState() => _TravelTabPageState();
 }
@@ -28,9 +31,15 @@ class _TravelTabPageState extends State<TravelTabPage> with AutomaticKeepAliveCl
   @override
   void initState() {
     super.initState();
+
+    // if(widget.nowSltTab==widget.tabsIndex){
+    //   _loadData();
+    // }
     _loadData();
+
     _scrollController.addListener((){
       if(_scrollController.position.pixels == _scrollController.position.maxScrollExtent){
+
         _loadData(loadMore: true);
       }
     });
@@ -53,7 +62,7 @@ class _TravelTabPageState extends State<TravelTabPage> with AutomaticKeepAliveCl
     setState(() {
       _loading =true;
     });
-    print('子页面开始请求');
+
     try{
     var res = await TravelDao.fetch(widget.travelUrl??_TRAVEL_URL,widget.groupChannelCode,pageIndex,PAGE_SIZE);
     TravelItemModel model = res['TravelItemModel'];
@@ -78,6 +87,7 @@ class _TravelTabPageState extends State<TravelTabPage> with AutomaticKeepAliveCl
   }
 
   Future handleRefresh() async{
+
     _loadData();
     return null;
   }

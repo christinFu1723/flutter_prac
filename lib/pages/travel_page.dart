@@ -14,13 +14,19 @@ class _TravelPageState extends State<TravelPage> with TickerProviderStateMixin{
   TabController _controller;
   List<TravelTabs> tabsList = [];
   TravelTabModel travelTabModel;
+  int nowSltTab=0;
 
   @override
   void initState() {
 
     super.initState();
     _controller = TabController(length: 0, vsync: this);
+    _controller.addListener((){
+      setState(() {
+        nowSltTab=_controller.index;
+      });
 
+    });
     _loadTabs();
 
 
@@ -81,8 +87,14 @@ class _TravelPageState extends State<TravelPage> with TickerProviderStateMixin{
                 child:
                   TabBarView(
                     controller: _controller,
-                    children: this.tabsList.map((TravelTabs tab){
-                      return TravelTabPage(travelUrl:travelTabModel.url,groupChannelCode:tab.groupChannelCode);
+                    children: this.tabsList.asMap().entries.map((mapItem){
+
+                      return TravelTabPage(
+                          travelUrl:travelTabModel.url,
+                          groupChannelCode:mapItem.value.groupChannelCode,
+                          tabsIndex:mapItem.key,
+                          nowSltTab:nowSltTab
+                      );
                     }).toList(),
                   )
             )

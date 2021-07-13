@@ -32,6 +32,8 @@ class HttpUtilSec{
     return _instance;
   }
 
+
+
   setProxy(bool proxyFlg){
     this.openProxy = proxyFlg;
   }

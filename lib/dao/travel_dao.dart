@@ -21,14 +21,15 @@ var Params = {
   "head": {'cid': "09031014111431397988"},
   "contentType": "json"
 };
-
+const baseUrl = 'https://m.ctrip.com';
 class TravelDao{
   static Future<dynamic> fetch(String url,String groupChannelCode,int pageIndex, int pageSize) async{
     Map paramsMap = Params['pagePara'];
     paramsMap['pageIndex'] = pageIndex;
     paramsMap['pageSize'] = pageSize;
     Params['groupChannelCode'] = groupChannelCode;
-    final resp = await HttpUtilSec(baseUrlInput:url).post(url,data:json.encode(Params));
+    // 这里的url含http(s),根据dio的基础语法。baseurl存不存在，不重要
+    final resp = await HttpUtilSec.instance.post(url,data:json.encode(Params));
     return {
       'TravelItemModel':TravelItemModel.fromJson(resp),
       'resultStrJson':resp
