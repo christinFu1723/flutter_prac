@@ -171,11 +171,11 @@ class _MyHomePageState extends State<MyHomePage> {
         itemBuilder: (BuildContext context, int index) {
           return _wrapGesture(
             context,
-            // Image.network(
-            //   bannerList[index].icon,
-            //   fit: BoxFit.cover,
-            // ),
-            ImageNetwork(imageUrl:bannerList[index].icon),
+            Image.network(
+              bannerList[index].icon,
+              fit: BoxFit.cover,
+            ),
+            // ImageNetwork(imageUrl:bannerList[index].icon, fit: BoxFit.cover),
 
             bannerList[index].url,
             bannerList[index].title,

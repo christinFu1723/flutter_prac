@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:demo7_pro/model/common_model.dart';
 import 'package:demo7_pro/model/sales_box_model.dart';
 import 'package:demo7_pro/widgets/webview.dart';
+import 'package:demo7_pro/widgets/imageNetwork.dart';
 
 
 class SalesBox extends StatelessWidget{
@@ -34,6 +35,7 @@ class SalesBox extends StatelessWidget{
           child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Image.network(salesBox.icon,height: 15,fit:BoxFit.fill),
+              // ImageNetwork(imageUrl:salesBox.icon,height: 15,fit:BoxFit.fill),
               Container(
                 padding: EdgeInsets.fromLTRB(10, 1, 8, 1),
                 margin: EdgeInsets.only(right: 7),
@@ -97,6 +99,7 @@ class SalesBox extends StatelessWidget{
             fit: BoxFit.fill,
 
           ),
+          // ImageNetwork(imageUrl:model.icon,width: MediaQuery.of(context).size.width /2 -10,height: big?129:80,fit:BoxFit.fill),
           // Padding(padding:
           // EdgeInsets.only(top:3),
           //     child:Text(model.title,style: TextStyle(fontSize: 12),
