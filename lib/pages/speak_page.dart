@@ -3,10 +3,8 @@ import 'package:demo7_pro/pages/search_page.dart';
 import 'package:demo7_pro/plugin/asr_manager/asr_manager.dart';
 
 class SpeakPage extends StatefulWidget {
-
   @override
   _SpeakPageState createState() => _SpeakPageState();
-
 }
 
 class _SpeakPageState extends State<SpeakPage>
@@ -43,90 +41,115 @@ class _SpeakPageState extends State<SpeakPage>
   Widget build(BuildContext context) {
     return Scaffold(
         body: Container(
-          padding: EdgeInsets.all(30),
-          child: Center(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: <Widget>[
-                _topItem(),
-                _bottomItem()
-              ],
-            ),
-          ),
-        )
-    );
+      padding: EdgeInsets.all(30),
+      child: layout,
+      //   Column(
+      //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      //   children: <Widget>[
+      //     ClipRect(child:_topItem() ,),
+      //     ClipRect(child: _bottomItem(),)
+      //   ],
+      // ) ,
+    ));
+  }
+
+  Widget get layout {
+    return Column(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          _topItem(),
+          _bottomItem(),
+        ]);
   }
 
   _topItem() {
     return Column(
       children: <Widget>[
-        Padding(padding: EdgeInsets.fromLTRB(0, 30, 0, 30),
-            child: Text(
-                '你可以这样说',
+        Padding(
+            padding: EdgeInsets.fromLTRB(0, 30, 0, 30),
+            child: Text('你可以这样说',
                 style: TextStyle(fontSize: 16, color: Colors.black54))),
         Text(
           '故宫门票\n北京一日游\n迪士尼乐园',
           textAlign: TextAlign.center,
-          style: TextStyle(fontSize: 15, color: Colors.grey),),
-        Padding(
-          padding: EdgeInsets.all(20),
-          child: Text(speakResult,
-            style: TextStyle(color: Colors.blue),
-          ),
-        )
+          style: TextStyle(fontSize: 15, color: Colors.grey),
+        ),
+        if (speakResult.isNotEmpty)
+          Container(
+            padding: EdgeInsets.all(20),
+            color: Colors.pink,
+            child: Text(
+              speakResult,
+              style: TextStyle(color: Colors.blue, height: 2),
+            ),
+          )
       ],
     );
   }
 
   _bottomItem() {
-    return FractionallySizedBox(
-      widthFactor: 1,
-      child: Stack(
-        children: <Widget>[
-          GestureDetector(
-            onTapDown: (e) {
-              _speakStart();
-            },
-            onTapUp: (e) {
-              _speakStop();
-            },
-            onTapCancel: () {
-              _speakCancel();
-            },
-            child: Center(
-              child: Column(
-                children: <Widget>[
-                  Padding(padding: EdgeInsets.all(10),
-                      child: Text(speakTips
-                        , style: TextStyle(color: Colors.blue, fontSize: 12),)),
-                  Stack(
-                    children: <Widget>[
-                      Container(
-                        //占坑，避免动画执行过程中父布局变化
-                        height: MIC_SIZE,
-                        width: MIC_SIZE,
+    return ClipRect(
+      child: FractionallySizedBox(
+          widthFactor: 1,
+          child: Container(
+            child: Stack(
+              children: <Widget>[
+                GestureDetector(
+                  onTapDown: (e) {
+                    _speakStart();
+                  },
+                  onTapUp: (e) {
+                    _speakStop();
+                  },
+                  onTapCancel: () {
+                    _speakCancel();
+                  },
+                  child: Center(
+                      child: ClipRect(
+                    child: Column(
+                      children: <Widget>[
+                        Padding(
+                            padding: EdgeInsets.all(10),
+                            child: Text(
+                              speakTips,
+                              style:
+                                  TextStyle(color: Colors.blue, fontSize: 12),
+                            )),
+                        Stack(
+                          children: <Widget>[
+                            Container(
+                              //占坑，避免动画执行过程中父布局变化
+                              height: MIC_SIZE,
+                              width: MIC_SIZE,
+                            ),
+                            Center(
+                              child: AnimatedMic(
+                                animation: animation,
+                              ),
+                            )
+                          ],
+                        )
+                      ],
+                    ),
+                  )),
+                ),
+                Positioned(
+                    right: 0,
+                    bottom: 20,
+                    child: GestureDetector(
+                      onTap: () {
+                        Navigator.pop(context);
+                      },
+                      child: Icon(
+                        Icons.close,
+                        size: 30,
+                        color: Colors.black,
                       ),
-                      Center(
-                        child: AnimatedMic(animation: animation,),
-                      )
-                    ],
-                  )
-
-                ],
-              ),
+                    ))
+              ],
             ),
-          ),
-          Positioned(
-              right: 0,
-              bottom: 20,
-              child: GestureDetector(
-                onTap: () {
-                  Navigator.pop(context);
-                },
-                child: Icon(Icons.close, size: 30, color: Colors.black,),
-              ))
-        ],
-      ),
+          )),
     );
   }
 
@@ -137,18 +160,22 @@ class _SpeakPageState extends State<SpeakPage>
     });
 
     AsrManager.start().then((text) {
-      print("返回"+text);
+      print("返回" + text);
       if (text != null && text.length > 0) {
         setState(() {
           speakResult = text;
         });
         //选关闭再跳转
         Navigator.pop(context);
-        Navigator.push(context, MaterialPageRoute(
-            builder: (context) => SearchPage(keyword: speakResult,)));
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) => SearchPage(
+                      keyword: speakResult,
+                    )));
       }
     }).catchError((e) {
-      print('识别出错---' + e);
+      print('识别出错---' + e.toString());
     });
   }
 
@@ -163,16 +190,14 @@ class _SpeakPageState extends State<SpeakPage>
 
   _speakCancel() {
     setState(() {
-    speakTips = '长按说话';
+      speakTips = '长按说话';
     });
     controller.reset();
     controller.stop();
 
     AsrManager.cancel();
   }
-
 }
-
 
 /**
  * 编写动画
@@ -190,9 +215,8 @@ class AnimatedMic extends AnimatedWidget {
    */
   static final _sizeTween = Tween<double>(begin: MIC_SIZE, end: MIC_SIZE - 20);
 
-
   AnimatedMic({Key key, Animation<double> animation})
-      :super(key: key, listenable: animation);
+      : super(key: key, listenable: animation);
 
   @override
   Widget build(BuildContext context) {
@@ -206,9 +230,11 @@ class AnimatedMic extends AnimatedWidget {
           color: Colors.blue,
           borderRadius: BorderRadius.circular(MIC_SIZE / 2),
         ),
-        child: Icon(Icons.mic, color: Colors.white,),
+        child: Icon(
+          Icons.mic,
+          color: Colors.white,
+        ),
       ),
     );
   }
-
 }

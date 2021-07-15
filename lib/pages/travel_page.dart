@@ -44,7 +44,7 @@ class _TravelPageState extends State<TravelPage> with TickerProviderStateMixin{
     try{
     var res = await TravelTabDao.fetch();
     TravelTabModel model = res['TravelTabModel'];
-    _controller.dispose();
+    // _controller.dispose();
     _controller = TabController(length:model.tabs.length , vsync: this);
     setState(() {
 
