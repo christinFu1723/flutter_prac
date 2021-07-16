@@ -34,6 +34,7 @@ class VersionTip extends StatelessWidget {
               child: Wrap(
                 children: [
                   Container(
+                    alignment: Alignment.center,
                     margin: EdgeInsets.fromLTRB(0, 10, 0, 10),
                     child: Text(versionTips ?? '默认子标题',
                         style: TextStyle(
@@ -71,7 +72,7 @@ class VersionTip extends StatelessWidget {
         ),
       )),
       onTap: () {
-        AppService.checkClientVersion(context,tipsy:true);
+        AppService.checkClientVersion(context, tipsy: true);
       },
     );
   }

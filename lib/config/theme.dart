@@ -4,6 +4,8 @@ class AppTheme {
   /// 主题色
   static const Color primaryColor = Color(0xFF1C4899);
 
+  static const Color backgroundDefaultColor = Color(0xFFF5F8F8);
+
   /// 次要颜色
   static const Color secondColor = Color(0xFF00B3BF);
 
@@ -36,6 +38,9 @@ class AppTheme {
 
   /// 次要文本色
   static const Color secondTextColor = Color(0xFF4C5268);
+
+  /// 输入框placeholder颜色
+  static const Color placeholderColor = Color(0xff8E9B9B);
 
   /// 较亮文本色
   static const Color lightTextColor = Color(0xFFB1B6BC);

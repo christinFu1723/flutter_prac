@@ -6,6 +6,7 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:demo7_pro/services/jpush.dart';
 import 'package:bot_toast/bot_toast.dart';
 import 'package:demo7_pro/app.dart';
+import 'package:demo7_pro/pages/login_page.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized(); // main()方法想要使用async ,一定要调用它。
@@ -15,7 +16,7 @@ void main() async {
   /// 初始化极光
   JPushService.init();
 
-  runApp(App());
+  runApp(LoginPage());
 
   /// 锁定竖屏
   SystemChrome.setPreferredOrientations([

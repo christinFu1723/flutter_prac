@@ -127,6 +127,10 @@ dependencies:
   # https://pub.flutter-io.cn/packages/image_gallery_saver
   image_gallery_saver: ^1.6.9
 
+  # loadingBtn
+  # https://pub.flutter-io.cn/packages/future_button
+  future_button: ^0.1.2
+
 dev_dependencies:
   flutter_test:
     sdk: flutter

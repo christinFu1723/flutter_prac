@@ -44,7 +44,8 @@ class _MyPageState extends State<MyPage> {
               padding: EdgeInsets.fromLTRB(0, 5, 0, 8),
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(25),
-              )),
+              )
+          ),
           onPressed: () {},
           child: Text('注销登录'),
         ));
