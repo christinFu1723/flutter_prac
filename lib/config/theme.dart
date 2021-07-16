@@ -67,6 +67,9 @@ class AppTheme {
   /// 极小备注字号
   static const double fontSizeSmall = 12.0;
 
+  /// 超极小备注字号
+  static const double fontSizeMini = 10.0;
+
   /// 元素默认间距
   static const double gutter = 16.0;
 }

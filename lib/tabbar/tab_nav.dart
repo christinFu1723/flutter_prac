@@ -13,9 +13,10 @@ class _TabNavigatorState extends State<TabNavigator> {
   final PageController _controller = PageController(
     initialPage:3,
   );
+  int _currentIndex = 3;
   final _defaultColor = Colors.grey;
   final _activeColor = Colors.blue;
-  int _currentIndex = 0;
+
   Widget build(BuildContext context) {
     return Scaffold(
       body: PageView(

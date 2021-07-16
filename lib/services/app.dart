@@ -25,19 +25,19 @@ import 'package:demo7_pro/config/theme.dart';
 import 'package:demo7_pro/widgets/apk_install.dart';
 import 'package:install_plugin/install_plugin.dart';
 import 'package:flutter/services.dart' show rootBundle;
-// import 'package:url_launcher/url_launcher.dart';
+import 'package:url_launcher/url_launcher.dart';
 
-// import 'package:vibrate/vibrate.dart';
-// import 'package:flutter_cache_manager/flutter_cache_manager.dart';
-// import 'package:cached_network_image/cached_network_image.dart';
-// import 'package:image_gallery_saver/image_gallery_saver.dart';
+import 'package:vibrate/vibrate.dart';
+import 'package:flutter_cache_manager/flutter_cache_manager.dart';
+import 'package:cached_network_image/cached_network_image.dart';
+import 'package:image_gallery_saver/image_gallery_saver.dart';
 
-class AppService{
+class AppService {
   /// 获取后端处，获取应用配置信息，并加入provider监听(特殊项目独有，不具备普遍性)
   static Future<ClientConfigModel> getClientConfig(BuildContext context) async {
     final AppStoreModel appStoreModel = Provider.of<AppStoreModel>(
       context,
-      listen:false,
+      listen: false,
     );
     // ClientConfigModel config = await ApiBasic.getClientConfig();
     ClientConfigModel config;
@@ -54,7 +54,7 @@ class AppService{
   /// List<String> keywords：已登录用户的历史搜索记录
 
   static Future<EnumUserType> start(BuildContext context) async {
-    try{
+    try {
       /// 权限初始化
       requestPermission();
 
@@ -87,7 +87,6 @@ class AppService{
         'member': EnumUserType.member,
         'supplier': EnumUserType.supplier,
       };
-
 
       /// 身份标识不存在时，清除登录状态，重新登录
       if (identity == null) {
@@ -122,8 +121,6 @@ class AppService{
       throw e;
     }
   }
-
-
 
   /// 清除用户登录信息
   static Future<void> clearPrefers(BuildContext context) async {
@@ -200,24 +197,36 @@ class AppService{
     return true;
   }
 
-
-
   /// 检查新版本
   static Future<void> checkClientVersion(BuildContext context,
       {bool tipsy}) async {
     try {
       AppUtil.showLoading();
 
-      /// 刷新应用配置
-      await getClientConfig(context);
+      // /// 刷新应用配置
+      // await getClientConfig(context);
 
       /// 获取版本信息
       PackageInfo info = await PackageInfo.fromPlatform();
 
+      Logger().i('''
+      pubspec.yaml文件信息。改动，重新编译后生效
+      当前app名称：${info.appName}
+      当前package包名：${info.packageName}
+      当前版本信息：${info.version}
+      当前buildNumber:${info.buildNumber}
+      
+      ''');
+
       // ClientVersionDetailModel detail = await ApiBasic.checkerClientVersion(
       //   appMark: info.buildNumber,
       // );
-      ClientVersionDetailModel detail;
+      ClientVersionDetailModel detail = ClientVersionDetailModel(
+          appMark: 'sddsds',
+          appUrl: 'https://songcw-dev.oss-cn-shanghai.aliyuncs.com/apk/app-release-2.0.apk',
+          releaseTime: '2021-06-16',
+          version: '3.0.0',
+          versionDescription:'测试更新测试更新测试更新测试更新测试更新');
 
       if (detail == null) {
         if (tipsy == true) throw '已经是最新版本';
@@ -270,7 +279,7 @@ class AppService{
           );
         } else {
           /// URL 则直接用浏览器打开
-          // await launch(detail.appUrl);
+          await launch(detail.appUrl);
         }
 
         return;
@@ -280,19 +289,19 @@ class AppService{
         ClientConfigModel clientConfig = Provider.of<AppStoreModel>(
           context,
           listen: false,
-        ).clientConfig;
-
+        ).clientConfig??ClientConfigModel();
+        clientConfig.appStoreUrl='https://apps.apple.com/cn/app/id1540207444';
         AppUtil.showToast('发现新版本，请前往 AppStore 更新');
         if (clientConfig?.appStoreUrl == null) return;
         InstallPlugin.gotoAppStore(clientConfig?.appStoreUrl);
       }
     } catch (e) {
+      Logger().e(e);
       AppUtil.showToast(e);
     } finally {
       AppUtil.hideLoading();
     }
   }
-
 
   /// 需要登录后操作
   static void needLogin(BuildContext context, VoidCallback callback) {
@@ -373,7 +382,6 @@ class AppService{
     }
   }
 
-
   /// 保存图片到相册
   ///
   /// 默认为下载网络图片，如需下载资源图片，需要指定 [isAsset] 为 `true`。
@@ -426,7 +434,6 @@ class AppService{
     //   AppUtil.hideLoading();
     // }
   }
-
 
   /// 缓存用户历史搜索记录
   static Future<void> setKeywords(String keyword) async {
@@ -543,5 +550,4 @@ class AppService{
       throw e;
     }
   }
-
 }

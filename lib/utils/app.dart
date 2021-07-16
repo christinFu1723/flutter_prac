@@ -10,6 +10,7 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 import 'package:demo7_pro/utils/oss_image.dart';
 import 'package:demo7_pro/utils/string.dart';
+import 'package:demo7_pro/config/theme.dart';
 
 // 应用基础操作辅助
 class AppUtil {
@@ -234,7 +235,7 @@ class AppUtil {
     BotToast.showCustomLoading(
       toastBuilder: (CancelFunc cancelFunc) {
         return SpinKitRipple(
-          // color: AppTheme.secondColor,
+          color: AppTheme.secondColor,
           size: 40.0,
         );
       },

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:demo7_pro/widgets/webview.dart';
+import 'package:demo7_pro/widgets/version.dart';
 
 class MyPage extends StatefulWidget {
   @override
@@ -15,7 +16,17 @@ class _MyPageState extends State<MyPage> {
             context: context,
             child: SingleChildScrollView(
               child: Column(
-                children: [_infoCard(), _signOutBtn()],
+                children: [
+                  _infoCard(),
+                  _signOutBtn(),
+                  Container(
+                    margin: EdgeInsets.fromLTRB(0,130,0,75),
+                    child: VersionTip(
+                        logoTitle: '文立APP',
+                        versionTips: '和我一起去炸鱼吧！可莉，想回家了！嘟嘟可大魔王，我来接受你的挑战',
+                        version: '1.0.0'),
+                  )
+                ],
               ),
             )));
   }
