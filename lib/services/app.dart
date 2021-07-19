@@ -18,7 +18,7 @@ import 'package:device_info/device_info.dart';
 import 'package:logger/logger.dart';
 import 'package:demo7_pro/store/personal.dart';
 import 'package:demo7_pro/utils/app.dart';
-import 'package:demo7_pro/pages/login.dart';
+import 'package:demo7_pro/pages/login_page.dart';
 import 'package:demo7_pro/widgets/confirm.dart';
 import 'package:demo7_pro/services/jpush.dart';
 import 'package:demo7_pro/config/theme.dart';
@@ -31,6 +31,9 @@ import 'package:vibrate/vibrate.dart';
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:image_gallery_saver/image_gallery_saver.dart';
+
+import 'package:demo7_pro/utils/event_bus.dart';
+import 'package:demo7_pro/eventBus/app.dart' show NeedReLoginEvent;
 
 class AppService {
   /// 获取后端处，获取应用配置信息，并加入provider监听(特殊项目独有，不具备普遍性)
@@ -59,10 +62,10 @@ class AppService {
       requestPermission();
 
       /// 动态调整 iOS 端生产环境的接口，避免生产环境数据污染
-      await checkApiServe();
+      // await checkApiServe();
 
       /// 初始化
-      await getClientConfig(context);
+      // await getClientConfig(context);
 
       /// 初始化全省市区数据
       // var areas = await ApiBasic.getPostals();
@@ -72,51 +75,59 @@ class AppService {
       // );
       // appStoreModel.setAreas(areas);
 
-      /// 获取已登录的用户信息
-      PersonalInfomationModel cacheUser = await PersonalService.getUser();
+      // /// 获取已登录的用户信息
+      // PersonalInfomationModel cacheUser = await PersonalService.getUser();
+      //
+      // /// 无用户信息，直接进入会员主页
+      // if (cacheUser == null) return EnumUserType.member;
+      //
+      // /// 获取会员的登录身份标识
+      // String identity = await getIdentity();
+      //
+      // /// 目标跳转页面
+      // Map<String, EnumUserType> identityTarget = {
+      //   'guest': EnumUserType.guest,
+      //   'member': EnumUserType.member,
+      //   'supplier': EnumUserType.supplier,
+      // };
 
-      /// 无用户信息，直接进入会员主页
-      if (cacheUser == null) return EnumUserType.member;
+      // /// 身份标识不存在时，清除登录状态，重新登录
+      // if (identity == null) {
+      //   await clearPrefers(context);
+      //   await setIdentity('member');
+      //   return EnumUserType.member;
+      // }
 
-      /// 获取会员的登录身份标识
-      String identity = await getIdentity();
-
-      /// 目标跳转页面
-      Map<String, EnumUserType> identityTarget = {
-        'guest': EnumUserType.guest,
-        'member': EnumUserType.member,
-        'supplier': EnumUserType.supplier,
-      };
-
-      /// 身份标识不存在时，清除登录状态，重新登录
-      if (identity == null) {
+      // /// 无效的身份标识
+      // if (['member', 'supplier'].indexOf(identity) == -1) throw '无效的身份标识';
+      var token = await getToken();
+      if(token==null){
         await clearPrefers(context);
-        await setIdentity('member');
-        return EnumUserType.member;
+        EventBusUtil.instance.eventBus.fire(NeedReLoginEvent());
+        return null;
       }
+      // /// 验证用户是否过期
+      // DateTime expire = await getExpire();
+      // if (expire == null ||
+      //     DateTime.now().millisecondsSinceEpoch >=
+      //         expire.millisecondsSinceEpoch) {
+      //   // PersonalService.clearUserStore(context);
+      //   await clearPrefers(context);
+      //   // await PersonalService.setUserIdentity(context, identity);
+      //   // 转到对应的主页
+      //   EventBusUtil.instance.eventBus.fire(NeedReLoginEvent());
+      //   // return identityTarget[identity];
+      //   return null;
+      // }
 
-      /// 无效的身份标识
-      if (['member', 'supplier'].indexOf(identity) == -1) throw '无效的身份标识';
-
-      /// 验证用户是否过期
-      DateTime expire = await getExpire();
-      if (expire == null ||
-          DateTime.now().millisecondsSinceEpoch >=
-              expire.millisecondsSinceEpoch) {
-        PersonalService.clearUserStore(context);
-        await clearPrefers(context);
-        await PersonalService.setUserIdentity(context, identity);
-        // 转到对应的主页
-        return identityTarget[identity];
-      }
 
       /// 更新身份标识
-      await PersonalService.setUserIdentity(context, identity);
-
-      /// 初始化状态
-      await PersonalService.fetchUser(context);
-
-      return identityTarget[identity];
+      // await PersonalService.setUserIdentity(context, identity);
+      //
+      // /// 初始化状态
+      // await PersonalService.fetchUser(context);
+      //
+      // return identityTarget[identity];
     } catch (e) {
       throw e;
     }

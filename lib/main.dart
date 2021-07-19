@@ -16,7 +16,7 @@ void main() async {
   /// 初始化极光
   JPushService.init();
 
-  runApp(LoginPage());
+  runApp(App());
 
   /// 锁定竖屏
   SystemChrome.setPreferredOrientations([

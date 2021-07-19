@@ -11,6 +11,7 @@ import 'package:demo7_pro/http/interceptors/header.dart';
 import 'package:demo7_pro/http/interceptors/response.dart';
 import 'package:demo7_pro/model/response_data.dart';
 import 'package:demo7_pro/utils/event_bus.dart';
+import 'package:demo7_pro/eventBus/app.dart' show NeedReLoginEvent;
 
 class HttpUtil{
   bool openProxy=false; // 是否开启代理
@@ -107,7 +108,8 @@ class HttpUtil{
 
         /// 验证过期，需要重新登录
         if (error.response?.statusCode == 403) {
-          // EventBusUtil.instance.eventBus.fire(NeedReLoginEvent());
+          EventBusUtil.instance.eventBus.fire(NeedReLoginEvent());
+          // AppUtil().pushAndRemoveUntil(context,);
           throw '登录无效，请重新登录';
         }
 

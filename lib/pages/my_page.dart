@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:demo7_pro/widgets/webview.dart';
+
 import 'package:demo7_pro/widgets/version.dart';
+import 'package:demo7_pro/utils/event_bus.dart';
+
+import 'package:demo7_pro/services/app.dart';
+import 'package:demo7_pro/eventBus/app.dart' show NeedReLoginEvent;
 
 class MyPage extends StatefulWidget {
   @override
@@ -20,7 +24,7 @@ class _MyPageState extends State<MyPage> {
                   _infoCard(),
                   _signOutBtn(),
                   Container(
-                    margin: EdgeInsets.fromLTRB(0,130,0,75),
+                    margin: EdgeInsets.fromLTRB(0, 130, 0, 75),
                     child: VersionTip(
                         logoTitle: '文立APP',
                         versionTips: '和我一起去炸鱼吧！可莉，想回家了！嘟嘟可大魔王，我来接受你的挑战',
@@ -44,9 +48,10 @@ class _MyPageState extends State<MyPage> {
               padding: EdgeInsets.fromLTRB(0, 5, 0, 8),
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(25),
-              )
-          ),
-          onPressed: () {},
+              )),
+          onPressed: () {
+            _loginAndClear();
+          },
           child: Text('注销登录'),
         ));
   }
@@ -132,5 +137,10 @@ class _MyPageState extends State<MyPage> {
         ],
       ),
     ));
+  }
+
+  _loginAndClear() async {
+    await AppService.clearPrefers(context);
+    EventBusUtil.instance.eventBus.fire(NeedReLoginEvent());
   }
 }

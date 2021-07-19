@@ -3,6 +3,13 @@ import 'package:demo7_pro/pages/home_page.dart';
 import 'package:demo7_pro/pages/my_page.dart';
 import 'package:demo7_pro/pages/search_page.dart';
 import 'package:demo7_pro/pages/travel_page.dart';
+import 'package:demo7_pro/eventBus/app.dart';
+import 'dart:async';
+import 'package:demo7_pro/utils/event_bus.dart';
+import 'package:demo7_pro/pages/login_page.dart';
+import 'package:demo7_pro/services/app.dart';
+import 'package:demo7_pro/utils/app.dart';
+import 'package:logger/logger.dart';
 
 class TabNavigator extends StatefulWidget {
   @override
@@ -10,12 +17,40 @@ class TabNavigator extends StatefulWidget {
 }
 
 class _TabNavigatorState extends State<TabNavigator> {
+
+
   final PageController _controller = PageController(
     initialPage:3,
   );
   int _currentIndex = 3;
   final _defaultColor = Colors.grey;
   final _activeColor = Colors.blue;
+  /// 重新登录事件
+  StreamSubscription<NeedReLoginEvent> _needLogin;
+
+  @override
+  void initState(){
+    _needLogin =
+        EventBusUtil.instance.eventBus.on<NeedReLoginEvent>().listen((event) {
+          needLogin();
+        });
+    /// 初始化应用状态
+    init();
+    super.initState();
+  }
+
+  void init() async{
+    /// 初始化应用状态
+    await AppService.start(context);
+  }
+
+  Future<void> needLogin() async{
+    await AppService.clearPrefers(context);
+    Logger().i('检查到需要跳转登录页');
+    AppUtil.pushAndRemoveUntil(context, LoginPage());
+  }
+
+
 
   Widget build(BuildContext context) {
     return Scaffold(
