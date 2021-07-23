@@ -4,7 +4,7 @@ import 'package:demo7_pro/store/personal.dart';
 import 'package:flutter/material.dart';
 import 'package:bot_toast/bot_toast.dart';
 import 'package:demo7_pro/tabbar/tab_nav.dart';
-
+import 'package:flutter_localizations/flutter_localizations.dart';
 
 
 class App extends StatefulWidget{
@@ -29,6 +29,14 @@ class _AppState extends State<App>{
       builder: ((BuildContext context, Widget _) {
         return MaterialApp(
           title: '阿福首页',
+          localizationsDelegates: [
+            GlobalMaterialLocalizations.delegate,
+            GlobalWidgetsLocalizations.delegate,
+          ],
+          supportedLocales: [
+            const Locale('zh', 'CH'),
+            const Locale('en', 'US'), // English
+          ],
           theme: ThemeData(
             primarySwatch: Colors.blue,
           ),

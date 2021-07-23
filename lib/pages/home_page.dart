@@ -4,6 +4,7 @@ import 'package:demo7_pro/model/common_model.dart';
 import 'package:demo7_pro/model/sales_box_model.dart';
 
 import 'package:demo7_pro/pages/speak_page.dart';
+import 'package:demo7_pro/pages/submit_page.dart';
 import 'package:flutter/material.dart';
 import 'package:demo7_pro/dao/home_dao.dart';
 import 'dart:convert';
@@ -18,100 +19,104 @@ import 'package:demo7_pro/widgets/search_bar.dart';
 import 'package:demo7_pro/pages/search_page.dart';
 import 'package:demo7_pro/widgets/imageNetwork.dart';
 
+
 const AppBar_Hide_Distance = 100;
-const SEARCH_BAR_DEFAULT_TEXT='首页默认值';
+const SEARCH_BAR_DEFAULT_TEXT = '首页默认值';
 
 class MyHomePage extends StatefulWidget {
-
   @override
   _MyHomePageState createState() => _MyHomePageState();
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  String resultString='';
+  String resultString = '';
   HomeModel model;
   GridNavModel gridNav;
   List<CommonModel> localList;
   List<CommonModel> subNavList;
   List<CommonModel> bannerList;
   SalesBoxModel salesBox;
-  bool _loading=true;
+  bool _loading = true;
   double appBarAlpha = 0;
 
-
   ScrollController _scrollController = ScrollController();
-  Future loadData() async{
-    print('刷新');
-    try{
-      var _model = await  HomeDao.fetch();
-      var homeModelInstance =_model['HomeModel'];
 
-      setState((){
-        model=_model['HomeModel'];
-        gridNav=model.gridNav;
-        localList=model.localNavList;
-        subNavList=model.subNavList;
+  Future loadData() async {
+    print('刷新');
+    try {
+      var _model = await HomeDao.fetch();
+      var homeModelInstance = _model['HomeModel'];
+
+      setState(() {
+        model = _model['HomeModel'];
+        gridNav = model.gridNav;
+        localList = model.localNavList;
+        subNavList = model.subNavList;
         salesBox = model.salesBox;
-        bannerList = model.bannerList??[];
-        resultString=json.encode(homeModelInstance.config);
-        _loading=false;
+        bannerList = model.bannerList ?? [];
+        resultString = json.encode(homeModelInstance.config);
+        _loading = false;
       });
-    }
-    catch(e){
-      setState((){
-        _loading=false;
+    } catch (e) {
+      setState(() {
+        _loading = false;
       });
     }
     return null;
   }
 
-
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    loadData();
-    _scrollController.addListener((){
-      if(_scrollController.position.pixels == _scrollController.position.maxScrollExtent){
 
-      }
+    loadData();
+    _scrollController.addListener(() {
+      if (_scrollController.position.pixels ==
+          _scrollController.position.maxScrollExtent) {}
     });
   }
+
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
-             backgroundColor: Color(0xfff2f2f2),
-             body:
-             LoadingContainer(
-                isLoading: _loading,
-                cover: true,
-                child: Stack(
-                  children:[
-                   MediaQuery.removePadding(
-                       context: context,
-                       removeTop: true,
-                       child:RefreshIndicator(
-                           onRefresh: loadData,
-                           child:NotificationListener(
-                             onNotification: (scrollNotification) {
-                               if (scrollNotification is ScrollUpdateNotification &&
-                                   scrollNotification.depth == 0) {
-                                 _onScroll(scrollNotification.metrics.pixels);
-                               }
-                               return false;// 必须为false
-                             },
-                             child:_listView,
-                           )
-                    )
-                   ),
-
-                    _appBar
-                 ]
-               ),
-             ),
-           );
-
+      backgroundColor: Color(0xfff2f2f2),
+      body: LoadingContainer(
+        isLoading: _loading,
+        cover: true,
+        child: Stack(children: [
+          MediaQuery.removePadding(
+              context: context,
+              removeTop: true,
+              child: Stack(
+                children: [
+                  RefreshIndicator(
+                      onRefresh: loadData,
+                      child: NotificationListener(
+                        onNotification: (scrollNotification) {
+                          if (scrollNotification is ScrollUpdateNotification &&
+                              scrollNotification.depth == 0) {
+                            _onScroll(scrollNotification.metrics.pixels);
+                          }
+                          return false; // 必须为false
+                        },
+                        child: _listView,
+                      )),
+                  Positioned(
+                      bottom: 10,
+                      right: 5,
+                      child: FloatingActionButton(
+                        onPressed: () {
+                          _jumpToSubmitPage();
+                        },
+                        child: Icon(Icons.add),
+                      ))
+                ],
+              )),
+          _appBar
+        ]),
+      ),
+    );
   }
 
   void _onScroll(val) {
@@ -132,40 +137,38 @@ class _MyHomePageState extends State<MyHomePage> {
       children: [
         Container(
           decoration: BoxDecoration(
-            gradient: LinearGradient(
-              colors: [Color(0x66000000),Colors.transparent],
-              begin: Alignment.topCenter,
-              end: Alignment.bottomCenter
-            )
-          ),
-          child:Container(
+              gradient: LinearGradient(
+                  colors: [Color(0x66000000), Colors.transparent],
+                  begin: Alignment.topCenter,
+                  end: Alignment.bottomCenter)),
+          child: Container(
             padding: EdgeInsets.fromLTRB(0, 15, 0, 0),
             height: 80,
             decoration: BoxDecoration(
-              color: Color.fromARGB((appBarAlpha*255).toInt(), 255, 255, 255)
-            ),
-            child:SearchBar(
-              searchBarType: appBarAlpha>0.2?SearchBarType.homeLight:SearchBarType.home,
+                color:
+                    Color.fromARGB((appBarAlpha * 255).toInt(), 255, 255, 255)),
+            child: SearchBar(
+              searchBarType: appBarAlpha > 0.2
+                  ? SearchBarType.homeLight
+                  : SearchBarType.home,
               inputBoxClick: _jumpToSearch,
               speakClick: _jumpToSpeak,
               defaultText: SEARCH_BAR_DEFAULT_TEXT,
-              leftButtonClick: (){},
+              leftButtonClick: () {},
             ),
-          ) ,
+          ),
         ),
         Container(
-          height: appBarAlpha>0.2?0.5:0,
+          height: appBarAlpha > 0.2 ? 0.5 : 0,
           decoration: BoxDecoration(
-            boxShadow: [BoxShadow(color: Colors.black12,blurRadius: 0.5)]
-          ),
+              boxShadow: [BoxShadow(color: Colors.black12, blurRadius: 0.5)]),
         )
       ],
     );
-
-
   }
-  Widget get _banner{
-    return    Container(
+
+  Widget get _banner {
+    return Container(
       height: 160,
       child: new Swiper(
         itemBuilder: (BuildContext context, int index) {
@@ -181,68 +184,68 @@ class _MyHomePageState extends State<MyHomePage> {
             bannerList[index].title,
           );
         },
-        itemCount: bannerList!=null?bannerList.length:0,
+        itemCount: bannerList != null ? bannerList.length : 0,
         autoplay: true,
         pagination: new SwiperPagination(),
         control: new SwiperControl(),
       ),
     );
   }
-  Widget get _listView{
+
+  Widget get _listView {
     return ListView(
       controller: _scrollController,
-      physics:new AlwaysScrollableScrollPhysics(),
+      physics: new AlwaysScrollableScrollPhysics(),
       children: [
         _banner,
         Padding(
           padding: EdgeInsets.fromLTRB(7, 4, 7, 4),
-          child: LocalNav(localNavList:localList),
+          child: LocalNav(localNavList: localList),
         ),
         Padding(
           padding: EdgeInsets.fromLTRB(7, 4, 7, 4),
-          child:GridNav(gridNavModel:gridNav),
+          child: GridNav(gridNavModel: gridNav),
         ),
         Padding(
           padding: EdgeInsets.fromLTRB(7, 4, 7, 4),
-          child: SubNav(subNavList:subNavList),
+          child: SubNav(subNavList: subNavList),
         ),
         Padding(
           padding: EdgeInsets.fromLTRB(7, 4, 7, 4),
-          child: SalesBox(salesBox:salesBox),
+          child: SalesBox(salesBox: salesBox),
         ),
       ],
     );
   }
 
-  _wrapGesture(BuildContext context,Widget widget,String url,String title){
+  _wrapGesture(BuildContext context, Widget widget, String url, String title) {
     return GestureDetector(
-      onTap: (){
-        Navigator.push(context,
-            MaterialPageRoute(builder: (context)=>
-                WebView(
-                  url: url,
-
-                  title: title,
-                )
-            ));
+      onTap: () {
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) => WebView(
+                      url: url,
+                      title: title,
+                    )));
       },
       child: widget,
     );
   }
-  _jumpToSearch(){
-    Navigator.push(
-        context,
-        MaterialPageRoute(
-            builder: (context){
-              return SearchPage(hideLeft:false,hint:SEARCH_BAR_DEFAULT_TEXT);
-            })
-    );
-  }
-  _jumpToSpeak(){
-    Navigator.push(
-        context, MaterialPageRoute(builder: (context) => SpeakPage())
-    );
 
+  _jumpToSubmitPage() {
+    Navigator.push(
+        context, MaterialPageRoute(builder: (context) => SubmitPage()));
+  }
+
+  _jumpToSearch() {
+    Navigator.push(context, MaterialPageRoute(builder: (context) {
+      return SearchPage(hideLeft: false, hint: SEARCH_BAR_DEFAULT_TEXT);
+    }));
+  }
+
+  _jumpToSpeak() {
+    Navigator.push(
+        context, MaterialPageRoute(builder: (context) => SpeakPage()));
   }
 }
-

@@ -130,6 +130,10 @@ dependencies:
   # loadingBtn
   # https://pub.flutter-io.cn/packages/future_button
   future_button: ^0.1.2
+  timeline_tile: ^2.0.0
+  flutter_rounded_date_picker: ^2.0.2
+  flutter_localizations:
+    sdk: flutter
 
 dev_dependencies:
   flutter_test:

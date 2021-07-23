@@ -14,6 +14,13 @@ class ValidateUtil {
     return RegExp(r'^[0][1-9]{2,3}-[0-9]{5,10}$').hasMatch(phone);
   }
 
+  /// 是否为身份证号
+  static bool isIdCard(String id) {
+
+    if (StringUtil.isEmpty(id)) return false;
+    return RegExp(r'(^[1-9]\d{5}\d{2}((0[1-9])|(10|11|12))(([0-2][1-9])|10|20|30|31)\d{3}$)|(^[1-9]\d{5}(18|19|([23]\d))\d{2}((0[1-9])|(10|11|12))(([0-2][1-9])|10|20|30|31)\d{3}[0-9Xx]$)').hasMatch(id);
+  }
+
   /// 是否为指定长度的验证码
   static bool isSMSCodeWithLength(String code, [int length = 4]) {
     return RegExp(r'^[0-9]+{$length}').hasMatch(code);

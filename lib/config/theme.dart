@@ -33,6 +33,9 @@ class AppTheme {
   /// 情境配色 - 信息
   static const Color sitInfoColor = Color(0xFF87A1FD);
 
+  /// 主要标题颜色
+  static const Color titleColor = Color(0xFF2A2A2A);
+
   /// 主要文本色
   static const Color textColor = Color(0xFF494867);
 

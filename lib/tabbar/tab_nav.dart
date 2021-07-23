@@ -17,12 +17,12 @@ class TabNavigator extends StatefulWidget {
 }
 
 class _TabNavigatorState extends State<TabNavigator> {
-
+  int _currentIndex = 0;
 
   final PageController _controller = PageController(
-    initialPage:3,
+    initialPage:0,
   );
-  int _currentIndex = 3;
+
   final _defaultColor = Colors.grey;
   final _activeColor = Colors.blue;
   /// 重新登录事件
