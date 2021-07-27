@@ -134,6 +134,7 @@ dependencies:
   flutter_rounded_date_picker: ^2.0.2
   flutter_localizations:
     sdk: flutter
+  image_picker: ^0.8.2
 
 dev_dependencies:
   flutter_test:

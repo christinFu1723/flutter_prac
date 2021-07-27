@@ -8,6 +8,9 @@ import 'package:logger/logger.dart';
 import 'package:flutter_rounded_date_picker/flutter_rounded_date_picker.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:demo7_pro/utils/time.dart' show TimeUtil;
+import 'package:demo7_pro/widgets/common/input.dart' show InputForm;
+import 'package:demo7_pro/widgets/common/inputDecoration.dart' show InputStyleDecoration;
+import 'package:demo7_pro/widgets/common/img_upload.dart' show ImgUpload;
 
 class SubmitPage extends StatefulWidget {
   @override
@@ -78,7 +81,7 @@ class _SubmitPageState extends State<SubmitPage> {
             Form(
               key: _formKey,
               child: Column(
-                children: [_companyInfoForm(), _contactInfoForm()],
+                children: [_companyInfoForm(), _certificateForm(),_contactInfoForm()],
               ),
             )
           ],
@@ -108,9 +111,9 @@ class _SubmitPageState extends State<SubmitPage> {
             color: Colors.white, borderRadius: BorderRadius.circular(6)),
         child: Column(
           children: [
-            _InputRow(
+            InputStyleDecoration(
                 '企业名称',
-                _Input(
+                InputForm(
                     controller: organizeNameController,
                     validatorFn: (
                       String value,
@@ -119,14 +122,14 @@ class _SubmitPageState extends State<SubmitPage> {
                           validateType: '', errMsg: '请输入企业名称');
                     },
                     onChange: (String value) {
-                      organizeNameController.text = value;
+                      // organizeNameController.text = value;
                       form.organizeName = value;
                     },
                     hintStr: '请输入企业名称',
                     maxLength: 10)),
-            _InputRow(
+            InputStyleDecoration(
                 '社会统一信用代码',
-                _Input(
+                InputForm(
                     controller: organizeSocialCodeController,
                     validatorFn: (
                       String value,
@@ -135,14 +138,14 @@ class _SubmitPageState extends State<SubmitPage> {
                           validateType: '', errMsg: '请输入社会统一信用代码');
                     },
                     onChange: (String value) {
-                      organizeSocialCodeController.text = value;
+                      // organizeSocialCodeController.text = value;
                       form.organizeSocialCode = value;
                     },
                     hintStr: '请输入社会统一信用代码',
                     maxLength: 20)),
-            _InputRow(
+            InputStyleDecoration(
                 '法定代表人',
-                _Input(
+                InputForm(
                     controller: legalNameController,
                     validatorFn: (
                       String value,
@@ -151,14 +154,14 @@ class _SubmitPageState extends State<SubmitPage> {
                           validateType: '', errMsg: '请输入法定代表人');
                     },
                     onChange: (String value) {
-                      legalNameController.text = value;
+                      // legalNameController.text = value;
                       form.legalName = value;
                     },
                     hintStr: '请输入法定代表人',
                     maxLength: 10)),
-            _InputRow(
+            InputStyleDecoration(
                 '法人手机号',
-                _Input(
+                InputForm(
                     controller: legalMobileController,
                     validatorFn: (
                       String value,
@@ -167,15 +170,15 @@ class _SubmitPageState extends State<SubmitPage> {
                           validateType: 'mobile', errMsg: '请输入法人手机号');
                     },
                     onChange: (String value) {
-                      legalMobileController.text = value;
+                      // legalMobileController.text = value;
                       form.legalMobile = value;
                     },
                     hintStr: '请输入法人手机号',
                     maxLength: 11,
                     keyboardType: TextInputType.phone)),
-            _InputRow(
+            InputStyleDecoration(
                 '法人身份证号',
-                _Input(
+                InputForm(
                   controller: legalIdCardNoController,
                   validatorFn: (
                     String value,
@@ -184,15 +187,15 @@ class _SubmitPageState extends State<SubmitPage> {
                         validateType: 'id', errMsg: '请输入法人身份证号');
                   },
                   onChange: (String value) {
-                    legalIdCardNoController.text = value;
+                    // legalIdCardNoController.text = value;
                     form.legalIdCardNo = value;
                   },
                   hintStr: '请输入法人身份证号',
                   maxLength: 20,
                 )),
-            _InputRow(
+            InputStyleDecoration(
                 '注册资本',
-                _Input(
+                InputForm(
                     controller: organizeRegisteredCapitalController,
                     validatorFn: (
                       String value,
@@ -201,7 +204,7 @@ class _SubmitPageState extends State<SubmitPage> {
                           validateType: '', errMsg: '请输入注册资本');
                     },
                     onChange: (String value) {
-                      organizeRegisteredCapitalController.text = value;
+                      // organizeRegisteredCapitalController.text = value;
                       form.organizeRegisteredCapital = value;
                     },
                     hintStr: '请输入注册资本',
@@ -215,9 +218,9 @@ class _SubmitPageState extends State<SubmitPage> {
                           fontSize: AppTheme.fontSizeSmall,
                           color: AppTheme.titleColor),
                     ))),
-            _InputRow(
+            InputStyleDecoration(
                 '注册时间',
-                _Input(
+                InputForm(
                   controller: organizeRegisteredTimeController,
                   validatorFn: (
                     String value,
@@ -251,9 +254,9 @@ class _SubmitPageState extends State<SubmitPage> {
                 extendsWidget: Padding(
                     padding: EdgeInsets.only(left: 10),
                     child: Icon(Icons.date_range_sharp))),
-            _InputRow(
+            InputStyleDecoration(
                 '注册地址',
-                _Input(
+                InputForm(
                     controller: organizeAddressController,
                     validatorFn: (
                       String value,
@@ -262,7 +265,7 @@ class _SubmitPageState extends State<SubmitPage> {
                           validateType: 'id', errMsg: '请输入注册地址');
                     },
                     onChange: (String value) {
-                      organizeAddressController.text = value;
+                      // organizeAddressController.text = value;
                       form.organizeAddress = value;
                     },
                     hintStr: '请输入注册地址',
@@ -288,9 +291,9 @@ class _SubmitPageState extends State<SubmitPage> {
             color: Colors.white, borderRadius: BorderRadius.circular(6)),
         child: Column(
           children: [
-            _InputRow(
+            InputStyleDecoration(
                 '联系人',
-                _Input(
+                InputForm(
                     controller: contactController,
                     validatorFn: (
                       String value,
@@ -299,14 +302,14 @@ class _SubmitPageState extends State<SubmitPage> {
                           validateType: '', errMsg: '请输入联系人');
                     },
                     onChange: (String value) {
-                      contactController.text = value;
+                      // contactController.text = value;
                       form.contact = value;
                     },
                     hintStr: '请输入联系人',
                     maxLength: 10)),
-            _InputRow(
+            InputStyleDecoration(
                 '联系人手机号',
-                _Input(
+                InputForm(
                     controller: contactMobileController,
                     validatorFn: (
                       String value,
@@ -315,15 +318,15 @@ class _SubmitPageState extends State<SubmitPage> {
                           validateType: 'mobile', errMsg: '请输入联系人手机号');
                     },
                     onChange: (String value) {
-                      contactMobileController.text = value;
+                      // contactMobileController.text = value;
                       form.contactMobile = value;
                     },
                     hintStr: '请输入联系人手机号',
                     maxLength: 11,
                     keyboardType: TextInputType.phone)),
-            _InputRow(
+            InputStyleDecoration(
                 '联系地址',
-                _Input(
+                InputForm(
                     controller: contactAddressController,
                     validatorFn: (
                       String value,
@@ -332,7 +335,7 @@ class _SubmitPageState extends State<SubmitPage> {
                           validateType: 'id', errMsg: '请输入联系地址');
                     },
                     onChange: (String value) {
-                      contactAddressController.text = value;
+                      // contactAddressController.text = value;
                       form.contactAddress = value;
                     },
                     hintStr: '请输入联系地址',
@@ -345,6 +348,21 @@ class _SubmitPageState extends State<SubmitPage> {
         padding: EdgeInsets.fromLTRB(0, 50, 0, 0),
       ),
     ]);
+  }
+
+  Widget _certificateForm(){
+    return Column(
+      children: [
+        Padding(
+          padding: EdgeInsets.fromLTRB(0, 20, 0, 0),
+        ),
+        TitleSpan(title: '证照信息'),
+        Padding(
+          padding: EdgeInsets.fromLTRB(0, 20, 0, 0),
+        ),
+        ImgUpload(),
+      ],
+    );
   }
 
   String _inputValidate(String value,
@@ -369,61 +387,8 @@ class _SubmitPageState extends State<SubmitPage> {
     return '';
   }
 
-  /// input装饰器
-  Widget _Input({
-    @required TextEditingController controller,
-    @required Function validatorFn,
-    @required Function onChange,
-    Function onTap,
-    String hintStr,
-    int maxLength,
-    bool readOnly,
-    TextInputType keyboardType,
-  }) {
-    return TextFormField(
-        maxLength: maxLength,
-        textAlign: TextAlign.right,
-        controller: controller,
-        keyboardType: keyboardType ?? TextInputType.text,
-        readOnly: readOnly ?? false,
-        decoration: InputDecoration(
-          counterText: "",
-          // 不显示输入框最大字数统计
-          border: InputBorder.none,
-          hintText: hintStr,
-          hintStyle: TextStyle(
-              color: AppTheme.placeholderColor,
-              fontSize: AppTheme.fontSizeSmall),
-          hintTextDirection: TextDirection.rtl,
-        ),
-        validator: validatorFn,
-        onTap: onTap,
-        onChanged: onChange);
-  }
 
-  /// 表单行_装饰器
-  Widget _InputRow(String title, Widget InputChild,
-      {isLastChild = false, Widget extendsWidget}) {
-    return Container(
-      padding: EdgeInsets.fromLTRB(20, 0, 20, 0),
-      decoration: BoxDecoration(
-          border: !isLastChild
-              ? Border(
-                  bottom: BorderSide(
-                      // 设置单侧边框的样式
-                      color: AppTheme.backgroundDefaultColor,
-                      width: 1,
-                      style: BorderStyle.solid))
-              : null),
-      child: Row(children: [
-        Text(
-          title,
-          style: TextStyle(
-              color: AppTheme.titleColor, fontSize: AppTheme.fontSizeSmall),
-        ),
-        Expanded(child: InputChild),
-        extendsWidget ?? Container()
-      ]),
-    );
-  }
+
+
+
 }
