@@ -307,8 +307,7 @@ class _LoginPageState extends State<LoginPage> {
           loginInJson['tokenInfo'] != null &&
           loginInJson['tokenInfo']['access_token'] != null) {
 
-
-        await AppService.setToken(loginInJson['tokenInfo']['access_token']);
+        await AppService.setToken('Bearer ${loginInJson['tokenInfo']['access_token']}');
         await PrefersUtil.set("userInfo", json.encode(loginInJson));
         AppUtil.pushReplacement(context, TabNavigator());
       }

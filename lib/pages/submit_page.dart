@@ -9,8 +9,12 @@ import 'package:flutter_rounded_date_picker/flutter_rounded_date_picker.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:demo7_pro/utils/time.dart' show TimeUtil;
 import 'package:demo7_pro/widgets/common/input.dart' show InputForm;
-import 'package:demo7_pro/widgets/common/inputDecoration.dart' show InputStyleDecoration;
-import 'package:demo7_pro/widgets/common/img_upload.dart' show ImgUpload;
+import 'package:demo7_pro/widgets/common/inputDecoration.dart'
+    show InputStyleDecoration;
+
+// import 'package:demo7_pro/widgets/common/img_upload.dart' show ImgUpload;
+// import 'package:image_picker/image_picker.dart' show XFile;
+import 'package:demo7_pro/widgets/common/img_upload_decorator.dart';
 
 class SubmitPage extends StatefulWidget {
   @override
@@ -81,7 +85,11 @@ class _SubmitPageState extends State<SubmitPage> {
             Form(
               key: _formKey,
               child: Column(
-                children: [_companyInfoForm(), _certificateForm(),_contactInfoForm()],
+                children: [
+                  _companyInfoForm(),
+                  _certificateForm(),
+                  _contactInfoForm()
+                ],
               ),
             )
           ],
@@ -350,20 +358,24 @@ class _SubmitPageState extends State<SubmitPage> {
     ]);
   }
 
-  Widget _certificateForm(){
+  Widget _certificateForm() {
     return Column(
       children: [
         Padding(
           padding: EdgeInsets.fromLTRB(0, 20, 0, 0),
         ),
         TitleSpan(title: '证照信息'),
-        Padding(
-          padding: EdgeInsets.fromLTRB(0, 20, 0, 0),
+        ImgUploadDecorator(
+          maxLength: 1,
+          initImgList: [],
         ),
-        ImgUpload(),
       ],
     );
   }
+
+  // void _onSuccessFn(List<String> urlList) {}
+  //
+  // void _onChange(List<XFile> filesList) {}
 
   String _inputValidate(String value,
       {@required String validateType, @required String errMsg}) {
@@ -386,9 +398,4 @@ class _SubmitPageState extends State<SubmitPage> {
     }
     return '';
   }
-
-
-
-
-
 }

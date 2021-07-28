@@ -3,18 +3,19 @@ import 'dart:async';
 import 'package:dio/adapter.dart';
 import 'package:dio/dio.dart';
 import 'package:logger/logger.dart';
+import 'package:demo7_pro/services/app.dart' show AppService;
 
 
 
 // 拦截器 请求前添加头部 token
 class HeaderInterceptor extends Interceptor{
   @override
-  void onRequest(RequestOptions options,RequestInterceptorHandler handler) {
+  void onRequest(RequestOptions options,RequestInterceptorHandler handler) async {
     Map<String,dynamic> header ={};
 
-    if(options.path.startsWith('/api')){
-      // String token = await AppService.getToken();
-      // header['Authoriztion']=token;
+    if(options.path.startsWith('/api')||options.path.startsWith('https://api.uat.chanjesign.com/api')){
+      String token = await AppService.getToken();
+      header['Authorization']=token;
 
     }
 

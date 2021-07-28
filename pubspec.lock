@@ -280,6 +280,13 @@ packages:
       url: "https://pub.flutter-io.cn"
     source: hosted
     version: "2.2.0"
+  images_picker:
+    dependency: "direct main"
+    description:
+      name: images_picker
+      url: "https://pub.flutter-io.cn"
+    source: hosted
+    version: "1.2.4"
   install_plugin:
     dependency: "direct main"
     description:
@@ -413,6 +420,13 @@ packages:
       url: "https://pub.flutter-io.cn"
     source: hosted
     version: "3.6.0"
+  photo_view:
+    dependency: "direct main"
+    description:
+      name: photo_view
+      url: "https://pub.flutter-io.cn"
+    source: hosted
+    version: "0.12.0"
   platform:
     dependency: transitive
     description:

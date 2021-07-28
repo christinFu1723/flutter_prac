@@ -107,7 +107,7 @@ class HttpUtil{
         }
 
         /// 验证过期，需要重新登录
-        if (error.response?.statusCode == 403) {
+        if (error.response?.statusCode == 401) {
           EventBusUtil.instance.eventBus.fire(NeedReLoginEvent());
           // AppUtil().pushAndRemoveUntil(context,);
           throw '登录无效，请重新登录';
