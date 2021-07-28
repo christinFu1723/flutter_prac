@@ -33,6 +33,8 @@ class InputForm extends StatelessWidget {
         keyboardType: keyboardType ?? TextInputType.text,
         readOnly: readOnly ?? false,
         decoration: InputDecoration(
+          errorText:'', // 不显示错误提示
+          errorStyle: TextStyle(color: Colors.transparent,height: 0),// 不显示错误提示
           counterText: "",
           // 不显示输入框最大字数统计
           border: InputBorder.none,
@@ -43,6 +45,8 @@ class InputForm extends StatelessWidget {
           hintTextDirection: TextDirection.rtl,
         ),
         validator: validatorFn,
+        autovalidate:true,
+        enableSuggestions:false,
         onTap: onTap,
         onChanged: onChange);
   }

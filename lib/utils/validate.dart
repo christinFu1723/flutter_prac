@@ -1,7 +1,39 @@
 import 'package:demo7_pro/utils/string.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:demo7_pro/utils/idCard.dart' show IdCardUtil;
 
 /// 验证辅助
 class ValidateUtil {
+  /// 校验一级数组的key值是否填充？
+  static bool verifyObjArrFilled({@required List arr, @required String key}) {
+    if(arr==null||key==null){
+      return false;
+    }
+    var flg = true;
+    if (arr.length > 0) {
+      if (key != '' && key != null) {
+        for (var item in arr) {
+          flg = flg && item[key] != '' && item[key] != null;
+        }
+      }
+    } else {
+      flg = false;
+    }
+    return flg;
+  }
+
+  /// 是否为身份证
+  static bool isIdCard(String idCard) {
+    if (StringUtil.isEmpty(idCard)) return false;
+    return IdCardUtil.verifyCardId(idCard);
+  }
+
+  /// 是否为价格
+  static bool isPrice(String price) {
+    if (StringUtil.isEmpty(price)) return false;
+    return RegExp(r'((^[1-9]\d*)|^0)(\.\d{0,2}){0,1}$').hasMatch(price);
+  }
+
   /// 是否为手机号
   static bool isMobile(String mobile) {
     if (StringUtil.isEmpty(mobile)) return false;
@@ -15,10 +47,11 @@ class ValidateUtil {
   }
 
   /// 是否为身份证号
-  static bool isIdCard(String id) {
-
+  static bool isIdCardReg(String id) {
     if (StringUtil.isEmpty(id)) return false;
-    return RegExp(r'(^[1-9]\d{5}\d{2}((0[1-9])|(10|11|12))(([0-2][1-9])|10|20|30|31)\d{3}$)|(^[1-9]\d{5}(18|19|([23]\d))\d{2}((0[1-9])|(10|11|12))(([0-2][1-9])|10|20|30|31)\d{3}[0-9Xx]$)').hasMatch(id);
+    return RegExp(
+            r'(^[1-9]\d{5}\d{2}((0[1-9])|(10|11|12))(([0-2][1-9])|10|20|30|31)\d{3}$)|(^[1-9]\d{5}(18|19|([23]\d))\d{2}((0[1-9])|(10|11|12))(([0-2][1-9])|10|20|30|31)\d{3}[0-9Xx]$)')
+        .hasMatch(id);
   }
 
   /// 是否为指定长度的验证码

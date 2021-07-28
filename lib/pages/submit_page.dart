@@ -88,7 +88,8 @@ class _SubmitPageState extends State<SubmitPage> {
                 children: [
                   _companyInfoForm(),
                   _certificateForm(),
-                  _contactInfoForm()
+                  _contactInfoForm(),
+                  _nextBtn(),
                 ],
               ),
             )
@@ -96,6 +97,23 @@ class _SubmitPageState extends State<SubmitPage> {
         ),
       ));
     }));
+  }
+
+  Widget _nextBtn(){
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 16.0),
+      child: ElevatedButton(
+        onPressed: () {
+          // Validate will return true if the form is valid, or false if
+          // the form is invalid.
+          form.validateForm();
+          if (_formKey.currentState.validate()) {
+            // Process data.
+          }
+        },
+        child: const Text('下一步'),
+      ),
+    );
   }
 
   Widget _step() {
@@ -368,14 +386,23 @@ class _SubmitPageState extends State<SubmitPage> {
         ImgUploadDecorator(
           maxLength: 1,
           initImgList: [],
+            imgListUploadCallback:handleImgChange
         ),
       ],
     );
   }
 
-  // void _onSuccessFn(List<String> urlList) {}
-  //
-  // void _onChange(List<XFile> filesList) {}
+  void handleImgChange(List<String> imgs){
+
+    var obj={
+      'attachType': '1001',
+      'attachUrl': imgs[0],
+    };
+    var saveAttachesArr=[];
+    saveAttachesArr.add(obj);
+    form.attaches=saveAttachesArr;
+    Logger().i('传回来的照片: ${form.attaches}');
+  }
 
   String _inputValidate(String value,
       {@required String validateType, @required String errMsg}) {
@@ -391,7 +418,7 @@ class _SubmitPageState extends State<SubmitPage> {
         }
         break;
       default:
-        if (value = null) {
+        if (value == ''||value == null) {
           return errMsg;
         }
         break;

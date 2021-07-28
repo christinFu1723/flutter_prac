@@ -10,8 +10,9 @@ import 'package:demo7_pro/widgets/common/img_preview.dart' show ImgPreview;
 class ImgUploadDecorator extends StatefulWidget {
   final int maxLength;
   final List<String> initImgList;
+  final Function(List<String> imgUrlList) imgListUploadCallback;
 
-  ImgUploadDecorator({Key key, this.maxLength = 9, this.initImgList})
+  ImgUploadDecorator({Key key, this.maxLength = 9, this.initImgList,this.imgListUploadCallback})
       : super(key: key);
 
   @override
@@ -152,6 +153,9 @@ class _ImgUploadDecoratorState extends State<ImgUploadDecorator> {
     setState(() {
       this.imgList.addAll(urlList);
     });
+    if(widget.imgListUploadCallback!=null){
+      widget.imgListUploadCallback.call(urlList);
+    }
   }
 
   void _onChange(List<dynamic> filesList) {}
