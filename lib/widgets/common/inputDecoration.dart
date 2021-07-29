@@ -6,9 +6,10 @@ class InputStyleDecoration extends StatelessWidget {
   final bool isLastChild;
   final Widget extendsWidget;
   final String title;
+  final bool showRequireFlg;
 
   InputStyleDecoration(this.title, this.inputChild,
-      {Key key, this.extendsWidget, this.isLastChild = false})
+      {Key key, this.extendsWidget, this.isLastChild = false,this.showRequireFlg=false})
       : super(key: key);
 
   @override
@@ -30,6 +31,7 @@ class InputStyleDecoration extends StatelessWidget {
           style: TextStyle(
               color: AppTheme.titleColor, fontSize: AppTheme.fontSizeSmall),
         ),
+        showRequireFlg?Text('*',textAlign:TextAlign.center,style: TextStyle(color: AppTheme.sitDangerColor),):Container(),
         Expanded(child: inputChild),
         extendsWidget ?? Container()
       ]),

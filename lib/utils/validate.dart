@@ -22,7 +22,7 @@ class ValidateUtil {
     return flg;
   }
 
-  /// 是否为身份证
+  /// 是否为身份证.是返回true,否返回false
   static bool isIdCard(String idCard) {
     if (StringUtil.isEmpty(idCard)) return false;
     return IdCardUtil.verifyCardId(idCard);

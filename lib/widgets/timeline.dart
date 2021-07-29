@@ -5,46 +5,55 @@ import 'package:demo7_pro/config/stepTimelineConfig.dart';
 class StepTimeline extends StatelessWidget {
   final List<String> data;
   final int nowStep;
+  final Function(int tapIndex) handleTimelineIndicatorTap;
 
-  StepTimeline({Key key, this.data, this.nowStep});
+  StepTimeline(
+      {Key key, this.data, this.nowStep, this.handleTimelineIndicatorTap});
 
   List<Widget> _getTimeline(BuildContext context) {
     var timelineArr = this
         .data
         .asMap()
         .entries
-        .map((entry) => TimelineTile(
-              isFirst: entry.key == 0,
-              isLast: entry.key == this.data.length - 1,
-              axis: TimelineAxis.horizontal,
-              alignment: TimelineAlign.center,
-              endChild: Container(
-                  alignment: Alignment.center,
-                  constraints: const BoxConstraints(
-                    minWidth: 110,
-                  ),
-                  color: Colors.transparent,
-                  child: Wrap(
-                    children: [
-                      Text(
-                        entry.value,
-                        style: TextStyle(
-                            color: _indicatorColor(entry), fontSize: 12),
-                      )
-                    ],
-                  )),
-              indicatorStyle:
-                  IndicatorStyle(indicator: _indicatorCustom(context, entry)),
-              beforeLineStyle: LineStyle(
-                color: entry.key <= this.nowStep
-                    ? StepTimelineConfig.doneIndicatorColor
-                    : StepTimelineConfig.defaultIndicatorColor.withOpacity(0.2),
+        .map((entry) => GestureDetector(
+              child: TimelineTile(
+                isFirst: entry.key == 0,
+                isLast: entry.key == this.data.length - 1,
+                axis: TimelineAxis.horizontal,
+                alignment: TimelineAlign.center,
+                endChild: Container(
+                    alignment: Alignment.center,
+                    constraints: const BoxConstraints(
+                      minWidth: 110,
+                    ),
+                    color: Colors.transparent,
+                    child: Wrap(
+                      children: [
+                        Text(
+                          entry.value,
+                          style: TextStyle(
+                              color: _indicatorColor(entry), fontSize: 12),
+                        )
+                      ],
+                    )),
+                indicatorStyle:
+                    IndicatorStyle(indicator: _indicatorCustom(context, entry)),
+                beforeLineStyle: LineStyle(
+                  color: entry.key <= this.nowStep
+                      ? StepTimelineConfig.doneIndicatorColor
+                      : StepTimelineConfig.defaultIndicatorColor
+                          .withOpacity(0.2),
+                ),
+                afterLineStyle: LineStyle(
+                  color: entry.key < this.nowStep
+                      ? StepTimelineConfig.doneIndicatorColor
+                      : StepTimelineConfig.defaultIndicatorColor
+                          .withOpacity(0.2),
+                ),
               ),
-              afterLineStyle: LineStyle(
-                color: entry.key < this.nowStep
-                    ? StepTimelineConfig.doneIndicatorColor
-                    : StepTimelineConfig.defaultIndicatorColor.withOpacity(0.2),
-              ),
+              onTap: () {
+                handleTimelineIndicatorTap(entry.key);
+              },
             ))
         .toList();
     return timelineArr;

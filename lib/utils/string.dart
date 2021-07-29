@@ -1,12 +1,15 @@
 // 文本辅助处理
 import 'dart:math';
 
+
 class StringUtil {
   /// 剪裁掉字符串最后一个指定字符
   static String spliceChar(String str,String char){
     var respStr = str??'';
     var index =respStr.lastIndexOf(char);
-    if(index>0&&index<respStr.length-1){
+
+    if(index>0&&index<respStr.length){
+
       respStr=respStr.substring(0, index)+respStr.substring(index+1, respStr.length);
     }
     return respStr;

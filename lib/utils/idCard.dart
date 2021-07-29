@@ -1,3 +1,5 @@
+import 'package:logger/logger.dart';
+
 class IdCardUtil {
   // 校验身份证合法性
   static bool verifyCardId(String cardId) {

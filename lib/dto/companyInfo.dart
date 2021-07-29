@@ -33,7 +33,7 @@ class CompanyInfo {
     this.attaches,
   });
 
-  void validateForm() {
+  bool validateForm() {
     try {
       var errorMsg = '';
       if (StringUtil.isEmpty(this.organizeName)) {
@@ -45,13 +45,15 @@ class CompanyInfo {
       if (StringUtil.isEmpty(this.legalName)) {
         errorMsg+='法人,';
       }
-      if (ValidateUtil.isIdCard(this.legalMobile)) {
+      if (!ValidateUtil.isMobile(this.legalMobile)) {
         errorMsg+='法人手机号,';
       }
-      if (StringUtil.isEmpty(this.legalIdCardNo)) {
+
+      if (!ValidateUtil.isIdCard(this.legalIdCardNo)) {
+
         errorMsg+='法人身份证,';
       }
-      if (ValidateUtil.isPrice(this.organizeRegisteredCapital)) {
+      if (!ValidateUtil.isPrice(this.organizeRegisteredCapital)) {
         errorMsg+='注册资本(最多支持2位小数),';
       }
       if (StringUtil.isEmpty(this.organizeRegisteredTime)) {
@@ -63,24 +65,25 @@ class CompanyInfo {
       if (StringUtil.isEmpty(this.contact)) {
         errorMsg+='联系人,';
       }
-      if (ValidateUtil.isMobile(this.contactMobile)) {
+      if (!ValidateUtil.isMobile(this.contactMobile)) {
         errorMsg+='联系人电话,';
       }
       if (StringUtil.isEmpty(this.organizeName)) {
         errorMsg+='企业名称,';
       }
-      if (ValidateUtil.verifyObjArrFilled(arr:this.attaches,key:'attachUrl')) {
+      if (!ValidateUtil.verifyObjArrFilled(arr:this.attaches,key:'attachUrl')) {
         errorMsg+='证照信息,';
       }
 
       if(errorMsg!=''){
-        errorMsg='请填写：'+errorMsg;
+        errorMsg='请正确填写：'+errorMsg;
         errorMsg=StringUtil.spliceChar(errorMsg,',');
         throw errorMsg;
       }
-
+      return true;
     } catch (e) {
       AppUtil.showToast(e);
+      return false;
     }
   }
 }

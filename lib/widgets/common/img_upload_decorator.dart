@@ -39,6 +39,7 @@ class _ImgUploadDecoratorState extends State<ImgUploadDecorator> {
             crossAxisSpacing: 10,
             childAspectRatio: 1.47, // 宽高比
           ),
+          physics: const NeverScrollableScrollPhysics(),
           shrinkWrap: true,
           itemCount: showGridBlock.length,
           itemBuilder: (BuildContext context, int index) {
