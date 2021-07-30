@@ -1,10 +1,17 @@
+import 'package:demo7_pro/utils/app.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:demo7_pro/widgets/timeline.dart' show StepTimeline;
 import 'package:demo7_pro/config/theme.dart' show AppTheme;
 import 'package:demo7_pro/pages/submit_page/widgets/companyInfo.dart'
     show CompanyInfoSubmit;
+import 'package:demo7_pro/pages/submit_page/widgets/accountInfo.dart'
+    show AccountInfoSubmit;
+import 'package:demo7_pro/pages/submit_page/widgets/packageChoose.dart'
+    show PackageChoose;
 import 'package:logger/logger.dart';
+import 'package:demo7_pro/dto/companyInfo.dart' show CompanyInfo;
+
 
 class SubmitPage extends StatefulWidget {
   @override
@@ -12,15 +19,17 @@ class SubmitPage extends StatefulWidget {
 }
 
 class _SubmitPageState extends State<SubmitPage> with TickerProviderStateMixin {
-  int nowStep = 1;
+  int nowStep = 2;
   final List<String> timeline = ['信息录入', '主账号创建', '套餐选择'];
   TabController _tabController;
+  CompanyInfo form;
 
   @override
   initState() {
     super.initState();
     _tabController = TabController(length: 3, vsync: this);
     _tabController.animateTo(this.nowStep);
+    form = CompanyInfo();
   }
 
   @override
@@ -38,13 +47,27 @@ class _SubmitPageState extends State<SubmitPage> with TickerProviderStateMixin {
         headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
           return <Widget>[
             SliverAppBar(
+              backgroundColor: Colors.white,
               pinned: true,
-              stretch: true,
-              flexibleSpace: Image.network(
-                'https://hbimg.huabanimg.com/89b90b7944a97b9f2f19c947be71dd9ae1bbf49040e45a-rt5p7S_fw658/format/webp',
-                fit: BoxFit.cover,
+              stretch: false,
+              leading: GestureDetector(
+                onTap: (){
+                  AppUtil.pop(context);
+                },
+                child: Icon(
+                  Icons.arrow_back_ios,
+                  size: 20,
+                  color: AppTheme.placeholderColor,
+                ),
               ),
-              expandedHeight: 240,
+              // flexibleSpace: Image.network(
+              //   'https://hbimg.huabanimg.com/89b90b7944a97b9f2f19c947be71dd9ae1bbf49040e45a-rt5p7S_fw658/format/webp',
+              //   fit: BoxFit.cover,
+              // ),
+              toolbarHeight: 45,
+
+              expandedHeight: 200,
+
               bottom: PreferredSize(
                 preferredSize: Size.fromHeight(120),
                 child: Column(
@@ -68,16 +91,29 @@ class _SubmitPageState extends State<SubmitPage> with TickerProviderStateMixin {
             Center(
               child: SingleChildScrollView(
                 child: CompanyInfoSubmit(
+                    form: this.form,
                     onNextStep: () => {_handleNextStepDone(nextStep: 1)}),
                 padding: EdgeInsets.symmetric(vertical: 10),
                 physics: NeverScrollableScrollPhysics(),
               ),
             ),
             Center(
-              child: Text("1111It's rainy here"),
+              child: SingleChildScrollView(
+                child: AccountInfoSubmit(
+                    form: this.form,
+                    onNextStep: () => {_handleNextStepDone(nextStep: 2)}),
+                padding: EdgeInsets.symmetric(vertical: 10),
+                physics: NeverScrollableScrollPhysics(),
+              ),
             ),
             Center(
-              child: Text("222It's sunny here"),
+              child: SingleChildScrollView(
+                child: PackageChoose(
+                    form: this.form,
+                    onNextStep: () => {_handleNextStepDone(nextStep: 3)}),
+                padding: EdgeInsets.symmetric(vertical: 10),
+                physics: NeverScrollableScrollPhysics(),
+              ),
             ),
           ],
         ));
@@ -132,7 +168,9 @@ class _SubmitPageState extends State<SubmitPage> with TickerProviderStateMixin {
   }
 
   _handleNextStepDone({@required int nextStep}) {
-    Logger().i('sdsdds: $nextStep');
+    if(nextStep>=timeline.length){
+      return;
+    }
     _tabController.index = nextStep;
     // _tabController.animateTo(nextStep, duration: Duration(milliseconds: 20),curve: Curves.easeIn);
     setState(() {

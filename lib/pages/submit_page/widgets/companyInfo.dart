@@ -15,15 +15,16 @@ import 'package:demo7_pro/widgets/common/img_upload_decorator.dart';
 
 class CompanyInfoSubmit extends StatefulWidget {
   final Function onNextStep;
+  final CompanyInfo form;
 
   @override
-  CompanyInfoSubmit({Key key, this.onNextStep}) : super(key: key);
+  CompanyInfoSubmit({Key key, this.onNextStep, this.form}) : super(key: key);
 
   @override
   _CompanyInfoSubmitState createState() => _CompanyInfoSubmitState();
 }
 
-class _CompanyInfoSubmitState extends State<CompanyInfoSubmit> {
+class _CompanyInfoSubmitState extends State<CompanyInfoSubmit>  with AutomaticKeepAliveClientMixin {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   TextEditingController organizeNameController;
   TextEditingController organizeSocialCodeController;
@@ -38,10 +39,15 @@ class _CompanyInfoSubmitState extends State<CompanyInfoSubmit> {
   TextEditingController contactAddressController;
   TextEditingController attachesController;
   CompanyInfo form;
+  List<String> initImgsShow;
+
+  @override
+  bool get wantKeepAlive => true; // 防止页面tab切换以后，页面重绘
 
   @override
   initState() {
-    form = new CompanyInfo();
+    form = widget.form;
+    initImgsShow=this.initImgUploadData(form.attaches)??[];
     organizeNameController = TextEditingController();
     organizeSocialCodeController = TextEditingController();
     legalNameController = TextEditingController();
@@ -95,7 +101,7 @@ class _CompanyInfoSubmitState extends State<CompanyInfoSubmit> {
       padding: const EdgeInsets.symmetric(vertical: 16.0),
       child: ElevatedButton(
         onPressed: () {
-          if (form.validateForm()) {
+          if (form.validateCompanyBaseInfo()) {
             widget.onNextStep.call();
           }
         },
@@ -119,6 +125,7 @@ class _CompanyInfoSubmitState extends State<CompanyInfoSubmit> {
               '企业名称',
               InputForm(
                   controller: organizeNameController,
+                  initVal: form.organizeName,
                   validatorFn: (
                     String value,
                   ) {
@@ -137,6 +144,7 @@ class _CompanyInfoSubmitState extends State<CompanyInfoSubmit> {
               '社会统一信用代码',
               InputForm(
                   controller: organizeSocialCodeController,
+                  initVal: form.organizeSocialCode,
                   validatorFn: (
                     String value,
                   ) {
@@ -155,6 +163,7 @@ class _CompanyInfoSubmitState extends State<CompanyInfoSubmit> {
               '法定代表人',
               InputForm(
                   controller: legalNameController,
+                  initVal: form.legalName,
                   validatorFn: (
                     String value,
                   ) {
@@ -173,6 +182,7 @@ class _CompanyInfoSubmitState extends State<CompanyInfoSubmit> {
               '法人手机号',
               InputForm(
                   controller: legalMobileController,
+                  initVal: form.legalMobile,
                   validatorFn: (
                     String value,
                   ) {
@@ -192,6 +202,8 @@ class _CompanyInfoSubmitState extends State<CompanyInfoSubmit> {
               '法人身份证号',
               InputForm(
                 controller: legalIdCardNoController,
+                initVal: form.legalIdCardNo,
+
                 validatorFn: (
                   String value,
                 ) {
@@ -211,6 +223,7 @@ class _CompanyInfoSubmitState extends State<CompanyInfoSubmit> {
                 '注册资本',
                 InputForm(
                     controller: organizeRegisteredCapitalController,
+                    initVal: form.organizeRegisteredCapital,
                     validatorFn: (
                       String value,
                     ) {
@@ -237,6 +250,7 @@ class _CompanyInfoSubmitState extends State<CompanyInfoSubmit> {
                 '注册时间',
                 InputForm(
                   controller: organizeRegisteredTimeController,
+                  initVal: form.organizeRegisteredTime,
                   validatorFn: (
                     String value,
                   ) {
@@ -274,6 +288,7 @@ class _CompanyInfoSubmitState extends State<CompanyInfoSubmit> {
                 '注册地址',
                 InputForm(
                     controller: organizeAddressController,
+                    initVal: form.organizeAddress,
                     validatorFn: (
                       String value,
                     ) {
@@ -312,6 +327,7 @@ class _CompanyInfoSubmitState extends State<CompanyInfoSubmit> {
               '联系人',
               InputForm(
                   controller: contactController,
+                  initVal: form.contact,
                   validatorFn: (
                     String value,
                   ) {
@@ -330,6 +346,7 @@ class _CompanyInfoSubmitState extends State<CompanyInfoSubmit> {
               '联系人手机号',
               InputForm(
                   controller: contactMobileController,
+                  initVal: form.contactMobile,
                   validatorFn: (
                     String value,
                   ) {
@@ -349,6 +366,7 @@ class _CompanyInfoSubmitState extends State<CompanyInfoSubmit> {
                 '联系地址',
                 InputForm(
                     controller: contactAddressController,
+                    initVal: form.contactAddress,
                     validatorFn: (
                       String value,
                     ) {
@@ -382,19 +400,36 @@ class _CompanyInfoSubmitState extends State<CompanyInfoSubmit> {
         // ),
         ImgUploadDecorator(
             maxLength: 1,
-            initImgList: [],
+            initImgList: initImgsShow,
             imgListUploadCallback: handleImgChange),
       ],
     );
   }
 
+  List<String> initImgUploadData(List attaches){
+    List<String> arr =[];
+    if(attaches!=null){
+      for(var item in attaches){
+        if(item['attachUrl']!=''&&item['attachUrl'] is String){
+          arr.add(item['attachUrl']);
+        }
+      }
+    }
+
+    return arr;
+  }
+
   void handleImgChange(List<String> imgs) {
-    var obj = {
-      'attachType': '1001',
-      'attachUrl': imgs[0],
-    };
     var saveAttachesArr = [];
-    saveAttachesArr.add(obj);
+    var obj ;
+    if(imgs!=null&&imgs.length>=1){
+      obj= {
+        'attachType': '1001',
+        'attachUrl': imgs[0],
+      };
+      saveAttachesArr.add(obj);
+    }
+
     form.attaches = saveAttachesArr;
     Logger().i('传回来的照片: ${form.attaches}');
   }

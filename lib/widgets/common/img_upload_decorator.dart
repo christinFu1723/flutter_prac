@@ -25,7 +25,8 @@ class _ImgUploadDecoratorState extends State<ImgUploadDecorator> {
   @override
   void initState() {
     setState(() {
-      this.imgList = widget.initImgList;
+      this.imgList = widget.initImgList??[];
+
     });
     super.initState();
   }
@@ -102,14 +103,20 @@ class _ImgUploadDecoratorState extends State<ImgUploadDecorator> {
         imgList.removeAt(index);
       });
     }
+    if(widget.imgListUploadCallback!=null){
+      widget.imgListUploadCallback.call(this.imgList);// 上传成功后把页面显示的imgUrl全部返回
+    }
   }
 
   List<String> get showGridBlock {
     List<String> imgShowArr = [];
-    imgShowArr.addAll(this.imgList);
-    if (widget.maxLength > 0 && this.imgList.length < widget.maxLength) {
-      imgShowArr.add('add'); // 如果最大限制存在，且当前渲染项小于最大限制
-    } else if (widget.maxLength < 0 || widget.maxLength == null) {
+    if(this.imgList!=null){
+      imgShowArr.addAll(this.imgList);
+      if (widget.maxLength > 0 && this.imgList.length < widget.maxLength) {
+        imgShowArr.add('add'); // 如果最大限制存在，且当前渲染项小于最大限制
+      }
+    }
+    if (widget.maxLength < 0 || widget.maxLength == null) {
       imgShowArr.add('add'); // 最大限制不存在，恒定显示
     }
 
@@ -150,14 +157,14 @@ class _ImgUploadDecoratorState extends State<ImgUploadDecorator> {
         onChangeFn: _onChange);
   }
 
-  void _onSuccessFn(List<String> urlList) {
+  void _onSuccessFn(List<String> urlList) { // 返回上传成功后的图片
     setState(() {
       this.imgList.addAll(urlList);
     });
     if(widget.imgListUploadCallback!=null){
-      widget.imgListUploadCallback.call(urlList);
+      widget.imgListUploadCallback.call(this.imgList);// 上传成功后把页面显示的imgUrl全部返回
     }
   }
 
-  void _onChange(List<dynamic> filesList) {}
+  void _onChange(List<dynamic> filesList) {} // 返回的文件列表
 }
