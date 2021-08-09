@@ -5,6 +5,8 @@ import 'package:demo7_pro/utils/event_bus.dart';
 
 import 'package:demo7_pro/services/app.dart';
 import 'package:demo7_pro/eventBus/app.dart' show NeedReLoginEvent;
+import 'package:demo7_pro/utils/app.dart' show AppUtil;
+import 'package:demo7_pro/pages/filter_page/filter_page.dart' show FilterPage;
 
 class MyPage extends StatefulWidget {
   @override
@@ -70,12 +72,17 @@ class _MyPageState extends State<MyPage> {
               Positioned(
                   top: 0,
                   left: MediaQuery.of(context).size.width / 2 - 130 / 2,
-                  child: _headerIcon(
-                      imgUrl: 'image/1.jpg',
-                      width: 111,
-                      height: 111,
-                      borderWidth: 8,
-                      borderColor: Color.fromARGB(30, 0, 179, 191))),
+                  child: InkWell(
+                    child: _headerIcon(
+                        imgUrl: 'image/1.jpg',
+                        width: 111,
+                        height: 111,
+                        borderWidth: 8,
+                        borderColor: Color.fromARGB(30, 0, 179, 191)),
+                    onTap: (){
+                      AppUtil.push(context,FilterPage());
+                    },
+                  )),
               Positioned(
                   top: 0,
                   left: MediaQuery.of(context).size.width / 2 + 120 / 2 - 32,

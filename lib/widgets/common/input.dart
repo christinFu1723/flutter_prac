@@ -55,7 +55,7 @@ class _InputFormState extends State<InputForm> {
         keyboardType: widget.keyboardType ?? TextInputType.text,
         readOnly: widget.readOnly ?? false,
         style: TextStyle(
-            color: widget.readOnly
+            color: widget.readOnly?? false
                 ? AppTheme.placeholderColor
                 : AppTheme.titleColor),
         decoration: InputDecoration(
@@ -67,7 +67,7 @@ class _InputFormState extends State<InputForm> {
           // 不显示输入框最大字数统计
           border: InputBorder.none,
           labelStyle: TextStyle(
-              color: widget.readOnly
+              color: widget.readOnly?? false
                   ? AppTheme.placeholderColor
                   : AppTheme.titleColor),
           hintText: widget.hintStr,
