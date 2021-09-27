@@ -1,3 +1,4 @@
+import 'package:demo7_pro/config/theme.dart';
 import 'package:flutter/material.dart';
 
 import 'package:demo7_pro/widgets/version.dart';
@@ -7,6 +8,7 @@ import 'package:demo7_pro/services/app.dart';
 import 'package:demo7_pro/eventBus/app.dart' show NeedReLoginEvent;
 import 'package:demo7_pro/utils/app.dart' show AppUtil;
 import 'package:demo7_pro/pages/filter_page/filter_page.dart' show FilterPage;
+import 'package:demo7_pro/pages/cashier/cashier.dart' show CashierPage;
 
 class MyPage extends StatefulWidget {
   @override
@@ -25,6 +27,7 @@ class _MyPageState extends State<MyPage> {
                 children: [
                   _infoCard(),
                   _signOutBtn(),
+                  _cashierBtn(),
                   Container(
                     margin: EdgeInsets.fromLTRB(0, 130, 0, 75),
                     child: VersionTip(
@@ -56,6 +59,28 @@ class _MyPageState extends State<MyPage> {
           },
           child: Text('注销登录'),
         ));
+  }
+
+  _cashierBtn(){
+    return Container(
+      margin: EdgeInsets.only(top:34),
+        child: ElevatedButton(
+          style: ElevatedButton.styleFrom(
+              primary: AppTheme.sitSuccessColor,
+              //change background color of button
+              onPrimary: Colors.white,
+              minimumSize: Size(340, 48),
+              textStyle: TextStyle(fontSize: 16),
+              padding: EdgeInsets.fromLTRB(0, 5, 0, 8),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(25),
+              )),
+          onPressed: () {
+            _jumpToCashierPage();
+          },
+          child: Text('测试支付'),
+        ));
+
   }
 
   _infoCard() {
@@ -149,5 +174,10 @@ class _MyPageState extends State<MyPage> {
   _loginAndClear() async {
     await AppService.clearPrefers(context);
     EventBusUtil.instance.eventBus.fire(NeedReLoginEvent());
+  }
+
+  _jumpToCashierPage() {
+    Navigator.push(
+        context, MaterialPageRoute(builder: (context) => CashierPage()));
   }
 }

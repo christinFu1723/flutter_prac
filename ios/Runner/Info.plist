@@ -47,6 +47,42 @@
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
+	<key>CFBundleURLTypes</key>
+    <array>
+        <dict>
+            <key>CFBundleTypeRole</key>
+            <string>Editor</string>
+            <key>CFBundleURLName</key>
+            <string>weixin</string>
+            <key>CFBundleURLSchemes</key>
+            <array>
+                <string>wxcbf4e33e0e9cedeb</string>
+            </array>
+        </dict>
+        <dict>
+            <key>CFBundleTypeRole</key>
+            <string>Editor</string>
+            <key>CFBundleURLName</key>
+            <string>alipay</string>
+            <key>CFBundleURLSchemes</key>
+            <array>
+                <string>dingdangcheguanjia</string>
+            </array>
+        </dict>
+    </array>
+    <key>CFBundleVersion</key>
+    <string>$(CURRENT_PROJECT_VERSION)</string>
+    <key>LSApplicationQueriesSchemes</key>
+    <array>
+        <string>alipays</string>
+        <string>wechat</string>
+        <string>weixin</string>
+        <string>weixinULAPI</string>
+        <string>baidumap</string>
+        <string>iosamap</string>
+        <string>qqmap</string>
+        <string>amap</string>
+    </array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
 </dict>
