@@ -147,6 +147,10 @@ dependencies:
   # https://pub.dev/packages/iconfont
   iconfont: ^1.0.0
 
+  # 路由库
+  # https://pub:dev/packages/fluro/
+  fluro: ^2.0.3
+
 dev_dependencies:
   flutter_test:
     sdk: flutter

@@ -5,7 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:bot_toast/bot_toast.dart';
 import 'package:demo7_pro/tabbar/tab_nav.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-
+import 'package:demo7_pro/route/routes.dart' show Routes;
+import 'package:fluro/fluro.dart' show FluroRouter;
 
 class App extends StatefulWidget{
   @override
@@ -40,12 +41,14 @@ class _AppState extends State<App>{
           theme: ThemeData(
             primarySwatch: Colors.blue,
           ),
-          home: TabNavigator(),
+
           builder: (BuildContext context, Widget child) {
             child = botToastBuilder(context, child);
             return child;
           },
           navigatorObservers: [BotToastNavigatorObserver()],
+          initialRoute: Routes.root,
+          onGenerateRoute: FluroRouter.appRouter.generator,
         );
       }),
     );

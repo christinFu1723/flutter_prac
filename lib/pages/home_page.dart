@@ -3,8 +3,8 @@ import 'package:demo7_pro/model/grid_nav_model.dart';
 import 'package:demo7_pro/model/common_model.dart';
 import 'package:demo7_pro/model/sales_box_model.dart';
 
-import 'package:demo7_pro/pages/speak_page.dart';
-import 'package:demo7_pro/pages/submit_page/submit_page.dart';
+// import 'package:demo7_pro/pages/speak_page.dart';
+// import 'package:demo7_pro/pages/submit_page/submit_page.dart';
 import 'package:flutter/material.dart';
 import 'package:demo7_pro/dao/home_dao.dart';
 import 'dart:convert';
@@ -16,9 +16,17 @@ import 'package:demo7_pro/widgets/loading_container.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
 import 'package:demo7_pro/widgets/webview.dart';
 import 'package:demo7_pro/widgets/search_bar.dart';
-import 'package:demo7_pro/pages/search_page.dart';
-import 'package:demo7_pro/widgets/imageNetwork.dart';
+import 'package:logger/logger.dart';
 
+// import 'package:demo7_pro/pages/search_page.dart';
+// import 'package:demo7_pro/widgets/imageNetwork.dart';
+import 'package:demo7_pro/route/route_util.dart' show navTo;
+import 'package:demo7_pro/route/pages/search_page/index.dart'
+    show SearchPageRoutes;
+import 'package:demo7_pro/route/pages/speak_page//index.dart'
+    show SpeakPageRoutes;
+import 'package:demo7_pro/route/pages/submit_page/index.dart'
+    show SubmitPageRoutes;
 
 const AppBar_Hide_Distance = 100;
 const SEARCH_BAR_DEFAULT_TEXT = '首页默认值';
@@ -234,18 +242,28 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   _jumpToSubmitPage() {
-    Navigator.push(
-        context, MaterialPageRoute(builder: (context) => SubmitPage()));
+    // Navigator.push(
+    //     context, MaterialPageRoute(builder: (context) => SubmitPage()));
+    navTo(context, SubmitPageRoutes.submit, clearStack: false);
   }
 
   _jumpToSearch() {
-    Navigator.push(context, MaterialPageRoute(builder: (context) {
-      return SearchPage(hideLeft: false, hint: SEARCH_BAR_DEFAULT_TEXT);
-    }));
+    // Navigator.push(context, MaterialPageRoute(builder: (context) {
+    //   return SearchPage(hideLeft: false, hint: SEARCH_BAR_DEFAULT_TEXT);
+    // }));
+
+
+
+    navTo(context,
+        "${SearchPageRoutes.search}?hideLeft=${false}",
+        clearStack: false, arguments: {
+          "hint": SEARCH_BAR_DEFAULT_TEXT,
+        });
   }
 
   _jumpToSpeak() {
-    Navigator.push(
-        context, MaterialPageRoute(builder: (context) => SpeakPage()));
+    // Navigator.push(
+    //     context, MaterialPageRoute(builder: (context) => SpeakPage()));
+    navTo(context, SpeakPageRoutes.speak, clearStack: false);
   }
 }

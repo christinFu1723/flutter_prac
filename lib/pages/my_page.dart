@@ -8,7 +8,9 @@ import 'package:demo7_pro/services/app.dart';
 import 'package:demo7_pro/eventBus/app.dart' show NeedReLoginEvent;
 import 'package:demo7_pro/utils/app.dart' show AppUtil;
 import 'package:demo7_pro/pages/filter_page/filter_page.dart' show FilterPage;
-import 'package:demo7_pro/pages/cashier/cashier.dart' show CashierPage;
+// import 'package:demo7_pro/pages/cashier/cashier.dart' show CashierPage;
+import 'package:demo7_pro/route/route_util.dart' show navTo;
+import 'package:demo7_pro/route/pages/cashier/index.dart' show CashierRoutes;
 
 class MyPage extends StatefulWidget {
   @override
@@ -177,7 +179,6 @@ class _MyPageState extends State<MyPage> {
   }
 
   _jumpToCashierPage() {
-    Navigator.push(
-        context, MaterialPageRoute(builder: (context) => CashierPage()));
+    navTo(context, CashierRoutes.cashier, clearStack: false);
   }
 }
