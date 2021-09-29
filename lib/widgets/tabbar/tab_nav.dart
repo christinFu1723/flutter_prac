@@ -1,8 +1,4 @@
 import 'package:flutter/material.dart';
-// import 'package:demo7_pro/pages/home_page.dart';
-// import 'package:demo7_pro/pages/my_page.dart';
-// import 'package:demo7_pro/pages/search_page.dart';
-// import 'package:demo7_pro/pages/travel_page.dart';
 import 'package:demo7_pro/eventBus/app.dart';
 import 'dart:async';
 import 'package:demo7_pro/utils/event_bus.dart';
@@ -11,7 +7,6 @@ import 'package:demo7_pro/services/app.dart';
 import 'package:demo7_pro/utils/app.dart';
 import 'package:logger/logger.dart';
 import 'package:demo7_pro/route/tabbar/tabbar.dart' show TabConfig;
-
 import 'package:demo7_pro/route/route_util.dart' show navTo;
 import 'package:demo7_pro/route/pages/login_page/index.dart' show LoginPageRoutes;
 
@@ -51,7 +46,6 @@ class _TabNavigatorState extends State<TabNavigator> {
   Future<void> needLogin() async{
     await AppService.clearPrefers(context);
     Logger().i('检查到需要跳转登录页');
-    /// 转到登录页
     navTo(context, "${LoginPageRoutes.login}",clearStack:true);
   }
 

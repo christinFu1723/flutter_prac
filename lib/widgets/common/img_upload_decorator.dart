@@ -6,6 +6,7 @@ import 'package:image_picker/image_picker.dart' show XFile;
 import 'package:demo7_pro/config/theme.dart' show AppTheme;
 import 'package:logger/logger.dart';
 import 'package:demo7_pro/widgets/common/img_preview.dart' show ImgPreview;
+import 'package:demo7_pro/route/route_util.dart' show pushWidget;
 
 class ImgUploadDecorator extends StatefulWidget {
   final int maxLength;
@@ -88,7 +89,7 @@ class _ImgUploadDecoratorState extends State<ImgUploadDecorator> {
   }
 
   void _openImgPreview(int imgIndex, List<String> imgList) {
-    AppUtil.push(
+    pushWidget(
       context,
       ImgPreview(
         images: imgList,

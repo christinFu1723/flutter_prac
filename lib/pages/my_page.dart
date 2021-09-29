@@ -6,9 +6,10 @@ import 'package:demo7_pro/utils/event_bus.dart';
 
 import 'package:demo7_pro/services/app.dart';
 import 'package:demo7_pro/eventBus/app.dart' show NeedReLoginEvent;
-import 'package:demo7_pro/utils/app.dart' show AppUtil;
-import 'package:demo7_pro/pages/filter_page/filter_page.dart' show FilterPage;
-// import 'package:demo7_pro/pages/cashier/cashier.dart' show CashierPage;
+import 'package:demo7_pro/services/app.dart' show AppService;
+
+import 'package:demo7_pro/route/pages/filter_page/index.dart'
+    show FilterPageRoutes;
 import 'package:demo7_pro/route/route_util.dart' show navTo;
 import 'package:demo7_pro/route/pages/cashier/index.dart' show CashierRoutes;
 
@@ -63,9 +64,9 @@ class _MyPageState extends State<MyPage> {
         ));
   }
 
-  _cashierBtn(){
+  _cashierBtn() {
     return Container(
-      margin: EdgeInsets.only(top:34),
+        margin: EdgeInsets.only(top: 34),
         child: ElevatedButton(
           style: ElevatedButton.styleFrom(
               primary: AppTheme.sitSuccessColor,
@@ -82,7 +83,6 @@ class _MyPageState extends State<MyPage> {
           },
           child: Text('测试支付'),
         ));
-
   }
 
   _infoCard() {
@@ -98,7 +98,7 @@ class _MyPageState extends State<MyPage> {
               _card(),
               Positioned(
                   top: 0,
-                  left: MediaQuery.of(context).size.width / 2 - 130 / 2,
+                  left: MediaQuery.of(context).size.width / 2 - 180 / 2,
                   child: InkWell(
                     child: _headerIcon(
                         imgUrl: 'image/1.jpg',
@@ -106,19 +106,27 @@ class _MyPageState extends State<MyPage> {
                         height: 111,
                         borderWidth: 8,
                         borderColor: Color.fromARGB(30, 0, 179, 191)),
-                    onTap: (){
-                      AppUtil.push(context,FilterPage());
+                    onTap: () {
+                      navTo(context, "${FilterPageRoutes.filter}");
                     },
                   )),
               Positioned(
                   top: 0,
                   left: MediaQuery.of(context).size.width / 2 + 120 / 2 - 32,
-                  child: _headerIcon(
-                      imgUrl: 'image/3.jpg',
-                      width: 36,
-                      height: 36,
-                      borderWidth: 4,
-                      borderColor: Color.fromARGB(255, 255, 255, 255))),
+                  child: InkWell(
+                    child: _headerIcon(
+                        imgUrl: 'image/3.jpg',
+                        width: 36,
+                        height: 36,
+                        borderWidth: 4,
+                        borderColor: Color.fromARGB(255, 255, 255, 255)),
+                    onTap: () {
+                      AppService.saveImage(
+                        'image/3.jpg',
+                        isAsset: true,
+                      );
+                    },
+                  )),
             ],
           ),
         ),

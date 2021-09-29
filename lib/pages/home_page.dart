@@ -2,9 +2,6 @@ import 'package:demo7_pro/model/home_model.dart';
 import 'package:demo7_pro/model/grid_nav_model.dart';
 import 'package:demo7_pro/model/common_model.dart';
 import 'package:demo7_pro/model/sales_box_model.dart';
-
-// import 'package:demo7_pro/pages/speak_page.dart';
-// import 'package:demo7_pro/pages/submit_page/submit_page.dart';
 import 'package:flutter/material.dart';
 import 'package:demo7_pro/dao/home_dao.dart';
 import 'dart:convert';
@@ -14,12 +11,11 @@ import 'package:demo7_pro/widgets/local_nav.dart';
 import 'package:demo7_pro/widgets/sales_box.dart';
 import 'package:demo7_pro/widgets/loading_container.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
-import 'package:demo7_pro/widgets/webview.dart';
-import 'package:demo7_pro/widgets/search_bar.dart';
-import 'package:logger/logger.dart';
 
-// import 'package:demo7_pro/pages/search_page.dart';
-// import 'package:demo7_pro/widgets/imageNetwork.dart';
+import 'package:demo7_pro/widgets/search_bar.dart';
+import 'package:demo7_pro/route/pages/webview/index.dart'
+    show WebviewPageRoutes;
+
 import 'package:demo7_pro/route/route_util.dart' show navTo;
 import 'package:demo7_pro/route/pages/search_page/index.dart'
     show SearchPageRoutes;
@@ -229,41 +225,30 @@ class _MyHomePageState extends State<MyHomePage> {
   _wrapGesture(BuildContext context, Widget widget, String url, String title) {
     return GestureDetector(
       onTap: () {
-        Navigator.push(
-            context,
-            MaterialPageRoute(
-                builder: (context) => WebView(
-                      url: url,
-                      title: title,
-                    )));
+        navTo(context, "${WebviewPageRoutes.webview}",
+            clearStack: false,
+            arguments: {
+              "url": url,
+              "title": title,
+            });
       },
       child: widget,
     );
   }
 
   _jumpToSubmitPage() {
-    // Navigator.push(
-    //     context, MaterialPageRoute(builder: (context) => SubmitPage()));
     navTo(context, SubmitPageRoutes.submit, clearStack: false);
   }
 
   _jumpToSearch() {
-    // Navigator.push(context, MaterialPageRoute(builder: (context) {
-    //   return SearchPage(hideLeft: false, hint: SEARCH_BAR_DEFAULT_TEXT);
-    // }));
-
-
-
-    navTo(context,
-        "${SearchPageRoutes.search}?hideLeft=${false}",
-        clearStack: false, arguments: {
+    navTo(context, "${SearchPageRoutes.search}?hideLeft=${false}",
+        clearStack: false,
+        arguments: {
           "hint": SEARCH_BAR_DEFAULT_TEXT,
         });
   }
 
   _jumpToSpeak() {
-    // Navigator.push(
-    //     context, MaterialPageRoute(builder: (context) => SpeakPage()));
     navTo(context, SpeakPageRoutes.speak, clearStack: false);
   }
 }

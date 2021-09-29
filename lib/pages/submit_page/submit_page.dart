@@ -11,6 +11,7 @@ import 'package:demo7_pro/pages/submit_page/widgets/packageChoose.dart'
     show PackageChoose;
 import 'package:logger/logger.dart';
 import 'package:demo7_pro/dto/companyInfo.dart' show CompanyInfo;
+import 'package:demo7_pro/route/route_util.dart' show pop;
 
 
 class SubmitPage extends StatefulWidget {
@@ -52,7 +53,7 @@ class _SubmitPageState extends State<SubmitPage> with TickerProviderStateMixin {
               stretch: false,
               leading: GestureDetector(
                 onTap: (){
-                  AppUtil.pop(context);
+                  pop(context);
                 },
                 child: Icon(
                   Icons.arrow_back_ios,

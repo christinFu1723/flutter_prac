@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:demo7_pro/pages/search_page.dart';
+
 import 'package:demo7_pro/plugin/asr_manager/asr_manager.dart';
+import 'package:demo7_pro/route/pages/search_page/index.dart'
+    show SearchPageRoutes;
+import 'package:demo7_pro/route/route_util.dart' show navTo;
 
 class SpeakPage extends StatefulWidget {
   @override
@@ -167,12 +170,9 @@ class _SpeakPageState extends State<SpeakPage>
         });
         //选关闭再跳转
         Navigator.pop(context);
-        Navigator.push(
-            context,
-            MaterialPageRoute(
-                builder: (context) => SearchPage(
-                      keyword: speakResult,
-                    )));
+
+        navTo(context, "${SearchPageRoutes.search}",
+            arguments: {"keyword": speakResult});
       }
     }).catchError((e) {
       print('识别出错---' + e.toString());

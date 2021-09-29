@@ -16,6 +16,8 @@ import 'package:demo7_pro/utils/string.dart';
 import 'package:demo7_pro/utils/prefers.dart';
 import 'package:demo7_pro/tabbar/tab_nav.dart';
 import 'dart:convert';
+import 'package:demo7_pro/route/routes.dart' show Routes;
+import 'package:demo7_pro/route/route_util.dart' show navTo;
 
 class LoginPage extends StatefulWidget {
   @override
@@ -309,7 +311,7 @@ class _LoginPageState extends State<LoginPage> {
 
         await AppService.setToken('Bearer ${loginInJson['tokenInfo']['access_token']}');
         await PrefersUtil.set("userInfo", json.encode(loginInJson));
-        AppUtil.pushReplacement(context, TabNavigator());
+        navTo(context, '${Routes.root}',replace:true);
       }
       return true;
     } catch (e) {

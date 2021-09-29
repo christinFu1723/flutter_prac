@@ -1,5 +1,6 @@
 import 'package:demo7_pro/config/theme.dart';
 import 'package:demo7_pro/utils/app.dart';
+import 'package:demo7_pro/route/route_util.dart' show pop;
 import 'package:demo7_pro/widgets/button.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -144,7 +145,7 @@ class AppConfirm extends StatelessWidget {
             showShadow: false,
             textColor: AppTheme.secondTextColor,
             onPressed: () {
-              AppUtil.pop(context, result: false);
+              pop(context, result: false);
             },
           ),
         ),
@@ -154,7 +155,7 @@ class AppConfirm extends StatelessWidget {
             text: confirmText ?? '确认',
             color: AppTheme.primaryColor,
             onPressed: () {
-              AppUtil.pop(context, result: true);
+              pop(context, result: true);
             },
           ),
         ),

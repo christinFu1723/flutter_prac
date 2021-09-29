@@ -17,13 +17,16 @@ class SearchPageRoutes {
           name: search,
           handler: Handler(handlerFunc:
               (BuildContext context, Map<String, List<String>> params) {
-            Logger().i('查看路由参数 $params');
+
             final Map<String, dynamic> args =
                 ModalRoute.of(context).settings.arguments;
-            //
-            // bool hideLeft = args["hideLeft"];
-            String hint = args["hint"];
-            return SearchPage(hideLeft: params["hideLeft"].first=='true', hint: hint);
+
+
+            final bool hideLeft= args["hideLeft"];
+            final String searchUrl= args["searchUrl"];
+            final String keyword= args["keyword"];
+            final String hint= args["hint"];
+            return SearchPage(hideLeft: hideLeft??params["hideLeft"].first=='true', hint: hint,searchUrl:searchUrl,keyword:keyword);
           })),
     ];
     return _routes;

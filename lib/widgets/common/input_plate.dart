@@ -5,6 +5,7 @@ import 'package:vibrate/vibrate.dart';
 import 'package:demo7_pro/config/theme.dart';
 import 'package:demo7_pro/utils/app.dart';
 import 'package:demo7_pro/utils/string.dart';
+import 'package:demo7_pro/route/route_util.dart' show pop;
 
 /// 车牌输入
 ///
@@ -115,7 +116,7 @@ class _InputPlateState extends State<InputPlate> {
               color: AppTheme.lightTextColor,
             ),
             onPressed: () {
-              AppUtil.pop(context);
+              pop(context);
             },
           ),
         ),
@@ -480,13 +481,13 @@ class _InputPlateState extends State<InputPlate> {
 
       /// 允许为空
       if (StringUtil.isEmpty(_input)) {
-        AppUtil.pop(context, result: '');
+        pop(context, result: '');
         return;
       }
 
       if (_input.length < 7) throw '输入错误，请检查';
 
-      AppUtil.pop(context, result: _input);
+      pop(context, result: _input);
     } catch (e) {
       AppUtil.showToast(e);
     }
