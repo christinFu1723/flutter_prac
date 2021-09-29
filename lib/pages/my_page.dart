@@ -13,6 +13,7 @@ import 'package:demo7_pro/route/pages/filter_page/index.dart'
     show FilterPageRoutes;
 import 'package:demo7_pro/route/route_util.dart' show navTo;
 import 'package:demo7_pro/route/pages/cashier/index.dart' show CashierRoutes;
+import 'package:demo7_pro/route/pages/FlutterJsonBeanFactoryPage/index.dart' show FlutterJsonBeanFactoryPageRoutes;
 
 class MyPage extends StatefulWidget {
   @override
@@ -32,6 +33,7 @@ class _MyPageState extends State<MyPage> {
                   _infoCard(),
                   _signOutBtn(),
                   _cashierBtn(),
+                  _testFlutterJSONBeanBtn(),
                   Container(
                     margin: EdgeInsets.fromLTRB(0, 130, 0, 75),
                     child: VersionTip(
@@ -83,6 +85,27 @@ class _MyPageState extends State<MyPage> {
             _jumpToCashierPage();
           },
           child: Text('测试支付'),
+        ));
+  }
+
+  _testFlutterJSONBeanBtn() {
+    return Container(
+        margin: EdgeInsets.only(top: 34),
+        child: ElevatedButton(
+          style: ElevatedButton.styleFrom(
+              primary: AppTheme.sitWarningColor,
+              //change background color of button
+              onPrimary: Colors.white,
+              minimumSize: Size(340, 48),
+              textStyle: TextStyle(fontSize: 16),
+              padding: EdgeInsets.fromLTRB(0, 5, 0, 8),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(25),
+              )),
+          onPressed: () {
+            _jumpToFlutterJSONBeanPage();
+          },
+          child: Text('测试FlutterJSONBean'),
         ));
   }
 
@@ -189,5 +212,9 @@ class _MyPageState extends State<MyPage> {
 
   _jumpToCashierPage() {
     navTo(context, CashierRoutes.cashier, clearStack: false);
+  }
+
+  _jumpToFlutterJSONBeanPage(){
+    navTo(context, FlutterJsonBeanFactoryPageRoutes.futterJsonBeanFactoryPage, clearStack: false);
   }
 }

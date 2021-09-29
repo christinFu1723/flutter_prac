@@ -13,6 +13,7 @@ import 'package:demo7_pro/route/pages/webview/index.dart'
     show WebviewPageRoutes;
 import 'package:demo7_pro/route/pages/filter_page/index.dart' show FilterPageRoutes;
 import 'package:demo7_pro/route/pages/login_page/index.dart' show LoginPageRoutes;
+import 'package:demo7_pro/route/pages/FlutterJsonBeanFactoryPage/index.dart' show FlutterJsonBeanFactoryPageRoutes;
 import 'package:demo7_pro/widgets/tabbar/tab_nav.dart' show TabNavigator;
 
 
@@ -30,7 +31,8 @@ class Routes {
     ...SearchPageRoutes.route,
     ...WebviewPageRoutes.route,
     ...FilterPageRoutes.route,
-    ...LoginPageRoutes.route
+    ...LoginPageRoutes.route,
+    ...FlutterJsonBeanFactoryPageRoutes.route
   ];
 
   static void configureRoutes(FluroRouter router) {
