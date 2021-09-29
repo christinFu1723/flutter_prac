@@ -1,5 +1,4 @@
 import 'package:demo7_pro/model/personal_information.dart';
-import 'dart:io';
 import 'dart:convert';
 import 'package:demo7_pro/utils/prefers.dart';
 import 'package:provider/provider.dart';

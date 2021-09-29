@@ -7,6 +7,7 @@ import 'package:demo7_pro/utils/event_bus.dart';
 import 'package:demo7_pro/services/app.dart';
 import 'package:demo7_pro/eventBus/app.dart' show NeedReLoginEvent;
 import 'package:demo7_pro/services/app.dart' show AppService;
+import 'package:demo7_pro/utils/img_save.dart' show saveImage;
 
 import 'package:demo7_pro/route/pages/filter_page/index.dart'
     show FilterPageRoutes;
@@ -121,7 +122,7 @@ class _MyPageState extends State<MyPage> {
                         borderWidth: 4,
                         borderColor: Color.fromARGB(255, 255, 255, 255)),
                     onTap: () {
-                      AppService.saveImage(
+                      saveImage(
                         'image/3.jpg',
                         isAsset: true,
                       );
