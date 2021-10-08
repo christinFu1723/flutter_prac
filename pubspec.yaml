@@ -150,6 +150,11 @@ dependencies:
   # 路由库
   # https://pub:dev/packages/fluro/
   fluro: ^2.0.3
+  html_editor_enhanced: ^2.3.0
+
+  # dart string 转html编码
+  # https://pub.dev/packages/html_character_entities/install
+  html_character_entities: ^1.0.0+1
 
 dev_dependencies:
   flutter_test:

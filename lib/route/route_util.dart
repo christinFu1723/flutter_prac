@@ -5,6 +5,7 @@ import 'package:demo7_pro/route/routes.dart' show Routes;
 import 'package:demo7_pro/route/route_extension.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:logger/logger.dart';
 
 /// 页面切换
 /// 需要编写RouteItem并且在route/routes.dart里注册页面路由
@@ -17,6 +18,7 @@ Future navTo(BuildContext context, String path,
     Object arguments}) {
   // 如果是跳转到根目录，清空回退栈
   var isRoot = path == Routes.root;
+  Logger().i(path);
   return FluroRouter.appRouter.navTo(context, path,
       replace: replace,
       clearStack: isRoot ? true : clearStack,
