@@ -150,6 +150,9 @@ dependencies:
   # 路由库
   # https://pub:dev/packages/fluro/
   fluro: ^2.0.3
+
+  # html_editor富文本编辑器
+  # https://pub.dev/packages/html_editor_enhanced
   html_editor_enhanced: ^2.3.0
 
   # dart string 转html编码

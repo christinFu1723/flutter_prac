@@ -1,3 +1,4 @@
+import 'package:demo7_pro/services/event_bus.dart';
 import 'package:flutter/material.dart';
 import 'package:demo7_pro/eventBus/app.dart';
 import 'dart:async';
@@ -53,20 +54,23 @@ class _TabNavigatorState extends State<TabNavigator> {
 
   Widget build(BuildContext context) {
     return Scaffold(
-      body: PageView(
-        controller: _controller,
+      body: IndexedStack(
+        // controller: _controller,
         children: TabConfig.tab,
-        physics: NeverScrollableScrollPhysics(),
+        index: _currentIndex,
+        // physics: NeverScrollableScrollPhysics(),
       ),
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: _currentIndex,
         onTap: (index) {
           // _controller.jumpToPage(index);
-          _controller.animateToPage(index, duration: new Duration(milliseconds: 500),curve:new ElasticOutCurve(4));
+          // _controller.animateToPage(index, duration: new Duration(milliseconds: 500),curve:new ElasticOutCurve(4));
 
           setState(() {
             _currentIndex = index;
           });
+
+          EventBusService.eventBus.fire(HomeTabChangeEvent(index));
         },
         type: BottomNavigationBarType.fixed,
         items: [

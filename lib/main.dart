@@ -15,6 +15,7 @@ void main() async {
   final botToastBuilder = BotToastInit();
   await dotenv.load(fileName: ".env"); // 静态文件需要在pubspec.yaml里注册
 
+
   // 实例化路由配置
   Routes.configureRoutes(FluroRouter.appRouter);
 

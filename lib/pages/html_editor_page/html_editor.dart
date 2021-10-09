@@ -15,9 +15,9 @@ import 'package:logger/logger.dart';
 
 
 class HtmlEditorPage extends StatefulWidget {
-  String fileName;
-  String fileUrl;
-  String templateNo;
+  final String fileName;
+  final String fileUrl;
+  final String templateNo;
 
   HtmlEditorPage({Key key, this.fileName, this.fileUrl, this.templateNo})
       : super(key: key);

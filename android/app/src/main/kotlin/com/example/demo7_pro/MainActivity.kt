@@ -1,4 +1,4 @@
-package com.dingdangdata.cheguanjia.app
+package com.dingdangdata.demoApp.app
 
 import android.os.Bundle
 import com.example.asr_plugin.AsrPlugin

@@ -24,6 +24,9 @@ import 'package:demo7_pro/route/pages/speak_page//index.dart'
 import 'package:demo7_pro/route/pages/submit_page/index.dart'
     show SubmitPageRoutes;
 
+import 'package:demo7_pro/dao/getList/get_list.dart' show GetListRequest;
+import 'package:logger/logger.dart';
+
 const AppBar_Hide_Distance = 100;
 const SEARCH_BAR_DEFAULT_TEXT = '首页默认值';
 
@@ -32,7 +35,7 @@ class MyHomePage extends StatefulWidget {
   _MyHomePageState createState() => _MyHomePageState();
 }
 
-class _MyHomePageState extends State<MyHomePage> {
+class _MyHomePageState extends State<MyHomePage>  with TickerProviderStateMixin {
   String resultString = '';
   HomeModel model;
   GridNavModel gridNav;
@@ -49,8 +52,9 @@ class _MyHomePageState extends State<MyHomePage> {
     print('刷新');
     try {
       var _model = await HomeDao.fetch();
+      var _test  = await GetListRequest.fetch();
       var homeModelInstance = _model['HomeModel'];
-
+      if(!mounted) return;
       setState(() {
         model = _model['HomeModel'];
         gridNav = model.gridNav;
@@ -62,6 +66,7 @@ class _MyHomePageState extends State<MyHomePage> {
         _loading = false;
       });
     } catch (e) {
+      if(!mounted) return;
       setState(() {
         _loading = false;
       });
@@ -72,13 +77,15 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   void initState() {
     // TODO: implement initState
-    super.initState();
+
 
     loadData();
     _scrollController.addListener(() {
       if (_scrollController.position.pixels ==
           _scrollController.position.maxScrollExtent) {}
     });
+    Logger().i('我是首页初始化');
+    super.initState();
   }
 
   @override
@@ -117,7 +124,7 @@ class _MyHomePageState extends State<MyHomePage> {
                       ))
                 ],
               )),
-          _appBar
+          _appBar()
         ]),
       ),
     );
@@ -136,7 +143,7 @@ class _MyHomePageState extends State<MyHomePage> {
     });
   }
 
-  Widget get _appBar {
+  Widget  _appBar() {
     return Column(
       children: [
         Container(
@@ -159,6 +166,7 @@ class _MyHomePageState extends State<MyHomePage> {
               speakClick: _jumpToSpeak,
               defaultText: SEARCH_BAR_DEFAULT_TEXT,
               leftButtonClick: () {},
+              autofocus: false,
             ),
           ),
         ),

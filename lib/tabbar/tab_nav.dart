@@ -59,10 +59,10 @@ class _TabNavigatorState extends State<TabNavigator> {
 
   Widget build(BuildContext context) {
     return Scaffold(
-      body: PageView(
-        controller: _controller,
+      body: IndexedStack(
+        index:_currentIndex ,
         children: TabConfig.tab,
-        physics: NeverScrollableScrollPhysics(),
+
       ),
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: _currentIndex,

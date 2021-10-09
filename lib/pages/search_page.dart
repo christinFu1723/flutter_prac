@@ -1,3 +1,7 @@
+import 'dart:async';
+
+import 'package:demo7_pro/eventBus/app.dart';
+import 'package:demo7_pro/services/event_bus.dart';
 import 'package:flutter/material.dart';
 import 'package:demo7_pro/widgets/search_bar.dart';
 import 'package:demo7_pro/route/pages/webview/index.dart'
@@ -17,45 +21,61 @@ class SearchPage extends StatefulWidget {
   final String hint;
 
   const SearchPage(
-      {Key key, this.hideLeft = true, this.searchUrl = baseUrl, this.keyword, this.hint});
+      {Key key,
+      this.hideLeft = true,
+      this.searchUrl = baseUrl,
+      this.keyword,
+      this.hint});
 
   @override
   _SearchPageState createState() => _SearchPageState();
 }
 
-class _SearchPageState extends State<SearchPage> {
+class _SearchPageState extends State<SearchPage> with TickerProviderStateMixin {
   String showText = '';
   String keyword;
   SearchModel searchModel;
+  final FocusNode focusNode = FocusNode();
 
+  StreamSubscription _homeTabChangeEvent;
+
+  @override
   void initState() {
     super.initState();
     if (widget.keyword != null) {
       _textChange(widget.keyword);
     }
+    _homeTabChangeEvent =
+        EventBusService.eventBus.on<HomeTabChangeEvent>().listen((event) {
+      if (event.index != 1) return;
+      focusNode.requestFocus();
+    });
+  }
+
+  @override
+  void dispose() {
+    _homeTabChangeEvent?.cancel();
+    focusNode.unfocus(); // 失去焦点
+    super.dispose();
   }
 
   Widget build(BuildContext context) {
     return Scaffold(
         body: Column(
-          children: [
-            _appBar(),
-            MediaQuery.removePadding(context: context,
-                removeTop: true,
-                child: Expanded(
-                    flex: 1,
-                    child: ListView.builder(
-                        itemCount: searchModel?.data?.length ?? 0,
-                        itemBuilder: (BuildContext context, int pos) {
-                          return _listViewItem(pos);
-                        })
-                )
-            )
-
-
-          ],
-        )
-    );
+      children: [
+        _appBar(),
+        MediaQuery.removePadding(
+            context: context,
+            removeTop: true,
+            child: Expanded(
+                flex: 1,
+                child: ListView.builder(
+                    itemCount: searchModel?.data?.length ?? 0,
+                    itemBuilder: (BuildContext context, int pos) {
+                      return _listViewItem(pos);
+                    })))
+      ],
+    ));
   }
 
   _textChange(text) {
@@ -68,8 +88,7 @@ class _SearchPageState extends State<SearchPage> {
     }
     String url = widget.searchUrl + text;
     // SearchDao.fetch(url:url,keyword:keyword)
-    SearchDao.fetch(keyword: keyword)
-        .then((resp) {
+    SearchDao.fetch(keyword: keyword).then((resp) {
       if (resp['SearchModel']?.keyword == keyword) {
         // 输入内容和服务器返回一致才渲染
         setState(() {
@@ -89,47 +108,42 @@ class _SearchPageState extends State<SearchPage> {
                 gradient: LinearGradient(
                     colors: [Color(0x66000000), Colors.transparent],
                     begin: Alignment.topCenter,
-                    end: Alignment.bottomCenter
-                )
-            ),
+                    end: Alignment.bottomCenter)),
             child: Container(
               padding: EdgeInsets.only(top: 20),
               height: 80,
               decoration: BoxDecoration(color: Colors.white),
               child: SearchBar(
+                focusNode: focusNode,
                 hideLeft: widget.hideLeft,
                 defaultText: widget.keyword,
                 hint: widget.hint,
                 speakClick: _jumpToSpeak,
+                autofocus: false,
                 leftButtonClick: () {
                   Navigator.pop(context);
                 },
-                onChanged: _textChange,
+                // onChanged: _textChange,
               ),
-            )
-        ),
-
-
+            )),
       ],
     );
   }
 
   _listViewItem(pos) {
-    if (searchModel == null || searchModel.data == null ||
+    if (searchModel == null ||
+        searchModel.data == null ||
         searchModel.data.length < 1) return null;
     SearchModelItem item = searchModel.data[pos];
     return GestureDetector(
       onTap: () {
-
-        navTo(context, "${WebviewPageRoutes.webview}", arguments: {
-          "url": item.url, "title": '详情'
-        });
+        navTo(context, "${WebviewPageRoutes.webview}",
+            arguments: {"url": item.url, "title": '详情'});
       },
       child: Container(
         padding: EdgeInsets.all(10),
         decoration: BoxDecoration(
-            border: Border(bottom: BorderSide(width: 0.3, color: Colors.grey))
-        ),
+            border: Border(bottom: BorderSide(width: 0.3, color: Colors.grey))),
         child: Row(
           children: [
             Container(
@@ -149,8 +163,7 @@ class _SearchPageState extends State<SearchPage> {
                 Container(
                     width: 300,
                     margin: EdgeInsets.only(top: 5),
-                    child: _subTitle(item)
-                )
+                    child: _subTitle(item))
               ],
             )
           ],
@@ -160,7 +173,6 @@ class _SearchPageState extends State<SearchPage> {
   }
 
   _jumpToSpeak() {
-
     navTo(context, "${SpeakPageRoutes.speak}");
   }
 
@@ -179,8 +191,7 @@ class _SearchPageState extends State<SearchPage> {
     spans.addAll(_keywordTextSpans(item.word, searchModel.keyword));
     spans.add(TextSpan(
         text: ' ${item.districtname ?? ''}',
-        style: TextStyle(fontSize: 16, color: Colors.grey)
-    ));
+        style: TextStyle(fontSize: 16, color: Colors.grey)));
     return RichText(text: TextSpan(children: spans));
   }
 
@@ -204,18 +215,14 @@ class _SearchPageState extends State<SearchPage> {
 
   _subTitle(SearchModelItem item) {
     return RichText(
-      text: TextSpan(
-          children: [
-            TextSpan(
-                text: item.word ?? '',
-                style: TextStyle(fontSize: 16, color: Colors.orange)
-            ),
-            TextSpan(
-                text: item.type ?? '',
-                style: TextStyle(fontSize: 16, color: Colors.grey)
-            )
-          ]
-      ),
+      text: TextSpan(children: [
+        TextSpan(
+            text: item.word ?? '',
+            style: TextStyle(fontSize: 16, color: Colors.orange)),
+        TextSpan(
+            text: item.type ?? '',
+            style: TextStyle(fontSize: 16, color: Colors.grey))
+      ]),
     );
   }
 }
