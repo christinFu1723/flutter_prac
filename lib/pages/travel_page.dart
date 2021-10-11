@@ -22,13 +22,18 @@ class _TravelPageState extends State<TravelPage> with TickerProviderStateMixin {
   @override
   void initState() {
     super.initState();
+
     _controller = TabController(length: 0, vsync: this);
+
     _controller.addListener(() {
+      if (!mounted) return;
       setState(() {
         nowSltTab = _controller.index;
       });
+
     });
     _loadTabs();
+
   }
 
   @override
@@ -43,6 +48,7 @@ class _TravelPageState extends State<TravelPage> with TickerProviderStateMixin {
       TravelTabModel model = res['TravelTabModel'];
       // _controller.dispose();
       _controller = TabController(length: model.tabs.length, vsync: this);
+      if (!mounted) return;
       setState(() {
         tabsList = model.tabs;
         travelTabModel = model;

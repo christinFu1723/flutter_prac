@@ -45,8 +45,10 @@ class _TabNavigatorState extends State<TabNavigator> {
   }
 
   Future<void> needLogin() async{
+    if (!mounted) return;
     await AppService.clearPrefers(context);
     Logger().i('检查到需要跳转登录页');
+
     navTo(context, "${LoginPageRoutes.login}",clearStack:true);
   }
 

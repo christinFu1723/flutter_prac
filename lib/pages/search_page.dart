@@ -11,7 +11,7 @@ import 'package:demo7_pro/route/pages/speak_page//index.dart'
 import 'package:demo7_pro/route/route_util.dart' show navTo;
 import 'package:demo7_pro/dao/search_dao.dart';
 import 'package:demo7_pro/model/search_model.dart';
-
+import 'package:logger/logger.dart';
 import 'dart:math';
 
 class SearchPage extends StatefulWidget {
@@ -39,9 +39,15 @@ class _SearchPageState extends State<SearchPage> with TickerProviderStateMixin {
 
   StreamSubscription _homeTabChangeEvent;
 
+  // @override
+  // bool get wantKeepAlive =>true;
+
+
+
   @override
   void initState() {
     super.initState();
+    Logger().i('初始化页面额');
     if (widget.keyword != null) {
       _textChange(widget.keyword);
     }
@@ -50,6 +56,7 @@ class _SearchPageState extends State<SearchPage> with TickerProviderStateMixin {
       if (event.index != 1) return;
       focusNode.requestFocus();
     });
+    // focusNode.requestFocus();
   }
 
   @override
