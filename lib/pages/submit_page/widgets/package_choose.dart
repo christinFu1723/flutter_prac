@@ -3,14 +3,14 @@ import 'package:flutter/material.dart';
 import 'package:demo7_pro/widgets/title.dart' show TitleSpan;
 import 'package:demo7_pro/config/theme.dart' show AppTheme;
 import 'package:demo7_pro/utils/validate.dart' show ValidateUtil;
-import 'package:demo7_pro/dto/companyInfo.dart' show CompanyInfo;
+import 'package:demo7_pro/dto/company_info.dart' show CompanyInfo;
 import 'package:logger/logger.dart';
 import 'package:flutter_rounded_date_picker/flutter_rounded_date_picker.dart';
 import 'package:demo7_pro/utils/time.dart' show TimeUtil;
 import 'package:demo7_pro/widgets/common/input.dart' show InputForm;
-import 'package:demo7_pro/widgets/common/inputDecoration.dart'
+import 'package:demo7_pro/widgets/common/input_decoration.dart'
     show InputStyleDecoration;
-import 'package:demo7_pro/widgets/common/checkboxGroup.dart' show CheckBoxGroup;
+import 'package:demo7_pro/widgets/common/checkbox_group.dart' show CheckBoxGroup;
 
 class PackageChoose extends StatefulWidget {
   final Function onNextStep;

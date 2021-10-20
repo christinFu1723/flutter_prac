@@ -1,5 +1,5 @@
 import 'package:demo7_pro/route/router_item.dart' show RouteItem;
-import 'package:demo7_pro/pages/FlutterJsonBeanFactoryTest/FlutterJsonBeanFactory.dart'
+import 'package:demo7_pro/pages/flutter_json_bean_factory_test/flutter_json_bean_factory.dart'
     show FlutterJsonBeanFactoryPage;
 
 // 路由定义

@@ -1,6 +1,6 @@
 import 'package:timeline_tile/timeline_tile.dart';
 import 'package:flutter/material.dart';
-import 'package:demo7_pro/config/stepTimelineConfig.dart';
+import 'package:demo7_pro/config/step_timeline_config.dart';
 
 class StepTimeline extends StatelessWidget {
   final List<String> data;

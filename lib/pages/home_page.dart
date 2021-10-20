@@ -24,7 +24,7 @@ import 'package:demo7_pro/route/pages/speak_page//index.dart'
 import 'package:demo7_pro/route/pages/submit_page/index.dart'
     show SubmitPageRoutes;
 
-import 'package:demo7_pro/dao/getList/get_list.dart' show GetListRequest;
+import 'package:demo7_pro/dao/get_list_ccm_request_test/get_list.dart' show GetListCCMRequestTest;
 import 'package:logger/logger.dart';
 
 const AppBar_Hide_Distance = 100;
@@ -52,7 +52,7 @@ class _MyHomePageState extends State<MyHomePage>  with TickerProviderStateMixin 
     print('刷新');
     try {
       var _model = await HomeDao.fetch();
-      var _test  = await GetListRequest.fetch();
+      var _test  = await GetListCCMRequestTest.fetch();
       var homeModelInstance = _model['HomeModel'];
       if(!mounted) return;
       setState(() {

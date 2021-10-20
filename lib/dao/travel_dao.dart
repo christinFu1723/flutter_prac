@@ -1,6 +1,6 @@
 import 'package:demo7_pro/model/travel_model.dart';
 import 'dart:async';
-import 'package:demo7_pro/http/http_sec.dart';
+import 'package:demo7_pro/http/http.dart';
 import 'dart:convert';
 
 
@@ -29,7 +29,7 @@ class TravelDao{
     paramsMap['pageSize'] = pageSize;
     Params['groupChannelCode'] = groupChannelCode;
     // 这里的url含http(s),根据dio的基础语法。baseurl存不存在，不重要
-    final resp = await HttpUtilSec.instance.post(url,data:json.encode(Params));
+    final resp = await HttpUtil.instance.post(url,data:json.encode(Params));
     return {
       'TravelItemModel':TravelItemModel.fromJson(resp),
       'resultStrJson':resp

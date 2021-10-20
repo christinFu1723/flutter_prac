@@ -27,21 +27,17 @@ class HttpUtil {
   static Dio _dio = Dio();
 
   // HttpUtil 实例
-  static HttpUtil _instance = HttpUtil();
-
-  static HttpUtil get instance => _instance;
+  static HttpUtil instance = HttpUtil();
 
   static HttpUtil getInstance() {
-    if (_instance != null) return _instance;
-    _instance = new HttpUtil();
-    return _instance;
+    if (instance != null) return instance;
+    instance = new HttpUtil();
+    return instance;
   }
 
   setProxy(bool proxyFlg) {
     this.openProxy = proxyFlg;
   }
-
-
 
   HttpUtil() {
     (_dio.httpClientAdapter as DefaultHttpClientAdapter).onHttpClientCreate =
@@ -76,6 +72,7 @@ class HttpUtil {
     Map<String, dynamic> queryParameters,
     Map<String, dynamic> headers,
     Options options,
+    bool isSpecial = false, // 如果true，则返回Response Object
   }) async {
     // 构造请求参数
     options = options ?? Options();
@@ -91,78 +88,10 @@ class HttpUtil {
         queryParameters: queryParameters,
         options: options,
       );
-
-      // return Future.value(response);
+      if (isSpecial) {
+        return Future.value(response);
+      }
       return response.data;
-    } catch (error) {
-      Logger().d(error);
-
-      if (error is DioError && error.response == null) {
-        throw '连接服务器失败';
-      }
-
-      if (error is DioError && error.response.data != null) {
-        /// 连接服务器失败
-        if (error.response?.statusCode == 502) {
-          throw '连接服务器失败';
-        }
-
-        /// 验证过期，需要重新登录
-        if (error.response?.statusCode == 401) {
-          EventBusUtil.instance.eventBus.fire(NeedReLoginEvent());
-          // AppUtil().pushAndRemoveUntil(context,);
-          throw '登录无效，请重新登录';
-        }
-
-        /// 验证过期，需要重新登录
-        if (error.response?.statusCode == 404) throw '调用接口不存在';
-
-        /// 判断消息是否为 `{"msg": "error"}` 之类的格式
-        if (RegExp(r'^{.*}$').hasMatch(error.response.toString())) {
-          Map<String, dynamic> _error = json.decode(error.response.toString());
-          throw _error['msg'] ?? _error['error_description'];
-        }
-
-        try {
-          ResponseData responseData = ResponseData.fromJson(
-            error.response.data ?? {},
-          );
-          if (responseData?.code != 200) throw responseData.msg ?? '请求错误，请稍后再试';
-        } catch (e) {
-          throw error.response.data.toString();
-        }
-      }
-
-      throw error.response?.statusMessage ??
-          error.response.toString() ??
-          error.toString();
-    }
-  }
-
-  // 请求方法(测试昌明哥写法)
-  Future<dynamic> request2(
-    String url, {
-    dynamic data,
-    Map<String, dynamic> queryParameters,
-    Map<String, dynamic> headers,
-    Options options,
-  }) async {
-    // 构造请求参数
-    options = options ?? Options();
-
-    if (headers != null) {
-      options.headers.addAll(headers);
-    }
-
-    try {
-      Response response = await _dio.request(
-        url,
-        data: data,
-        queryParameters: queryParameters,
-        options: options,
-      );
-
-      return Future.value(response);
     } catch (error) {
       Logger().d(error);
 
@@ -307,11 +236,10 @@ class HttpUtil {
     CancelToken cancelToken,
     Options options,
   }) async =>
-      await (await request(
-        url,
-        data: data,
-        options: (options ?? Options()).copyWith(method: 'delete'),
-      ))
+      await (await request(url,
+              data: data,
+              options: (options ?? Options()).copyWith(method: 'delete'),
+              isSpecial: true))
           .toObject<T>();
 
 // get请求，返回经过 BaseEntity 包装后的实体
@@ -322,12 +250,11 @@ class HttpUtil {
     CancelToken cancelToken,
     Options options,
   }) async {
-    Response res = await request2(
-      url,
-      data: data,
-      queryParameters: queryParameters,
-      options: (options ?? Options()).copyWith(method: 'get'),
-    );
+    Response res = await request(url,
+        data: data,
+        queryParameters: queryParameters,
+        options: (options ?? Options()).copyWith(method: 'get'),
+        isSpecial: true);
     Logger().i('res:$res');
     var resp = await res.toObject<T>();
     Logger().i('resp:$resp');
@@ -343,12 +270,11 @@ class HttpUtil {
     CancelToken cancelToken,
     Options options,
   }) async {
-    Response res = await request2(
-      url,
-      data: data,
-      queryParameters: queryParameters,
-      options: (options ?? Options()).copyWith(method: 'get'),
-    );
+    Response res = await request(url,
+        data: data,
+        queryParameters: queryParameters,
+        options: (options ?? Options()).copyWith(method: 'get'),
+        isSpecial: true);
     Logger().i('res:$res');
     var resp = await res.toList<T>();
     Logger().i('resp:$resp');
@@ -364,12 +290,11 @@ class HttpUtil {
     CancelToken cancelToken,
     Options options,
   }) async {
-    Response res = await request2(
-      url,
-      data: data,
-      queryParameters: queryParameters,
-      options: (options ?? Options()).copyWith(method: 'post'),
-    );
+    Response res = await request(url,
+        data: data,
+        queryParameters: queryParameters,
+        options: (options ?? Options()).copyWith(method: 'post'),
+        isSpecial: true);
     Logger().i('res:$res');
     var resp = await res.toObject<T>();
     Logger().i('resp:$resp');

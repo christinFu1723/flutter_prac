@@ -1,6 +1,6 @@
 import 'package:demo7_pro/model/search_model.dart';
 import 'dart:async';
-import 'package:demo7_pro/http/http_sec.dart';
+import 'package:demo7_pro/http/http.dart';
 import 'package:demo7_pro/config/http.dart';
 
 
@@ -11,7 +11,7 @@ class SearchDao{
   static Future<dynamic> fetch({keyword}) async{
 
     // 这里的url含http(s),根据dio的基础语法。baseurl存不存在，不重要
-      final resp = await HttpUtilSec.instance.get(baseUrl,queryParameters:{
+      final resp = await HttpUtil.instance.get(baseUrl,queryParameters:{
         'source':'mobileweb',
         'action':'autocomplete',
         'contentType':'JSON',

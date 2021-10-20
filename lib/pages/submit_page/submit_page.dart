@@ -3,14 +3,14 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:demo7_pro/widgets/timeline.dart' show StepTimeline;
 import 'package:demo7_pro/config/theme.dart' show AppTheme;
-import 'package:demo7_pro/pages/submit_page/widgets/companyInfo.dart'
+import 'package:demo7_pro/pages/submit_page/widgets/company_info.dart'
     show CompanyInfoSubmit;
-import 'package:demo7_pro/pages/submit_page/widgets/accountInfo.dart'
+import 'package:demo7_pro/pages/submit_page/widgets/account_info.dart'
     show AccountInfoSubmit;
-import 'package:demo7_pro/pages/submit_page/widgets/packageChoose.dart'
+import 'package:demo7_pro/pages/submit_page/widgets/package_choose.dart'
     show PackageChoose;
 import 'package:logger/logger.dart';
-import 'package:demo7_pro/dto/companyInfo.dart' show CompanyInfo;
+import 'package:demo7_pro/dto/company_info.dart' show CompanyInfo;
 import 'package:demo7_pro/route/route_util.dart' show pop;
 
 

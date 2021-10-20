@@ -225,14 +225,18 @@ class _TravelItem extends StatelessWidget {
     return Container(
       padding: EdgeInsets.fromLTRB(6, 0, 6, 10),
       child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-        PhysicalModel(
-          color: Colors.transparent,
-          clipBehavior: Clip.antiAlias,
-          borderRadius: BorderRadius.circular(12),
-          child: Image.network(
-            item.article.author?.coverImage?.dynamicUrl,
-            width: 24,
-            height: 24,
+        ConstrainedBox(
+          constraints: BoxConstraints(
+              minWidth: 24.0, maxWidth: 24.0, minHeight: 24.0, maxHeight: 24.0),
+          child: PhysicalModel(
+            color: Colors.transparent,
+            clipBehavior: Clip.antiAlias,
+            borderRadius: BorderRadius.circular(12),
+            child: Image.network(
+              item.article.author?.coverImage?.dynamicUrl,
+              width: 24,
+              height: 24,
+            ),
           ),
         ),
         Container(

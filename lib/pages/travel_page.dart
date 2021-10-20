@@ -63,6 +63,7 @@ class _TravelPageState extends State<TravelPage> with TickerProviderStateMixin {
       onPressed: () {
         navTo(context, HtmlEditorPageRoutes.htmlEditorPage, clearStack: false);
       },
+      heroTag: 'travel_page_btn',
       child: Icon(Icons.edit),
     );
   }

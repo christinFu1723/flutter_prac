@@ -45,7 +45,6 @@ class _SearchBarState extends State<SearchBar> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    Logger().i('初始化SearchBar');
 
     if (widget.defaultText != null) {
       setState(() {
