@@ -1,4 +1,4 @@
-package com.dingdangdata.demoApp.app
+package com.afu.demo.app
 
 import android.os.Bundle
 import com.example.asr_plugin.AsrPlugin

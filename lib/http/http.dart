@@ -275,9 +275,9 @@ class HttpUtil {
         queryParameters: queryParameters,
         options: (options ?? Options()).copyWith(method: 'get'),
         isSpecial: true);
-    Logger().i('res:$res');
+
     var resp = await res.toList<T>();
-    Logger().i('resp:$resp');
+
 
     return resp;
   }
@@ -295,9 +295,9 @@ class HttpUtil {
         queryParameters: queryParameters,
         options: (options ?? Options()).copyWith(method: 'post'),
         isSpecial: true);
-    Logger().i('res:$res');
+
     var resp = await res.toObject<T>();
-    Logger().i('resp:$resp');
+
 
     return resp;
   }
@@ -382,7 +382,7 @@ class HttpUtil {
 
 extension ResponseExtension on Response {
   Future<T> toObject<T>() async {
-    Logger().i('进来了');
+
     return await HttpUtil.handleObj<T>(this);
   }
 

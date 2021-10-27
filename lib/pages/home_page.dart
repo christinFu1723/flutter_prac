@@ -26,6 +26,8 @@ import 'package:demo7_pro/route/pages/submit_page/index.dart'
 
 import 'package:demo7_pro/dao/get_list_ccm_request_test/get_list.dart' show GetListCCMRequestTest;
 import 'package:logger/logger.dart';
+import 'package:demo7_pro/services/jpush.dart' show JPushService;
+import 'package:jpush_flutter/jpush_flutter.dart' show LocalNotification;
 
 const AppBar_Hide_Distance = 100;
 const SEARCH_BAR_DEFAULT_TEXT = '首页默认值';
@@ -85,6 +87,15 @@ class _MyHomePageState extends State<MyHomePage>  with TickerProviderStateMixin 
           _scrollController.position.maxScrollExtent) {}
     });
     Logger().i('我是首页初始化');
+    var fireDate = DateTime.fromMillisecondsSinceEpoch(DateTime.now().millisecondsSinceEpoch + 1000);
+    JPushService.sendLocal(LocalNotification(
+      id: 234,
+      title: '我是推送测试标题wwwwwwwww',
+      buildId: 1,
+      content: '看到了说明已经成功了hahahaha',
+      fireTime: fireDate,
+      subtitle: '一个测试qqqqqqqq',
+    ));
     super.initState();
   }
 
