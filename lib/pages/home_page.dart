@@ -50,7 +50,7 @@ class _MyHomePageState extends State<MyHomePage>
   List<CommonModel> bannerList;
   SalesBoxModel salesBox;
   bool _loading = true;
-  double appBarAlpha = 0;
+
   String opacityKey = 'home_page_opacity';
 
   ScrollController _scrollController = ScrollController();
@@ -72,6 +72,7 @@ class _MyHomePageState extends State<MyHomePage>
         resultString = json.encode(homeModelInstance.config);
         _loading = false;
       });
+      getLine(opacityKey).setData(0); // 初始化组件，否则最开始不渲染。
     } catch (e) {
       if (!mounted) return;
       setState(() {
@@ -101,12 +102,14 @@ class _MyHomePageState extends State<MyHomePage>
       fireTime: fireDate,
       subtitle: '一个测试qqqqqqqq',
     ));
+
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
     print('查看是否不停在渲染');
+
     return Scaffold(
       backgroundColor: Color(0xfff2f2f2),
       body: LoadingContainer(
@@ -196,28 +199,30 @@ class _MyHomePageState extends State<MyHomePage>
   }
 
   Widget get _banner {
-    return Container(
-      height: 160,
-      child: new Swiper(
-        itemBuilder: (BuildContext context, int index) {
-          return _wrapGesture(
-            context,
-            Image.network(
-              bannerList[index].icon,
-              fit: BoxFit.cover,
-            ),
-            // ImageNetwork(imageUrl:bannerList[index].icon, fit: BoxFit.cover),
+    return bannerList != null && bannerList.length >= 1
+        ? Container(
+            height: 360,
+            child: new Swiper(
+              itemBuilder: (BuildContext context, int index) {
+                return _wrapGesture(
+                  context,
+                  Image.network(
+                    bannerList[index].icon,
+                    fit: BoxFit.cover,
+                  ),
+                  // ImageNetwork(imageUrl:bannerList[index].icon, fit: BoxFit.cover),
 
-            bannerList[index].url,
-            bannerList[index].title,
-          );
-        },
-        itemCount: bannerList != null ? bannerList.length : 0,
-        autoplay: true,
-        pagination: new SwiperPagination(),
-        control: new SwiperControl(),
-      ),
-    );
+                  bannerList[index].url,
+                  bannerList[index].title,
+                );
+              },
+              itemCount: bannerList != null ? bannerList.length : 0,
+              autoplay: true,
+              pagination: new SwiperPagination(),
+              control: new SwiperControl(),
+            ),
+          )
+        : Container();
   }
 
   Widget get _listView {
