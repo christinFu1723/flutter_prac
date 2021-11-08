@@ -42,21 +42,21 @@ class _SearchPageState extends State<SearchPage> with TickerProviderStateMixin {
   // @override
   // bool get wantKeepAlive =>true;
 
-
-
   @override
   void initState() {
     super.initState();
-    Logger().i('初始化页面额');
+
     if (widget.keyword != null) {
       _textChange(widget.keyword);
     }
     _homeTabChangeEvent =
         EventBusService.eventBus.on<HomeTabChangeEvent>().listen((event) {
-      if (event.index != 1) return;
-      focusNode.requestFocus();
+      if (event.index != 1) {
+        focusNode.unfocus(); // 失去焦点
+      } else {
+        focusNode.requestFocus();
+      }
     });
-    // focusNode.requestFocus();
   }
 
   @override

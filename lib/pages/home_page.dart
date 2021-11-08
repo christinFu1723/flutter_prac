@@ -181,13 +181,15 @@ class _MyHomePageState extends State<MyHomePage>
                   defaultText: SEARCH_BAR_DEFAULT_TEXT,
                   leftButtonClick: () {},
                   autofocus: false,
+                  focusNode: null,
                 ),
               ),
             ),
             Container(
               height: data > 0.2 ? 0.5 : 0,
-              decoration: BoxDecoration(
-                  boxShadow: [BoxShadow(color: Colors.black12, blurRadius: 0.5)]),
+              decoration: BoxDecoration(boxShadow: [
+                BoxShadow(color: Colors.black12, blurRadius: 0.5)
+              ]),
             )
           ],
         ));

@@ -4,15 +4,14 @@ import 'package:flutter/material.dart';
 // import 'package:demo7_pro/pages/my_page.dart';
 // import 'package:demo7_pro/pages/search_page.dart';
 // import 'package:demo7_pro/pages/travel_page.dart';
+// import 'package:demo7_pro/pages/login_page.dart';
+// import 'package:demo7_pro/utils/app.dart';
 import 'package:demo7_pro/eventBus/app.dart';
 import 'dart:async';
 import 'package:demo7_pro/utils/event_bus.dart';
-import 'package:demo7_pro/pages/login_page.dart';
 import 'package:demo7_pro/services/app.dart';
-import 'package:demo7_pro/utils/app.dart';
 import 'package:logger/logger.dart';
 import 'package:demo7_pro/route/tabbar/tabbar.dart' show TabConfig;
-
 import 'package:demo7_pro/route/route_util.dart' show navTo;
 import 'package:demo7_pro/route/pages/login_page/index.dart'
     show LoginPageRoutes;
@@ -80,16 +79,16 @@ class _TabNavigatorState extends State<TabNavigator> {
         },
         type: BottomNavigationBarType.fixed,
         items: [
-          _bottomItem('首页',Icons.home,0),
-          _bottomItem('搜索',Icons.search,1),
-          _bottomItem('旅拍',Icons.camera,2),
-          _bottomItem('我的',Icons.account_circle,3),
+          _bottomItem('首页', Icons.home, 0),
+          _bottomItem('搜索', Icons.search, 1),
+          _bottomItem('旅拍', Icons.camera, 2),
+          _bottomItem('我的', Icons.account_circle, 3),
         ],
       ),
     );
   }
 
-  _bottomItem(String title, IconData icon,int index) {
+  _bottomItem(String title, IconData icon, int index) {
     return BottomNavigationBarItem(
         icon: Icon(
           icon,
