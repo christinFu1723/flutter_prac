@@ -21,6 +21,7 @@ class _SubmitPageState extends State<SubmitPage> with TickerProviderStateMixin {
   int nowStep = 2;
   final List<String> timeline = ['信息录入', '主账号创建', '套餐选择'];
   TabController _tabController;
+  ScrollController _nestedScrollCtrl;
   CompanyInfo form;
 
   @override
@@ -28,11 +29,13 @@ class _SubmitPageState extends State<SubmitPage> with TickerProviderStateMixin {
     super.initState();
     _tabController = TabController(length: 3, vsync: this);
     _tabController.animateTo(this.nowStep);
+    _nestedScrollCtrl = ScrollController();
     form = CompanyInfo();
   }
 
   @override
   dispose() {
+    _nestedScrollCtrl.dispose();
     _tabController.dispose();
     super.dispose();
   }
@@ -43,6 +46,7 @@ class _SubmitPageState extends State<SubmitPage> with TickerProviderStateMixin {
     final screenHeight = size.height;
     return Scaffold(body: Builder(builder: (BuildContext context) {
       return NestedScrollView(
+        controller: _nestedScrollCtrl,
         headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
           return <Widget>[
             SliverAppBar(
@@ -166,6 +170,8 @@ class _SubmitPageState extends State<SubmitPage> with TickerProviderStateMixin {
       return;
     }
     _tabController.index = nextStep;
+    _nestedScrollCtrl
+        .jumpTo(_nestedScrollCtrl.position.minScrollExtent); // index切换，回到顶部
     // _tabController.animateTo(nextStep, duration: Duration(milliseconds: 20),curve: Curves.easeIn);
     setState(() {
       this.nowStep = nextStep;
