@@ -148,7 +148,7 @@ dependencies:
   iconfont: ^1.0.0
 
   # 路由库
-  # https://pub:dev/packages/fluro/
+  # https://pub:dev/packages/fluro
   fluro: ^2.0.3
 
   # html_editor富文本编辑器
@@ -178,7 +178,7 @@ flutter:
   fonts:
     - family: iconfont
       fonts:
-        - asset: assets/fonts/sxb_icons\iconfont.ttf
+        - asset: assets/fonts/sxb_icons/iconfont.ttf
 
   # To add assets to your application, add an assets section, like this:
   assets:

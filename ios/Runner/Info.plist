@@ -4,6 +4,8 @@
 <dict>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
+	<key>CFBundleDisplayName</key>
+	<string>文立测试app</string>
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
 	<key>CFBundleIdentifier</key>
@@ -15,36 +17,68 @@
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
-	<string>$(FLUTTER_BUILD_NAME)</string>
+	<string>$(MARKETING_VERSION)</string>
 	<key>CFBundleSignature</key>
 	<string>????</string>
+	<key>CFBundleURLTypes</key>
+	<array>
+		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>CFBundleURLName</key>
+			<string>weixin</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>wxcbf4e33e0e9cedeb</string>
+			</array>
+		</dict>
+		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>CFBundleURLName</key>
+			<string>alipay</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>dingdangcheguanjia</string>
+			</array>
+		</dict>
+	</array>
 	<key>CFBundleVersion</key>
-	<string>$(FLUTTER_BUILD_NUMBER)</string>
+	<string>$(CURRENT_PROJECT_VERSION)</string>
+	<key>LSApplicationQueriesSchemes</key>
+	<array>
+		<string>alipays</string>
+		<string>wechat</string>
+		<string>weixin</string>
+		<string>weixinULAPI</string>
+		<string>baidumap</string>
+		<string>iosamap</string>
+		<string>qqmap</string>
+		<string>amap</string>
+	</array>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
+	<key>LSSupportsOpeningDocumentsInPlace</key>
+	<true/>
+	<key>NSAppleMusicUsageDescription</key>
+	<string>是否允许App访问您的媒体资料库</string>
+	<key>NSCameraUsageDescription</key>
+	<string>请允许APP访问您的相机</string>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>请允许APP申请使用麦克风</string>
+	<key>NSPhotoLibraryAddUsageDescription</key>
+	<string>请允许APP保存图片到相册</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>请允许APP访问您的相册</string>
+	<key>UIBackgroundModes</key>
+	<array>
+		<string>remote-notification</string>
+		<string>fetch</string>
+	</array>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
-	<key>NSCameraUsageDescription</key>
-    <string>请允许APP访问您的相机</string>
-    <key>NSPhotoLibraryAddUsageDescription</key>
-    <string>请允许APP保存图片到相册</string>
-    <key>NSPhotoLibraryUsageDescription</key>
-    <string>请允许APP访问您的相册</string>
-    <key>NSMicrophoneUsageDescription</key>
-    <string>请允许APP申请使用麦克风</string>
 	<key>UIMainStoryboardFile</key>
 	<string>Main</string>
-	<key>NSAppleMusicUsageDescription</key>
-    <string>是否允许App访问您的媒体资料库</string>
-    <key>UISupportsDocumentBrowser</key>
-    <true/>
-    <key>LSSupportsOpeningDocumentsInPlace</key>
-    <true/>
-    <key>UIBackgroundModes</key>
-    <array>
-        <string>remote-notification</string>
-        <string>fetch</string>
-    </array>
 	<key>UISupportedInterfaceOrientations</key>
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>
@@ -58,42 +92,8 @@
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
-	<key>CFBundleURLTypes</key>
-    <array>
-        <dict>
-            <key>CFBundleTypeRole</key>
-            <string>Editor</string>
-            <key>CFBundleURLName</key>
-            <string>weixin</string>
-            <key>CFBundleURLSchemes</key>
-            <array>
-                <string>wxcbf4e33e0e9cedeb</string>
-            </array>
-        </dict>
-        <dict>
-            <key>CFBundleTypeRole</key>
-            <string>Editor</string>
-            <key>CFBundleURLName</key>
-            <string>alipay</string>
-            <key>CFBundleURLSchemes</key>
-            <array>
-                <string>dingdangcheguanjia</string>
-            </array>
-        </dict>
-    </array>
-    <key>CFBundleVersion</key>
-    <string>$(CURRENT_PROJECT_VERSION)</string>
-    <key>LSApplicationQueriesSchemes</key>
-    <array>
-        <string>alipays</string>
-        <string>wechat</string>
-        <string>weixin</string>
-        <string>weixinULAPI</string>
-        <string>baidumap</string>
-        <string>iosamap</string>
-        <string>qqmap</string>
-        <string>amap</string>
-    </array>
+	<key>UISupportsDocumentBrowser</key>
+	<true/>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
 </dict>
