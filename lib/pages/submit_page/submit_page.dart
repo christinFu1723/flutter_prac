@@ -1,4 +1,3 @@
-import 'package:demo7_pro/utils/app.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:demo7_pro/widgets/timeline.dart' show StepTimeline;
@@ -12,7 +11,6 @@ import 'package:demo7_pro/pages/submit_page/widgets/package_choose.dart'
 import 'package:logger/logger.dart';
 import 'package:demo7_pro/dto/company_info.dart' show CompanyInfo;
 import 'package:demo7_pro/route/route_util.dart' show pop;
-
 
 class SubmitPage extends StatefulWidget {
   @override
@@ -51,8 +49,9 @@ class _SubmitPageState extends State<SubmitPage> with TickerProviderStateMixin {
               backgroundColor: Colors.white,
               pinned: true,
               stretch: false,
+              forceElevated: true,
               leading: GestureDetector(
-                onTap: (){
+                onTap: () {
                   pop(context);
                 },
                 child: Icon(
@@ -89,32 +88,26 @@ class _SubmitPageState extends State<SubmitPage> with TickerProviderStateMixin {
         child: TabBarView(
           controller: _tabController,
           children: <Widget>[
-            Center(
-              child: SingleChildScrollView(
-                child: CompanyInfoSubmit(
-                    form: this.form,
-                    onNextStep: () => {_handleNextStepDone(nextStep: 1)}),
-                padding: EdgeInsets.symmetric(vertical: 10),
-                physics: NeverScrollableScrollPhysics(),
-              ),
+            SingleChildScrollView(
+              child: CompanyInfoSubmit(
+                  form: this.form,
+                  onNextStep: () => {_handleNextStepDone(nextStep: 1)}),
+              padding: EdgeInsets.symmetric(vertical: 10),
+              physics: NeverScrollableScrollPhysics(),
             ),
-            Center(
-              child: SingleChildScrollView(
-                child: AccountInfoSubmit(
-                    form: this.form,
-                    onNextStep: () => {_handleNextStepDone(nextStep: 2)}),
-                padding: EdgeInsets.symmetric(vertical: 10),
-                physics: NeverScrollableScrollPhysics(),
-              ),
+            SingleChildScrollView(
+              child: AccountInfoSubmit(
+                  form: this.form,
+                  onNextStep: () => {_handleNextStepDone(nextStep: 2)}),
+              padding: EdgeInsets.symmetric(vertical: 10),
+              physics: NeverScrollableScrollPhysics(),
             ),
-            Center(
-              child: SingleChildScrollView(
-                child: PackageChoose(
-                    form: this.form,
-                    onNextStep: () => {_handleNextStepDone(nextStep: 3)}),
-                padding: EdgeInsets.symmetric(vertical: 10),
-                physics: NeverScrollableScrollPhysics(),
-              ),
+            SingleChildScrollView(
+              child: PackageChoose(
+                  form: this.form,
+                  onNextStep: () => {_handleNextStepDone(nextStep: 3)}),
+              padding: EdgeInsets.symmetric(vertical: 10),
+              physics: NeverScrollableScrollPhysics(),
             ),
           ],
         ));
@@ -169,7 +162,7 @@ class _SubmitPageState extends State<SubmitPage> with TickerProviderStateMixin {
   }
 
   _handleNextStepDone({@required int nextStep}) {
-    if(nextStep>=timeline.length){
+    if (nextStep >= timeline.length) {
       return;
     }
     _tabController.index = nextStep;

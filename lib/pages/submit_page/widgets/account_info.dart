@@ -54,8 +54,10 @@ class _AccountInfoSubmitState extends State<AccountInfoSubmit>
       child: Form(
         key: _formKey,
         child: Column(
+
           children: [
             _accountInfoForm(),
+
             _nextBtn(),
           ],
         ),

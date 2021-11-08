@@ -24,10 +24,13 @@ import 'package:demo7_pro/route/pages/speak_page//index.dart'
 import 'package:demo7_pro/route/pages/submit_page/index.dart'
     show SubmitPageRoutes;
 
-import 'package:demo7_pro/dao/get_list_ccm_request_test/get_list.dart' show GetListCCMRequestTest;
+import 'package:demo7_pro/dao/get_list_ccm_request_test/get_list.dart'
+    show GetListCCMRequestTest;
 import 'package:logger/logger.dart';
 import 'package:demo7_pro/services/jpush.dart' show JPushService;
 import 'package:jpush_flutter/jpush_flutter.dart' show LocalNotification;
+import 'package:demo7_pro/utils/data_line/mult_data_line.dart'
+    show MultDataLine;
 
 const AppBar_Hide_Distance = 100;
 const SEARCH_BAR_DEFAULT_TEXT = '首页默认值';
@@ -37,7 +40,8 @@ class MyHomePage extends StatefulWidget {
   _MyHomePageState createState() => _MyHomePageState();
 }
 
-class _MyHomePageState extends State<MyHomePage>  with TickerProviderStateMixin {
+class _MyHomePageState extends State<MyHomePage>
+    with TickerProviderStateMixin, MultDataLine {
   String resultString = '';
   HomeModel model;
   GridNavModel gridNav;
@@ -47,6 +51,7 @@ class _MyHomePageState extends State<MyHomePage>  with TickerProviderStateMixin 
   SalesBoxModel salesBox;
   bool _loading = true;
   double appBarAlpha = 0;
+  String opacityKey = 'home_page_opacity';
 
   ScrollController _scrollController = ScrollController();
 
@@ -54,9 +59,9 @@ class _MyHomePageState extends State<MyHomePage>  with TickerProviderStateMixin 
     print('刷新');
     try {
       var _model = await HomeDao.fetch();
-      var _test  = await GetListCCMRequestTest.fetch();
+      var _test = await GetListCCMRequestTest.fetch();
       var homeModelInstance = _model['HomeModel'];
-      if(!mounted) return;
+      if (!mounted) return;
       setState(() {
         model = _model['HomeModel'];
         gridNav = model.gridNav;
@@ -68,7 +73,7 @@ class _MyHomePageState extends State<MyHomePage>  with TickerProviderStateMixin 
         _loading = false;
       });
     } catch (e) {
-      if(!mounted) return;
+      if (!mounted) return;
       setState(() {
         _loading = false;
       });
@@ -80,14 +85,14 @@ class _MyHomePageState extends State<MyHomePage>  with TickerProviderStateMixin 
   void initState() {
     // TODO: implement initState
 
-
     loadData();
     _scrollController.addListener(() {
       if (_scrollController.position.pixels ==
           _scrollController.position.maxScrollExtent) {}
     });
     Logger().i('我是首页初始化');
-    var fireDate = DateTime.fromMillisecondsSinceEpoch(DateTime.now().millisecondsSinceEpoch + 1000);
+    var fireDate = DateTime.fromMillisecondsSinceEpoch(
+        DateTime.now().millisecondsSinceEpoch + 1000);
     JPushService.sendLocal(LocalNotification(
       id: 234,
       title: '我是推送测试标题wwwwwwwww',
@@ -101,6 +106,7 @@ class _MyHomePageState extends State<MyHomePage>  with TickerProviderStateMixin 
 
   @override
   Widget build(BuildContext context) {
+    print('查看是否不停在渲染');
     return Scaffold(
       backgroundColor: Color(0xfff2f2f2),
       body: LoadingContainer(
@@ -149,45 +155,42 @@ class _MyHomePageState extends State<MyHomePage>  with TickerProviderStateMixin 
     } else if (alpha > 1) {
       alpha = 1;
     }
-    setState(() {
-      appBarAlpha = alpha;
-    });
+
+    getLine(opacityKey).setData(alpha); // 调用mult_data_line的buildStream
   }
 
-  Widget  _appBar() {
-    return Column(
-      children: [
-        Container(
-          decoration: BoxDecoration(
-              gradient: LinearGradient(
-                  colors: [Color(0x66000000), Colors.transparent],
-                  begin: Alignment.topCenter,
-                  end: Alignment.bottomCenter)),
-          child: Container(
-            padding: EdgeInsets.fromLTRB(0, 15, 0, 0),
-            height: 80,
-            decoration: BoxDecoration(
-                color:
-                    Color.fromARGB((appBarAlpha * 255).toInt(), 255, 255, 255)),
-            child: SearchBar(
-              searchBarType: appBarAlpha > 0.2
-                  ? SearchBarType.homeLight
-                  : SearchBarType.home,
-              inputBoxClick: _jumpToSearch,
-              speakClick: _jumpToSpeak,
-              defaultText: SEARCH_BAR_DEFAULT_TEXT,
-              leftButtonClick: () {},
-              autofocus: false,
+  Widget _appBar() {
+    return getLine(opacityKey).addObserver((context, data) => Column(
+          children: [
+            Container(
+              decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                      colors: [Color(0x66000000), Colors.transparent],
+                      begin: Alignment.topCenter,
+                      end: Alignment.bottomCenter)),
+              child: Container(
+                padding: EdgeInsets.fromLTRB(0, 15, 0, 0),
+                height: 80,
+                decoration: BoxDecoration(
+                    color: Color.fromARGB((data * 255).toInt(), 255, 255, 255)),
+                child: SearchBar(
+                  searchBarType:
+                      data > 0.2 ? SearchBarType.homeLight : SearchBarType.home,
+                  inputBoxClick: _jumpToSearch,
+                  speakClick: _jumpToSpeak,
+                  defaultText: SEARCH_BAR_DEFAULT_TEXT,
+                  leftButtonClick: () {},
+                  autofocus: false,
+                ),
+              ),
             ),
-          ),
-        ),
-        Container(
-          height: appBarAlpha > 0.2 ? 0.5 : 0,
-          decoration: BoxDecoration(
-              boxShadow: [BoxShadow(color: Colors.black12, blurRadius: 0.5)]),
-        )
-      ],
-    );
+            Container(
+              height: data > 0.2 ? 0.5 : 0,
+              decoration: BoxDecoration(
+                  boxShadow: [BoxShadow(color: Colors.black12, blurRadius: 0.5)]),
+            )
+          ],
+        ));
   }
 
   Widget get _banner {

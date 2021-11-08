@@ -24,7 +24,8 @@ class CompanyInfoSubmit extends StatefulWidget {
   _CompanyInfoSubmitState createState() => _CompanyInfoSubmitState();
 }
 
-class _CompanyInfoSubmitState extends State<CompanyInfoSubmit>  with AutomaticKeepAliveClientMixin {
+class _CompanyInfoSubmitState extends State<CompanyInfoSubmit>
+    with AutomaticKeepAliveClientMixin {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   TextEditingController organizeNameController;
   TextEditingController organizeSocialCodeController;
@@ -47,7 +48,7 @@ class _CompanyInfoSubmitState extends State<CompanyInfoSubmit>  with AutomaticKe
   @override
   initState() {
     form = widget.form;
-    initImgsShow=this.initImgUploadData(form.attaches)??[];
+    initImgsShow = this.initImgUploadData(form.attaches) ?? [];
     organizeNameController = TextEditingController();
     organizeSocialCodeController = TextEditingController();
     legalNameController = TextEditingController();
@@ -203,7 +204,6 @@ class _CompanyInfoSubmitState extends State<CompanyInfoSubmit>  with AutomaticKe
               InputForm(
                 controller: legalIdCardNoController,
                 initVal: form.legalIdCardNo,
-
                 validatorFn: (
                   String value,
                 ) {
@@ -406,11 +406,11 @@ class _CompanyInfoSubmitState extends State<CompanyInfoSubmit>  with AutomaticKe
     );
   }
 
-  List<String> initImgUploadData(List attaches){
-    List<String> arr =[];
-    if(attaches!=null){
-      for(var item in attaches){
-        if(item['attachUrl']!=''&&item['attachUrl'] is String){
+  List<String> initImgUploadData(List attaches) {
+    List<String> arr = [];
+    if (attaches != null) {
+      for (var item in attaches) {
+        if (item['attachUrl'] != '' && item['attachUrl'] is String) {
           arr.add(item['attachUrl']);
         }
       }
@@ -421,9 +421,9 @@ class _CompanyInfoSubmitState extends State<CompanyInfoSubmit>  with AutomaticKe
 
   void handleImgChange(List<String> imgs) {
     var saveAttachesArr = [];
-    var obj ;
-    if(imgs!=null&&imgs.length>=1){
-      obj= {
+    var obj;
+    if (imgs != null && imgs.length >= 1) {
+      obj = {
         'attachType': '1001',
         'attachUrl': imgs[0],
       };

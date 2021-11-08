@@ -55,7 +55,6 @@ class _SearchBarState extends State<SearchBar> {
 
   @override
   Widget build(BuildContext context) {
-    print('查看加载的输入框类型：${widget.searchBarType}');
     return widget.searchBarType == SearchBarType.normal
         ? _genNormalSearch()
         : _genHomeSearch();

@@ -1,0 +1,4 @@
+home_page有一个下滑动，动态改变appbar的opacity的动画
+我用了setState(),但是setState()会导致整个home_page的widgets重新刷新
+观看了好几种网上的解决方案，采用了buildStream的封装。
+局部刷新
