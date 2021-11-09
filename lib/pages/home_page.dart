@@ -72,7 +72,7 @@ class _MyHomePageState extends State<MyHomePage>
         resultString = json.encode(homeModelInstance.config);
         _loading = false;
       });
-      getLine(opacityKey).setData(0); // 初始化组件，否则最开始不渲染。
+
     } catch (e) {
       if (!mounted) return;
       setState(() {
@@ -102,7 +102,7 @@ class _MyHomePageState extends State<MyHomePage>
       fireTime: fireDate,
       subtitle: '一个测试qqqqqqqq',
     ));
-
+    getLine(opacityKey).setData(0); // 初始化组件，否则最开始不渲染。
     super.initState();
   }
 
