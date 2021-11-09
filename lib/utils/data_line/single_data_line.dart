@@ -20,8 +20,9 @@ class SingleDataLine<T> {
 
   void setData(T t) {
     if (t == currentData) return;
-    print("发送了一次数据 $t");
+
     if (_stream.isClosed) return;
+    print("发送了一次数据 $t");
     currentData = t;
     inner.add(t);
   }
@@ -56,13 +57,17 @@ class _DataObserverWidgetState<T> extends State<DataObserverWidget<T>> {
     return StreamBuilder(
       stream: widget._dataLine.outer,
       builder: (context, AsyncSnapshot<T> snapshot) {
-        if (snapshot != null && snapshot.data != null) {
-          print(
-              " ${context.widget.toString()} 中的steam接收到了一次数据${snapshot.data}");
-          return widget._builder(context, snapshot.data);
-        } else {
-          return Row();
-        }
+        // if (snapshot != null && snapshot.data != null) {
+        //   print(
+        //       " ${context.widget.toString()} 中的steam接收到了一次数据${snapshot.data}");
+        //   return widget._builder(context, snapshot.data);
+        // } else {
+        //   print('查看发生了什么，为什么收不到$snapshot,${snapshot.data}');
+        //   return Row();
+        // }
+        return widget._builder(
+          //加在这里
+            context, snapshot.data ?? widget._dataLine.currentData);
       },
     );
   }

@@ -14,6 +14,10 @@ import 'package:demo7_pro/route/pages/filter_page/index.dart'
 import 'package:demo7_pro/route/route_util.dart' show navTo;
 import 'package:demo7_pro/route/pages/cashier/index.dart' show CashierRoutes;
 import 'package:demo7_pro/route/pages/FlutterJsonBeanFactoryPage/index.dart' show FlutterJsonBeanFactoryPageRoutes;
+import 'package:demo7_pro/route/route_util.dart' show navTo;
+import 'package:demo7_pro/route/pages/login_page/index.dart' show LoginPageRoutes;
+
+
 
 class MyPage extends StatefulWidget {
   @override
@@ -208,6 +212,7 @@ class _MyPageState extends State<MyPage> {
   _loginAndClear() async {
     await AppService.clearPrefers(context);
     EventBusUtil.instance.eventBus.fire(NeedReLoginEvent());
+    // navTo(context, "${LoginPageRoutes.login}",clearStack:true);
   }
 
   _jumpToCashierPage() {

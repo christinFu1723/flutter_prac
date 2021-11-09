@@ -18,13 +18,15 @@ import 'package:demo7_pro/tabbar/tab_nav.dart';
 import 'dart:convert';
 import 'package:demo7_pro/route/routes.dart' show Routes;
 import 'package:demo7_pro/route/route_util.dart' show navTo;
+import 'package:demo7_pro/utils/data_line/mult_data_line.dart';
+import 'dart:math';
 
 class LoginPage extends StatefulWidget {
   @override
   _LoginPageState createState() => _LoginPageState();
 }
 
-class _LoginPageState extends State<LoginPage> {
+class _LoginPageState extends State<LoginPage> with MultDataLine {
   LoginForm form;
   TextEditingController phoneNumbController;
   TextEditingController smsController;
@@ -35,14 +37,21 @@ class _LoginPageState extends State<LoginPage> {
   FocusNode focusNodeVerifyCode = FocusNode();
 
   bool pending = false; // loading
+  String loginSmsCount = 'login_sms_count';
 
   @override
   void initState() {
     form = new LoginForm();
     phoneNumbController = TextEditingController();
     smsController = TextEditingController();
-    // phoneNumbController.text='ssss'; // 初始化输入框值
+
     focusNodeMobile.requestFocus();
+    var random = new DateTime.now().millisecondsSinceEpoch.toInt() ~/ (new Random().nextInt(100)+1);
+    getLine(loginSmsCount)
+        .setData(random); // 初始化
+
+
+
     super.initState();
   }
 
@@ -194,59 +203,64 @@ class _LoginPageState extends State<LoginPage> {
                       ),
                     ))
                   : Container(),
-              showSmsBtn
-                  ? Padding(
-                      padding: EdgeInsets.only(left: 10),
-                      child: ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                            primary: smsCountDownNumb != null
-                                ? AppTheme.lightTextColor
-                                : AppTheme.primaryColor,
-                            onPrimary: Colors.white,
-                            minimumSize: Size(60, 30),
-                            textStyle: TextStyle(fontSize: 16),
-                            padding: EdgeInsets.fromLTRB(13, 6, 13, 7),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(3),
-                            )),
-                        onPressed: () {
-                          _requestAuthCode();
-                        },
-                        child: _buttonLoadingChild(),
-                      ))
-                  : Container()
+              showSmsBtn ? _smsButton() : Container()
             ],
           ),
         ));
   }
 
+  Widget _smsButton() {
+    return Padding(
+        padding: EdgeInsets.only(left: 10),
+        child: ElevatedButton(
+          style: ElevatedButton.styleFrom(
+              primary: !(smsCountDownNumb == null ||
+                      smsCountDownNumb >= 0 && smsCountDownNumb <= 10)
+                  ? AppTheme.lightTextColor
+                  : AppTheme.primaryColor,
+              onPrimary: Colors.white,
+              minimumSize: Size(60, 30),
+              textStyle: TextStyle(fontSize: 16),
+              padding: EdgeInsets.fromLTRB(13, 6, 13, 7),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(3),
+              )),
+          onPressed: () {
+            _requestAuthCode();
+          },
+          child: _buttonLoadingChild(),
+        ));
+  }
+
   Widget _buttonLoadingChild() {
-    return smsCountDownNumb != null
-        ? (Row(
-            children: [
-              Padding(
-                padding: EdgeInsets.fromLTRB(0, 0, 10, 0),
-                child: SizedBox(
-                  child: CircularProgressIndicator(
-                    strokeWidth: 2,
-                    valueColor: AlwaysStoppedAnimation(Colors.white),
+
+    return getLine(loginSmsCount)
+        .addObserver((context, data) => data >= 0 && data <= 10
+            ? (Row(
+                children: [
+                  Padding(
+                    padding: EdgeInsets.fromLTRB(0, 0, 10, 0),
+                    child: SizedBox(
+                      child: CircularProgressIndicator(
+                        strokeWidth: 2,
+                        valueColor: AlwaysStoppedAnimation(Colors.white),
+                      ),
+                      width: AppTheme.fontSizeSmall,
+                      height: AppTheme.fontSizeSmall,
+                    ),
                   ),
-                  width: AppTheme.fontSizeSmall,
-                  height: AppTheme.fontSizeSmall,
-                ),
-              ),
-              Text(
-                '$smsCountDownNumb s',
+                  Text(
+                    '$data s',
+                    style: TextStyle(
+                        fontSize: AppTheme.fontSizeSmall, color: Colors.white),
+                  )
+                ],
+              ))
+            : (Text(
+                '获取短信验证码',
                 style: TextStyle(
                     fontSize: AppTheme.fontSizeSmall, color: Colors.white),
-              )
-            ],
-          ))
-        : (Text(
-            '获取短信验证码',
-            style: TextStyle(
-                fontSize: AppTheme.fontSizeSmall, color: Colors.white),
-          ));
+              )));
   }
 
   Widget _appInfoBlock() {
@@ -308,10 +322,10 @@ class _LoginPageState extends State<LoginPage> {
       if (loginInJson != null &&
           loginInJson['tokenInfo'] != null &&
           loginInJson['tokenInfo']['access_token'] != null) {
-
-        await AppService.setToken('Bearer ${loginInJson['tokenInfo']['access_token']}');
+        await AppService.setToken(
+            'Bearer ${loginInJson['tokenInfo']['access_token']}');
         await PrefersUtil.set("userInfo", json.encode(loginInJson));
-        navTo(context, '${Routes.root}',replace:true);
+        navTo(context, '${Routes.root}', replace: true);
       }
       return true;
     } catch (e) {
@@ -326,7 +340,10 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   void _requestAuthCode() async {
-    if (smsCountDownNumb != null) {
+    Logger().i('smsCountDownNumb$smsCountDownNumb');
+    if (smsCountDownNumb != null &&
+        smsCountDownNumb > 0 &&
+        smsCountDownNumb <= 10) {
       return;
     }
     AppUtil.showLoading();
@@ -345,13 +362,15 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   void _initTimer() {
-    if (smsCountDownNumb != null) {
+    if (smsCountDownNumb != null &&
+        smsCountDownNumb > 0 &&
+        smsCountDownNumb <= 10) {
       return;
     }
-    DateTime endAt = DateTime.now().add(Duration(seconds: 60));
-    setState(() {
-      smsCountDownNumb = 60;
-    });
+    DateTime endAt = DateTime.now().add(Duration(seconds: 10));
+
+    smsCountDownNumb = 10;
+    getLine(loginSmsCount).setData(smsCountDownNumb);
 
     smsCountDown = Timer.periodic(Duration(seconds: 1), (timer) {
       if (!mounted) {
@@ -363,18 +382,17 @@ class _LoginPageState extends State<LoginPage> {
         timer.cancel();
         smsCountDown.cancel();
         if (!mounted) return;
-        setState(() {
-          smsCountDownNumb = null;
-        });
+
+        getLine(loginSmsCount)
+            .setData(new DateTime.now().millisecondsSinceEpoch);
         return;
       }
 
-      setState(() {
-        smsCountDownNumb = ((endAt.millisecondsSinceEpoch -
-                    DateTime.now().millisecondsSinceEpoch) /
-                1000)
-            .ceil(); // 除法取整
-      });
+      smsCountDownNumb = ((endAt.millisecondsSinceEpoch -
+                  DateTime.now().millisecondsSinceEpoch) /
+              1000)
+          .ceil(); // 除法取整
+      getLine(loginSmsCount).setData(smsCountDownNumb);
     });
   }
 }

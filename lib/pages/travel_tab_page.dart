@@ -234,7 +234,7 @@ class _TravelItem extends StatelessWidget {
             clipBehavior: Clip.antiAlias,
             borderRadius: BorderRadius.circular(12),
             child: Image.network(
-              item.article.author?.coverImage?.dynamicUrl,
+              item.article.author?.coverImage?.dynamicUrl??'',
               width: 24,
               height: 24,
             ),

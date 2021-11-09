@@ -175,10 +175,12 @@ class _MyHomePageState extends State<MyHomePage>
                 padding: EdgeInsets.fromLTRB(0, 15, 0, 0),
                 height: 80,
                 decoration: BoxDecoration(
-                    color: Color.fromARGB((data * 255).toInt(), 255, 255, 255)),
+                    color: Color.fromARGB(
+                        ((data ?? 0 )* 255).toInt(), 255, 255, 255)),
                 child: SearchBar(
-                  searchBarType:
-                      data > 0.2 ? SearchBarType.homeLight : SearchBarType.home,
+                  searchBarType: (data ?? 0) > 0.2
+                      ? SearchBarType.homeLight
+                      : SearchBarType.home,
                   inputBoxClick: _jumpToSearch,
                   speakClick: _jumpToSpeak,
                   defaultText: SEARCH_BAR_DEFAULT_TEXT,
@@ -189,7 +191,7 @@ class _MyHomePageState extends State<MyHomePage>
               ),
             ),
             Container(
-              height: data > 0.2 ? 0.5 : 0,
+              height: (data ?? 0) > 0.2 ? 0.5 : 0,
               decoration: BoxDecoration(boxShadow: [
                 BoxShadow(color: Colors.black12, blurRadius: 0.5)
               ]),
