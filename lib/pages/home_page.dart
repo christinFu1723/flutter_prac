@@ -60,7 +60,7 @@ class _MyHomePageState extends State<MyHomePage>
     print('刷新');
     try {
       var _model = await HomeDao.fetch();
-      var _test = await GetListCCMRequestTest.fetch();
+
       var homeModelInstance = _model['HomeModel'];
       if (!mounted) return;
       setState(() {
@@ -73,7 +73,7 @@ class _MyHomePageState extends State<MyHomePage>
         resultString = json.encode(homeModelInstance.config);
         _loading = false;
       });
-
+      var _test = await GetListCCMRequestTest.fetch();
     } catch (e) {
       if (!mounted) return;
       setState(() {

@@ -8,6 +8,8 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:demo7_pro/route/routes.dart' show Routes;
 import 'package:fluro/fluro.dart' show FluroRouter;
 
+import 'package:get/get.dart';
+
 
 
 class App extends StatefulWidget{
@@ -64,4 +66,6 @@ class _AppState extends State<App>{
       }),
     );
   }
+
+
 }

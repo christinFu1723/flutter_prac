@@ -5,7 +5,8 @@ import 'dart:io' show Platform;
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:demo7_pro/services/jpush.dart';
 import 'package:bot_toast/bot_toast.dart';
-import 'package:demo7_pro/app.dart';
+// import 'package:demo7_pro/app.dart';
+import 'package:demo7_pro/app_get.dart';
 import 'package:demo7_pro/pages/login_page.dart';
 import 'package:fluro/fluro.dart' show FluroRouter;
 import 'package:demo7_pro/route/routes.dart' show Routes;
@@ -23,7 +24,7 @@ void main() async {
   /// 初始化极光
   JPushService.init();
 
-  runApp(App());
+  runApp(AppGET());
 
   /// 锁定竖屏
   SystemChrome.setPreferredOrientations([
