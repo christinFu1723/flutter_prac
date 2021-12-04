@@ -8,6 +8,8 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:demo7_pro/route/routes.dart' show Routes;
 import 'package:fluro/fluro.dart' show FluroRouter;
 
+
+
 class App extends StatefulWidget{
   @override
   _AppState createState()=>_AppState();
@@ -15,9 +17,18 @@ class App extends StatefulWidget{
 
 class _AppState extends State<App>{
 
+  @override
+  void initState(){
+    print('渲染了吗');
+    super.initState();
+
+
+  }
+
 
   Widget build(BuildContext context){
     final botToastBuilder = BotToastInit();
+
     return MultiProvider(
       providers: [
         ChangeNotifierProvider<AppStoreModel>(

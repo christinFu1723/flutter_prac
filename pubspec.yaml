@@ -159,6 +159,10 @@ dependencies:
   # https://pub.dev/packages/html_character_entities/install
   html_character_entities: ^1.0.0+1
 
+  # dio_log 用来抓network bug用的
+  #https://pub.dev/packages/dio_log/install
+  dio_log: ^2.0.2
+
 dev_dependencies:
   flutter_test:
     sdk: flutter

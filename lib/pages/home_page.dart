@@ -31,6 +31,7 @@ import 'package:demo7_pro/services/jpush.dart' show JPushService;
 import 'package:jpush_flutter/jpush_flutter.dart' show LocalNotification;
 import 'package:demo7_pro/utils/data_line/mult_data_line.dart'
     show MultDataLine;
+import 'package:dio_log/dio_log.dart';
 
 const AppBar_Hide_Distance = 100;
 const SEARCH_BAR_DEFAULT_TEXT = '首页默认值';
@@ -103,12 +104,18 @@ class _MyHomePageState extends State<MyHomePage>
       subtitle: '一个测试qqqqqqqq',
     ));
     getLine(opacityKey).setData(0); // 初始化组件，否则最开始不渲染。
+
+
+
+
     super.initState();
+
   }
 
   @override
   Widget build(BuildContext context) {
     print('查看是否不停在渲染');
+    showDebugBtn(context,btnColor: Colors.blue);
 
     return Scaffold(
       backgroundColor: Color(0xfff2f2f2),
@@ -121,6 +128,7 @@ class _MyHomePageState extends State<MyHomePage>
               removeTop: true,
               child: Stack(
                 children: [
+
                   RefreshIndicator(
                       onRefresh: loadData,
                       child: NotificationListener(

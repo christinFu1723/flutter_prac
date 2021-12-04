@@ -50,6 +50,7 @@ class _SubmitPageState extends State<SubmitPage> with TickerProviderStateMixin {
         headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
           return <Widget>[
             SliverAppBar(
+              key:Key('sliverAppTest'),
               backgroundColor: Colors.white,
               pinned: true,
               stretch: false,
@@ -79,6 +80,11 @@ class _SubmitPageState extends State<SubmitPage> with TickerProviderStateMixin {
                 ),
               ),
             ),
+            // SliverList(
+            //   key:Key('sliverTest'),
+            //   delegate: SliverChildListDelegate([_step(),Container(child:Text('测试1'))]),
+            // )
+
           ];
         },
         body: _tabPage(),

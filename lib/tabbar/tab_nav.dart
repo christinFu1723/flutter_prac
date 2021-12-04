@@ -15,6 +15,7 @@ import 'package:demo7_pro/route/tabbar/tabbar.dart' show TabConfig;
 import 'package:demo7_pro/route/route_util.dart' show navTo;
 import 'package:demo7_pro/route/pages/login_page/index.dart'
     show LoginPageRoutes;
+import 'package:dio_log/dio_log.dart';
 
 class TabNavigator extends StatefulWidget {
   @override
@@ -43,7 +44,9 @@ class _TabNavigatorState extends State<TabNavigator> {
 
     /// 初始化应用状态
     init();
+
     super.initState();
+
   }
 
   void init() async {
@@ -60,6 +63,7 @@ class _TabNavigatorState extends State<TabNavigator> {
   }
 
   Widget build(BuildContext context) {
+
     return Scaffold(
       body: IndexedStack(
         index: _currentIndex,

@@ -15,6 +15,7 @@ import 'package:demo7_pro/eventBus/app.dart' show NeedReLoginEvent;
 import 'package:demo7_pro/generated/json/base/json_convert_content.dart';
 import 'package:demo7_pro/json/base_entity.dart';
 import 'package:demo7_pro/json/base_list_entity.dart';
+import 'package:dio_log/dio_log.dart';
 import 'package:logger/logger.dart';
 
 class HttpUtil {
@@ -61,6 +62,7 @@ class HttpUtil {
     _dio.options.receiveTimeout = HttpConfig.instance.timeout;
 
     // 拦截器装载
+    _dio.interceptors.add(DioLogInterceptor());
     _dio.interceptors.add(HeaderInterceptor());
     _dio.interceptors.add(ResponseInterceptor());
   }
