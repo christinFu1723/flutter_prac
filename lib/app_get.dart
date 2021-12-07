@@ -38,6 +38,11 @@ class _AppState extends State<AppGET> {
 
     return GetMaterialApp.router(
       defaultTransition: Transition.native,
+      localizationsDelegates: [
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+      ],
       supportedLocales: [
         const Locale('zh', 'CH'),
         const Locale('en', 'US'), // English
